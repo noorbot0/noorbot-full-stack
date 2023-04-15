@@ -17,6 +17,6 @@ class DashboardTopCoursesModel {
     DashboardTopCoursesModel("Stop negative thinkig", "30 min", "Daniel Sleibi",
         tTopCourseImage2, null),
     DashboardTopCoursesModel("Body appreciation meditation", "6 Sections",
-        "Mays Quneibi", tTopCourseImage1, () {}),
+        "Mays Quneibi", tTopCourseImage3, () {}),
   ];
 }

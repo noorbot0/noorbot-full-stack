@@ -69,11 +69,11 @@ const String tOtpMessage = "Enter the verification code sent at ";
 
 // -- Dashboard Screen - Text
 const String tDashboardTitle = "Hey, Freind";
-const String tDashboardHeading = "Explore CPT exercises and SOS activities";
+const String tDashboardHeading = "Explore CPT exercises and more..";
 const String tDashboardSearch = "Search...";
 const String tDashboardBannerTitle2 = "Noorbot Model";
 const String tDashboardButton = "View All";
-const String tDashboardTopCourses = "Top Questions";
+const String tDashboardTopCourses = "Top Courses";
 const String tDashboardBannerSubTitle = "Read More..";
 const String tDashboardBannerTitle1 = "What is CPT";
 

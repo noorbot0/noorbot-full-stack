@@ -26,12 +26,13 @@ class DashboardTopCourses extends StatelessWidget {
         itemBuilder: (context, index) => GestureDetector(
           onTap: list[index].onPress,
           child: SizedBox(
-            width: 320,
-            height: 210,
+            width: 270,
+            height: 160,
             child: Padding(
               padding: const EdgeInsets.only(right: 10, top: 5),
               child: Container(
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
                   //For Dark Color
                   color: isDark ? tSecondaryColor : tCardBgColor,
                 ),
@@ -50,13 +51,17 @@ class DashboardTopCourses extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Flexible(child: Image(image: AssetImage(list[index].image), height: 110)),
+                        Flexible(
+                            child: Image(
+                                image: AssetImage(list[index].image),
+                                height: 110)),
                       ],
                     ),
                     Row(
                       children: [
                         ElevatedButton(
-                          style: ElevatedButton.styleFrom(shape: const CircleBorder()),
+                          style: ElevatedButton.styleFrom(
+                              shape: const CircleBorder()),
                           onPressed: () {},
                           child: const Icon(Icons.play_arrow),
                         ),

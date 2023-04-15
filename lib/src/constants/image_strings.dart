@@ -30,8 +30,9 @@ const String tUserProfileImage = "assets/images/dashboard/dash-person.png";
 const String tBookmarkIcon = "assets/images/dashboard/bookmark-icon.png";
 const String tBannerImage1 = "assets/images/dashboard/dash-01.png";
 const String tBannerImage2 = "assets/images/dashboard/dash-02.png";
-const String tTopCourseImage1 = "assets/images/dashboard/dash-03.png";
-const String tTopCourseImage2 = "assets/images/dashboard/dash-04.png";
+const String tTopCourseImage1 = "assets/images/dashboard/dash-1.png";
+const String tTopCourseImage2 = "assets/images/dashboard/dash-2.png";
+const String tTopCourseImage3 = "assets/images/dashboard/dash-3.png";
 
 // -- Profile Images
 const String tProfileImage = "assets/images/profile/profile-pic.png";
