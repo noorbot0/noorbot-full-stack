@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "278191727271",
+    "project_id": "noorbot-app",
+    "storage_bucket": "noorbot-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:278191727271:android:635d94a39f924921063182",
+        "android_client_info": {
+          "package_name": "com.semniar.noorbot_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "278191727271-0rmlop5fvu8n00dprlk10vkf1k98ilip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCABYhs3onJHKvpBQ-hnhAqRUlZsr6FrwI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "278191727271-0rmlop5fvu8n00dprlk10vkf1k98ilip.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

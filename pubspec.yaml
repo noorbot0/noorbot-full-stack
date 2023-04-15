@@ -1,0 +1,60 @@
+name: noorbot_app
+description: A new Flutter project.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.6 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^3.0.1
+
+  ## -- STATE MANAGEMENT
+  get: ^4.6.5
+
+  ## -- OnBoarding PACKAGES
+  liquid_swipe: ^3.0.0
+  smooth_page_indicator: ^1.0.0+2
+
+  ## -- OTP TEXT FIELD PACKAGE
+  flutter_otp_text_field: ^1.1.1
+
+  ## -- DAILOGFLOE PACKAGES
+  dialogflow_flutter: ^0.0.3
+  bubble:
+  intl:
+
+  # flutter_facebook_auth: ^5.0.7
+  # google_sign_in: ^5.4.2
+
+  ## -- ICON PACKAGES
+  cupertino_icons: ^1.0.2
+  line_awesome_flutter: ^2.0.0
+  flutter_native_splash: ^2.2.16
+
+  ## -- FIREBASE PACKAGES
+  firebase_core: ^2.9.0
+  firebase_auth: ^4.4.1
+  cloud_firestore: ^4.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/logo/
+    - assets/images/
+    - assets/images/profile/
+    - assets/images/dashboard/
+    - assets/images/splash_images/
+    - assets/images/welcome_images/
+    - assets/images/forget_password/
+    - assets/images/on_boarding_images/
+
+    - assets/service.json
+# Splash screen has been added in the 'splash.yaml' file in main project directory
