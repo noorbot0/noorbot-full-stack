@@ -42,6 +42,23 @@ class _Chat extends State<MyHomePage> {
 
   final messageInsert = TextEditingController();
   List<Map> messsages = List<Map>.empty();
+  bool sendButtonEnabled = false;
+
+  onPressed() {
+    if (messageInsert.text.isEmpty) {
+      print("empty message");
+    } else {
+      setState(() {
+        messsages.insert(0, {"data": 1, "message": messageInsert.text});
+      });
+      // response(messageInsert.text);
+      messageInsert.clear();
+    }
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +66,7 @@ class _Chat extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text(
           "Chat bot",
+          style: TextStyle(color: Colors.black),
         ),
       ),
       body: Container(
@@ -73,20 +91,26 @@ class _Chat extends State<MyHomePage> {
             ),
             const Divider(
               height: 5.0,
-              color: Colors.greenAccent,
+              color: Colors.grey,
             ),
             Container(
               child: ListTile(
                 title: Container(
-                  height: 35,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                    color: Color.fromRGBO(220, 220, 220, 1),
+                  // height: 35,
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    color: Colors.white, //Color.fromRGBO(220, 220, 220, 1),
+                    border: Border.all(
+                        color: const Color.fromARGB(255, 191, 191, 191)),
                   ),
                   padding: const EdgeInsets.only(left: 15),
                   child: TextFormField(
+                    minLines: 1,
+                    maxLines: 4,
+                    keyboardType: TextInputType.multiline,
                     controller: messageInsert,
                     decoration: const InputDecoration(
+                      isDense: true,
                       hintText: "Enter a Message...",
                       hintStyle: TextStyle(color: Colors.black26),
                       border: InputBorder.none,
@@ -96,31 +120,32 @@ class _Chat extends State<MyHomePage> {
                       disabledBorder: InputBorder.none,
                     ),
                     style: const TextStyle(fontSize: 16, color: Colors.black),
-                    onChanged: (value) {},
+                    onChanged: (value) {
+                      setState(() {
+                        sendButtonEnabled = value.isNotEmpty;
+                      });
+                      print(value);
+                      print(sendButtonEnabled);
+                    },
                   ),
                 ),
-                trailing: IconButton(
+                trailing: Ink(
+                  width: 35,
+                  decoration: ShapeDecoration(
+                    color: sendButtonEnabled
+                        ? const Color.fromARGB(255, 0, 117, 220)
+                        : const Color.fromARGB(255, 54, 76, 97),
+                    shape: const CircleBorder(),
+                  ),
+                  child: IconButton(
                     icon: const Icon(
                       Icons.send,
-                      size: 30.0,
-                      color: Colors.greenAccent,
+                      size: 20.0,
+                      color: Colors.white,
                     ),
-                    onPressed: () {
-                      if (messageInsert.text.isEmpty) {
-                        print("empty message");
-                      } else {
-                        setState(() {
-                          messsages.insert(
-                              0, {"data": 1, "message": messageInsert.text});
-                        });
-                        // response(messageInsert.text);
-                        messageInsert.clear();
-                      }
-                      FocusScopeNode currentFocus = FocusScope.of(context);
-                      if (!currentFocus.hasPrimaryFocus) {
-                        currentFocus.unfocus();
-                      }
-                    }),
+                    onPressed: sendButtonEnabled ? onPressed : null,
+                  ),
+                ),
               ),
             ),
             const SizedBox(
@@ -142,10 +167,10 @@ class _Chat extends State<MyHomePage> {
             data == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           data == 0
-              ? Container(
+              ? const SizedBox(
                   height: 60,
                   width: 60,
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     backgroundImage: AssetImage("assets/robot.jpg"),
                   ),
                 )
@@ -180,10 +205,10 @@ class _Chat extends State<MyHomePage> {
                 )),
           ),
           data == 1
-              ? Container(
+              ? const SizedBox(
                   height: 60,
                   width: 60,
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     backgroundImage: AssetImage("assets/default.jpg"),
                   ),
                 )
