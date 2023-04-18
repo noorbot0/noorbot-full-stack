@@ -50,20 +50,22 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCABYhs3onJHKvpBQ-hnhAqRUlZsr6FrwI',
-    appId: '1:278191727271:android:635d94a39f924921063182',
-    messagingSenderId: '278191727271',
-    projectId: 'noorbot-app',
-    storageBucket: 'noorbot-app.appspot.com',
+    apiKey: 'AIzaSyAQ3wjrp4KJFjz-CY_3WMyR333JSyynWfE',
+    appId: '1:212443719146:android:8f85e3cf4200de4a4a3e93',
+    messagingSenderId: '212443719146',
+    projectId: 'noorbot-ai',
+    databaseURL: 'https://noorbot-ai-default-rtdb.firebaseio.com',
+    storageBucket: 'noorbot-ai.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBTvKLxtMH5o41qZqh3icKN_jBGjpsdw_0',
-    appId: '1:278191727271:ios:56a8d2210db40fe8063182',
-    messagingSenderId: '278191727271',
-    projectId: 'noorbot-app',
-    storageBucket: 'noorbot-app.appspot.com',
-    iosClientId: '278191727271-c35032c1u9219udhlmjqpg38fm1fi0er.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDJPldhWhuBzvxTBOilXOw2dXMEbczF5kQ',
+    appId: '1:212443719146:ios:5d2073abae43af3e4a3e93',
+    messagingSenderId: '212443719146',
+    projectId: 'noorbot-ai',
+    databaseURL: 'https://noorbot-ai-default-rtdb.firebaseio.com',
+    storageBucket: 'noorbot-ai.appspot.com',
+    iosClientId: '212443719146-ktsaq521b2h5m2dtmc6sht2ranjml4pp.apps.googleusercontent.com',
     iosBundleId: 'com.codingwitht.loginFlutterApp',
   );
 }

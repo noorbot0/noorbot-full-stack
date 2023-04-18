@@ -1,7 +1,7 @@
 {
   "file_generated_by": "FlutterFire CLI",
   "purpose": "FirebaseAppID & ProjectID for this Firebase app in this directory",
-  "GOOGLE_APP_ID": "1:278191727271:ios:56a8d2210db40fe8063182",
-  "FIREBASE_PROJECT_ID": "noorbot-app",
-  "GCM_SENDER_ID": "278191727271"
+  "GOOGLE_APP_ID": "1:212443719146:ios:5d2073abae43af3e4a3e93",
+  "FIREBASE_PROJECT_ID": "noorbot-ai",
+  "GCM_SENDER_ID": "212443719146"
 }

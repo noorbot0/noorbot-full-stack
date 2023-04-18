@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "278191727271",
-    "project_id": "noorbot-app",
-    "storage_bucket": "noorbot-app.appspot.com"
+    "project_number": "212443719146",
+    "firebase_url": "https://noorbot-ai-default-rtdb.firebaseio.com",
+    "project_id": "noorbot-ai",
+    "storage_bucket": "noorbot-ai.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:278191727271:android:635d94a39f924921063182",
+        "mobilesdk_app_id": "1:212443719146:android:8f85e3cf4200de4a4a3e93",
         "android_client_info": {
           "package_name": "com.semniar.noorbot_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "278191727271-0rmlop5fvu8n00dprlk10vkf1k98ilip.apps.googleusercontent.com",
+          "client_id": "212443719146-jes3f4hjnnq3b6ga7oihij989qhvbbno.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCABYhs3onJHKvpBQ-hnhAqRUlZsr6FrwI"
+          "current_key": "AIzaSyAQ3wjrp4KJFjz-CY_3WMyR333JSyynWfE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "278191727271-0rmlop5fvu8n00dprlk10vkf1k98ilip.apps.googleusercontent.com",
+              "client_id": "212443719146-jes3f4hjnnq3b6ga7oihij989qhvbbno.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "212443719146-ktsaq521b2h5m2dtmc6sht2ranjml4pp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.codingwitht.loginFlutterApp"
+              }
             }
           ]
         }
