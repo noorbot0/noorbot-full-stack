@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:liquid_swipe/PageHelpers/LiquidController.dart';
-import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
+
+// import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
 import '../../../constants/colors.dart';
 import '../../../constants/image_strings.dart';
 import '../../../constants/text_strings.dart';
+import '../../core/screens/bottom_navbar/bottom_navbar.dart';
 import '../models/model_on_boarding.dart';
 import '../screens/on_boarding/on_boarding_page_widget.dart';
 
@@ -13,7 +15,7 @@ class OnBoardingController extends GetxController {
   RxInt currentPage = 0.obs;
 
   //Functions to trigger Skip, Next and onPageChange Events
-  skip() => Get.offAll(() => const Dashboard());
+  skip() => Get.offAll(() => const MyNavBar());
   animateToNextSlide() =>
       controller.animateToPage(page: controller.currentPage + 1);
   onPageChangedCallback(int activePageIndex) =>
