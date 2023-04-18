@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -15,9 +16,13 @@ void main() {
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   /// Authentication Repository so that It can check which screen to show.
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
+  Firebase.initializeApp(
+          //name: "noorbot-ai",
+          options: DefaultFirebaseOptions.currentPlatform)
       .then((value) => Get.put(AuthenticationRepository()));
 
+  // FirebaseDatabase database = FirebaseDatabase.instance;
+  // storeDataDemo(database);
   runApp(const App());
 }
 
