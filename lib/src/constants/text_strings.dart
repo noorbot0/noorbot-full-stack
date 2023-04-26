@@ -95,5 +95,11 @@ const String tDelete = "Delete";
 const String tJoined = "Joined";
 const String tJoinedAt = " 20 June 2030";
 
-// --Notifications Screen
+// -- Notifications Screen
 const String tNotificationTime = "Choose a daily check-in time";
+
+// -- BDI test screen
+const String tStart = "Start";
+const String tBdiTitle = "Negative Feelings check-in";
+const String tBdiSubTitle =
+    "Chat with Noor to practice CBT whenever you force an emotional challenge, and never let negative emotions build up again";

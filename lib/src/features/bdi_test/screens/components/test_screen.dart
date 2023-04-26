@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:noorbot_app/src/constants/colors.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
 
 import '../../../../constants/bdi_test.dart';
@@ -48,36 +50,27 @@ class _TestScreenState extends State<TestScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: double.infinity,
-                    child: Text(
-                      "Question ${index + 1}/10",
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 28.0,
-                      ),
-                    ),
-                  ),
-                  const Divider(
-                    color: Color.fromARGB(255, 170, 151, 151),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 100.0,
-                    child: Text(
-                      "${questions[index].questionNumber}",
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 177, 80, 80),
-                        fontSize: 22.0,
-                      ),
-                    ),
-                  ),
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: LinearPercentIndicator(
+                          width: MediaQuery.of(context).size.width - 50,
+                          animation: true,
+                          lineHeight: 20.0,
+                          animationDuration: 500,
+                          percent: (index / questions.length),
+                          // ignore: deprecated_member_use
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          progressColor: tPrimaryColor,
+                        ),
+                      )),
                   for (int i = 0; i < questions[index].answers!.length; i++)
                     Container(
                       width: double.infinity,
-                      height: 60.0,
+                      height: 50.0,
                       margin: const EdgeInsets.only(
                           bottom: 20.0, left: 12.0, right: 12.0),
+                      padding: EdgeInsets.only(left: 20.0, right: 20.0),
                       child: RawMaterialButton(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
@@ -97,10 +90,7 @@ class _TestScreenState extends State<TestScreen> {
                               }
                             : null,
                         child: Text(questions[index].answers!.keys.toList()[i],
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 18.0,
-                            )),
+                            style: const TextStyle(color: tWhiteColor)),
                       ),
                     ),
                   const SizedBox(
