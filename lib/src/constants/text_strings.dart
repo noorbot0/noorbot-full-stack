@@ -69,13 +69,13 @@ const String tOtpMessage = "Enter the verification code sent at ";
 
 // -- Dashboard Screen - Text
 const String tDashboardTitle = "Hey, Freind";
-const String tDashboardHeading = "Explore CPT exercises and more..";
+const String tDashboardHeading = "Explore CBT exercises and more..";
 const String tDashboardSearch = "Search...";
 const String tDashboardBannerTitle2 = "Noorbot Model";
 const String tDashboardButton = "View All";
 const String tDashboardTopCourses = "Top Courses";
 const String tDashboardBannerSubTitle = "Read More..";
-const String tDashboardBannerTitle1 = "What is CPT";
+const String tDashboardBannerTitle1 = "What is CBT";
 
 // -- Profile Screen - Text
 const String tProfile = "Profile";
@@ -94,3 +94,6 @@ const String tMenu3 = "User Management";
 const String tDelete = "Delete";
 const String tJoined = "Joined";
 const String tJoinedAt = " 20 June 2030";
+
+// --Notifications Screen
+const String tNotificationTime = "Choose a daily check-in time";

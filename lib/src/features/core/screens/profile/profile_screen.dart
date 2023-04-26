@@ -3,12 +3,14 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/constants/sizes.dart';
 import 'package:noorbot_app/src/constants/text_strings.dart';
+import 'package:noorbot_app/src/features/bdi_test/screens/bdi_test.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/update_profile_screen.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/widgets/image_with_icon.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/widgets/profile_menu.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../repository/authentication_repository/authentication_repository.dart';
+import '../NotifcationsTime/notifications_time.dart';
 import 'all_users.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -65,11 +67,11 @@ class ProfileScreen extends StatelessWidget {
               ProfileMenuWidget(
                   title: "Notifications",
                   icon: LineAwesomeIcons.cog,
-                  onPress: () {}),
+                  onPress: () => Get.to(const NotificationsTime())),
               ProfileMenuWidget(
                   title: "BDI Test",
                   icon: LineAwesomeIcons.wallet,
-                  onPress: () {}),
+                  onPress: () => Get.to(const BdiTest())),
               ProfileMenuWidget(
                   title: "User Management",
                   icon: LineAwesomeIcons.user_check,

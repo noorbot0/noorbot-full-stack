@@ -35,7 +35,7 @@ class TimesList extends StatelessWidget {
         height: 450,
         width: 300,
         child: Column(
-          children: <Widget>[
+          children: [
             Expanded(
                 child: ListView(
               children: notificationsTimes.map((time) {
@@ -43,9 +43,9 @@ class TimesList extends StatelessWidget {
                     .gradientTemplate[time.gradientColorIndex!].colors;
                 IconData? icon = time.icon;
                 return Container(
-                  margin: const EdgeInsets.only(bottom: 12),
+                  margin: const EdgeInsets.only(bottom: 5, top: 5),
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: gradientColor,
@@ -94,7 +94,7 @@ class TimesList extends StatelessWidget {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
+                        children: [
                           Text(
                             time.alarmDateTime!,
                             style: const TextStyle(
