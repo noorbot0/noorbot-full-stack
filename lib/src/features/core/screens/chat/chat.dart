@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:intl/intl.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/chat_provider.dart';
+import 'package:noorbot_app/src/features/core/screens/chat/widgets/chat_waiting.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
@@ -55,6 +56,7 @@ class _Chat extends State<MyHomePage> {
   final int _limit = 20;
   List<QueryDocumentSnapshot> listMessage = [];
   final ScrollController listScrollController = ScrollController();
+  bool isSomeoneTyping = false;
 
   @override
   void initState() {
@@ -72,12 +74,28 @@ class _Chat extends State<MyHomePage> {
     if (messageInsert.text.trim().isNotEmpty) {
       setState(() {
         messsages.insert(0, {"data": 1, "message": messageInsert.text.trim()});
-      });
-      setState(() {
         sendButtonEnabled = false;
+        isSomeoneTyping = true;
       });
-      chatProvider.sendMessage(
-          _auth.currentUser!.uid, chatRoomId, messageInsert.text.trim());
+      void okCallback(Map response) {
+        // print("-------------------callback");
+        // print(response["response"]);
+        setState(() {
+          messsages
+              .insert(0, {"data": 0, "message": response["response"].trim()});
+          isSomeoneTyping = false;
+        });
+      }
+
+      // void errCallback(error) {
+      //   print(error);
+      // }
+
+      // chatProvider.chatGCFunction(_auth.currentUser!.uid, chatRoomId,
+      //     messageInsert.text.trim(), okCallback, errCallback);
+      chatProvider.chatter(_auth.currentUser!.uid, chatRoomId,
+          messageInsert.text.trim(), okCallback);
+
       messageInsert.clear();
     }
   }
@@ -89,8 +107,12 @@ class _Chat extends State<MyHomePage> {
           title: const Text("Chat bot", style: TextStyle(color: Colors.black))),
       body: Column(
         children: <Widget>[
-          timeSection(),
+          // timeSection(),
           messagesSection(context),
+          // typingRow(",", 0),
+          TypingIndicator(
+            showIndicator: isSomeoneTyping,
+          ),
           const Divider(height: 1.0, color: Colors.grey),
           inputSection(),
         ],
@@ -147,65 +169,87 @@ class _Chat extends State<MyHomePage> {
     );
   }
 
+  Widget typingRow(String message, int sender) {
+    return Row(
+      mainAxisAlignment:
+          sender == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        sender == 0
+            ? const SizedBox(
+                // height: 60,
+                // width: 60,
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: AssetImage("assets/noor.png"),
+                ),
+              )
+            : Container(),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: TypingIndicator(
+            showIndicator: isSomeoneTyping,
+          ),
+        ),
+      ],
+    );
+  }
+
   //for better one i have use the bubble package check out the pubspec.yaml
 
   Widget messageWidget(String message, int sender) {
-    return Container(
-      // padding: const EdgeInsets.only(left: 5, right: 5),
-      child: Row(
-        mainAxisAlignment:
-            sender == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children: [
-          sender == 0
-              ? const SizedBox(
-                  // height: 60,
-                  // width: 60,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    backgroundImage: AssetImage("assets/noor.png"),
-                  ),
-                )
-              : Container(),
-          Padding(
-            padding: const EdgeInsets.all(5.0),
-            child: Bubble(
-                radius: const Radius.circular(15.0),
-                color: sender == 0
-                    ? const Color.fromRGBO(23, 157, 139, 1)
-                    : Colors.orangeAccent,
-                elevation: 0.0,
-                child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      const SizedBox(
-                        width: 10.0,
+    return Row(
+      mainAxisAlignment:
+          sender == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        sender == 0
+            ? const SizedBox(
+                // height: 60,
+                // width: 60,
+                child: CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: AssetImage("assets/noor.png"),
+                ),
+              )
+            : Container(),
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Bubble(
+              radius: const Radius.circular(15.0),
+              color: sender == 0
+                  ? const Color.fromRGBO(23, 157, 139, 1)
+                  : Colors.orangeAccent,
+              elevation: 0.0,
+              child: Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const SizedBox(
+                      width: 10.0,
+                    ),
+                    Flexible(
+                        child: Container(
+                      constraints: const BoxConstraints(maxWidth: 200),
+                      child: Text(
+                        message,
+                        style: const TextStyle(
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       ),
-                      Flexible(
-                          child: Container(
-                        constraints: const BoxConstraints(maxWidth: 200),
-                        child: Text(
-                          message,
-                          style: const TextStyle(
-                              color: Colors.white, fontWeight: FontWeight.bold),
-                        ),
-                      ))
-                    ],
-                  ),
-                )),
-          ),
-          // sender == 1
-          //     ? const SizedBox(
-          //         height: 60,
-          //         width: 60,
-          //         child: CircleAvatar(
-          //           backgroundImage: AssetImage("assets/dash-person.png"),
-          //         ),
-          //       )
-          //     : Container(),
-        ],
-      ),
+                    ))
+                  ],
+                ),
+              )),
+        ),
+        // sender == 1
+        //     ? const SizedBox(
+        //         height: 60,
+        //         width: 60,
+        //         child: CircleAvatar(
+        //           backgroundImage: AssetImage("assets/dash-person.png"),
+        //         ),
+        //       )
+        //     : Container(),
+      ],
     );
   }
 

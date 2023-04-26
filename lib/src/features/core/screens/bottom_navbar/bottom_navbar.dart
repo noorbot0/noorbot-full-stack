@@ -64,7 +64,8 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: [
-              const Color.fromARGB(255, 19, 198, 88),
+              // const Color.fromARGB(255, 19, 198, 88),
+              const Color.fromARGB(255, 52, 109, 225),
               const Color.fromARGB(255, 52, 109, 225)
             ][_selectedIndex],
             onTap: _onItemTapped,
