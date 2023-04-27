@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:liquid_swipe/PageHelpers/LiquidController.dart';
 import 'package:noorbot_app/src/features/bdi_test/screens/bdi_test.dart';
-import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
 import '../../../constants/colors.dart';
 import '../../../constants/image_strings.dart';
 import '../../../constants/text_strings.dart';
