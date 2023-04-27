@@ -69,13 +69,13 @@ const String tOtpMessage = "Enter the verification code sent at ";
 
 // -- Dashboard Screen - Text
 const String tDashboardTitle = "Hey, Freind";
-const String tDashboardHeading = "Explore CPT exercises and more..";
+const String tDashboardHeading = "Explore CBT exercises and more..";
 const String tDashboardSearch = "Search...";
 const String tDashboardBannerTitle2 = "Noorbot Model";
 const String tDashboardButton = "View All";
 const String tDashboardTopCourses = "Top Courses";
 const String tDashboardBannerSubTitle = "Read More..";
-const String tDashboardBannerTitle1 = "What is CPT";
+const String tDashboardBannerTitle1 = "What is CBT";
 
 // -- Profile Screen - Text
 const String tProfile = "Profile";
@@ -94,3 +94,12 @@ const String tMenu3 = "User Management";
 const String tDelete = "Delete";
 const String tJoined = "Joined";
 const String tJoinedAt = " 20 June 2030";
+
+// -- Notifications Screen
+const String tNotificationTime = "Choose a daily check-in time";
+
+// -- BDI test screen
+const String tStart = "Start";
+const String tBdiTitle = "Negative Feelings check-in";
+const String tBdiSubTitle =
+    "Chat with Noor to practice CBT whenever you force an emotional challenge, and never let negative emotions build up again";

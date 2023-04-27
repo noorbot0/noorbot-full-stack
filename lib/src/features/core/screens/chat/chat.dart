@@ -25,10 +25,10 @@ class MyHomePage extends StatefulWidget {
 
   @override
 // ignore: library_private_types_in_public_api
-  _Chat createState() => _Chat();
+  Chat createState() => Chat();
 }
 
-class _Chat extends State<MyHomePage> {
+class Chat extends State<MyHomePage> {
   // void response(query) async {
   //   AuthGoogle authGoogle = await AuthGoogle(
   //       fileJson: "assets/service.json")
