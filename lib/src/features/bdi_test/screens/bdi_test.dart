@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noorbot_app/src/constants/image_strings.dart';
 import 'package:noorbot_app/src/constants/text_strings.dart';
-import 'package:noorbot_app/src/features/bdi_test/screens/components/test_screen.dart';
+import 'package:noorbot_app/src/features/bdi_test/screens/bdi_screen.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/animation_design.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/fade_in_animation_controller.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/fade_in_animation_model.dart';
@@ -69,8 +69,7 @@ class BdiTest extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: OutlinedButton(
-                                  onPressed: () =>
-                                      Get.to(() => const TestScreen()),
+                                  onPressed: () => Get.to(() => BdiScreen()),
                                   child: Text(tStart.toUpperCase()),
                                 ),
                               ),

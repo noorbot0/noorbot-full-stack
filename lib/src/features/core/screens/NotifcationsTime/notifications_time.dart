@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
 import '../dashboard/widgets/appbar.dart';
-import 'components/next_btn.dart';
 import 'components/times_list.dart';
 
 class NotificationsTime extends StatelessWidget {
@@ -26,9 +27,13 @@ class NotificationsTime extends StatelessWidget {
                         // const SizedBox(height: defaultPadding * 2),
                         const TimesList(),
                         Row(
-                          children: const [
+                          children: [
                             Expanded(
-                              child: NextBtn(),
+                              child: OutlinedButton(
+                                onPressed: () =>
+                                    Get.to(() => const Dashboard()),
+                                child: Text(tNext.toUpperCase()),
+                              ),
                             ),
                           ],
                         ),
