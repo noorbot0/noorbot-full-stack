@@ -47,7 +47,7 @@ class _Chat extends State<MyHomePage> {
   //  }
 
   final messageInsert = TextEditingController();
-  List<Map> messsages = List<Map>.empty(growable: true);
+  List<Map> messages = List<Map>.empty(growable: true);
   bool sendButtonEnabled = false;
   // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -66,14 +66,13 @@ class _Chat extends State<MyHomePage> {
   }
 
   void readLocal() {
-    String currentUserId = _auth.currentUser!.uid;
-    chatRoomId = 'noorbot-$currentUserId';
+    chatRoomId = _auth.currentUser!.uid;
   }
 
   void onSendMessage() async {
     if (messageInsert.text.trim().isNotEmpty) {
       setState(() {
-        messsages.insert(0, {"data": 1, "message": messageInsert.text.trim()});
+        messages.insert(0, {"data": 1, "message": messageInsert.text.trim()});
         sendButtonEnabled = false;
         isSomeoneTyping = true;
       });
@@ -81,7 +80,7 @@ class _Chat extends State<MyHomePage> {
         // print("-------------------callback");
         // print(response["response"]);
         setState(() {
-          messsages
+          messages
               .insert(0, {"data": 0, "message": response["response"].trim()});
           isSomeoneTyping = false;
         });
@@ -138,6 +137,20 @@ class _Chat extends State<MyHomePage> {
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasData) {
                   listMessage = snapshot.data!.docs;
+                  if (listMessage.isEmpty && messages.isEmpty) {
+                    // setState(() {
+                    chatProvider.getFirst(
+                        _auth.currentUser!.uid,
+                        chatRoomId,
+                        (firstMsg) => {
+                              if (listMessage.isEmpty && messages.isEmpty)
+                                messages.insert(0, {
+                                  "data": 0,
+                                  "message": firstMsg,
+                                })
+                            });
+                    // });
+                  }
                   if (listMessage.isNotEmpty) {
                     return ListView.builder(
                       padding: const EdgeInsets.all(10),
@@ -150,7 +163,12 @@ class _Chat extends State<MyHomePage> {
                       controller: listScrollController,
                     );
                   } else {
-                    return const Center(child: Text("No message here yet..."));
+                    // return const Center(child: Text("No message here yet..."));
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.purple,
+                      ),
+                    );
                   }
                 } else {
                   return const Center(

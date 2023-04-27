@@ -80,6 +80,18 @@ class ChatProvider {
     });
   }
 
+  Future<void> getFirst(
+      String currentUserId, String chatId, Function callback) async {
+    print("---------------------------------");
+    http.Response res =
+        await http.get(Uri.parse('https://noorbot-app.web.app/first'));
+    final Map parsed = json.decode(res.body);
+    print("---------------------------------");
+    print(parsed);
+    storeMessage(currentUserId, chatId, parsed["response"], 0);
+    callback(parsed);
+  }
+
   // Future<void> chatGCFunction(String currentUserId, String groupChatId,
   //     String content, Function okCallback, Function errCallback) async {
   //   try {
