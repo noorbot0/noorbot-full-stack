@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:noorbot_app/src/features/authentication/screens/on_boarding/on_boarding_screen.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 import 'package:noorbot_app/src/features/authentication/screens/welcome/welcome_screen.dart';
-import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
+import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
 
 import 'exceptions/t_exceptions.dart';
 
@@ -42,7 +42,8 @@ class AuthenticationRepository extends GetxController {
     user == null
         ? Get.offAll(() => const WelcomeScreen())
         // : await UserRepository.instance.recordExist(user.email ?? "")
-        : Get.offAll(() => const Dashboard());
+        : Get.offAll(() =>
+            const MyNavBar()); // const Dashboard()); // ------------------------------
     // : Get.offAll(() => const WelcomeScreen());
   }
 

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/image_strings.dart';
 import '../../../../../constants/text_strings.dart';
+import '../../chat/chat.dart';
 import '../../profile/profile_screen.dart';
 
 class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -19,7 +20,11 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: true,
       backgroundColor: Colors.transparent,
-      leading: Icon(Icons.menu, color: isDark ? tWhiteColor : tDarkColor),
+      leading: IconButton(
+        onPressed: () => Get.to(() => const MyHomePage(title: "Chat")),
+        // onPressed: () => AuthenticationRepository.instance.logout(),
+        icon: Icon(Icons.menu, color: isDark ? tWhiteColor : tDarkColor),
+      ),
       title: Text(tAppName, style: Theme.of(context).textTheme.headlineMedium),
       actions: [
         Container(

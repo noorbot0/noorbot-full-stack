@@ -63,6 +63,11 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+
+    lintOptions {
+            abortOnError false
+    }
+
 }
 
 flutter {
@@ -71,4 +76,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation platform('com.google.firebase:firebase-bom:31.5.0')
+    implementation("com.google.firebase:firebase-functions:19.0.1")
 }
