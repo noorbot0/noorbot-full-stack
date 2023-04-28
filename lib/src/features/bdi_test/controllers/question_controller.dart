@@ -1,10 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:noorbot_app/src/features/authentication/models/user_model.dart';
 import 'package:noorbot_app/src/features/bdi_test/models/Questions.dart';
 import 'package:noorbot_app/src/features/core/controllers/profile_controller.dart';
-import 'package:noorbot_app/src/features/core/screens/chat/chat.dart';
+import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
 
 // We use get package for our state management
 
@@ -37,7 +36,7 @@ class QuestionController extends GetxController
   final RxInt _questionNumber = 1.obs;
   RxInt get questionNumber => _questionNumber;
 
-  RxInt _score = 0.obs;
+  final RxInt _score = 0.obs;
   RxInt get score => _score;
 
   // called immediately after the widget is allocated memory
@@ -61,12 +60,13 @@ class QuestionController extends GetxController
     _isAnswered = true;
     _selectedAns = selectedIndex;
 
-    _score.value += _selectedAns;
-
+    _score.value = _score.value + _selectedAns;
+    print(_selectedAns);
+    print(_score.value);
     update();
 
     // Once user select an ans after 3s it will go to the next qn
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       nextQuestion();
     });
   }
@@ -75,11 +75,12 @@ class QuestionController extends GetxController
     if (_questionNumber.value != _questions.length) {
       _isAnswered = false;
       _pageController.nextPage(
-          duration: Duration(milliseconds: 100), curve: Curves.ease);
+          duration: const Duration(milliseconds: 100), curve: Curves.ease);
     } else {
       // Get package provide us simple way to naviigate another page
 
-      Get.to(MyHomePage(title: "Chat"));
+      // Get.to(MyHomePage(title: "Chat"));
+      Get.to(const MyNavBar());
       storeBdiResult();
     }
   }

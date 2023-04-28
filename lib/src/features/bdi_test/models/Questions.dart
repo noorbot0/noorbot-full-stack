@@ -24,7 +24,7 @@ const List sample_data = [
   },
   {
     "id": 1,
-    "question": "",
+    "question": "Sadness",
     "options": [
       "I do not feel sad.",
       "I feel sad ",
@@ -35,7 +35,7 @@ const List sample_data = [
   },
   {
     "id": 2,
-    "question": "",
+    "question": "Pessimism",
     "options": [
       "I am not particularly discouraged about the future. ",
       "I feel discouraged about the future.",
@@ -46,7 +46,7 @@ const List sample_data = [
   },
   {
     "id": 3,
-    "question": "",
+    "question": "Sense of failure",
     "options": [
       "I do not feel like a failure. ",
       "I feel I have failed more than the average person. ",
@@ -57,7 +57,7 @@ const List sample_data = [
   },
   {
     "id": 4,
-    "question": "",
+    "question": "Loss of pleasure",
     "options": [
       "I get as much satisfaction out of things as I used to.",
       "I don't enjoy things the way I used to. ",
@@ -68,7 +68,7 @@ const List sample_data = [
   },
   {
     "id": 5,
-    "question": "",
+    "question": "Guilt",
     "options": [
       "I don't feel particularly guilty",
       "I feel guilty a good part of the time.",
@@ -79,7 +79,7 @@ const List sample_data = [
   },
   {
     "id": 6,
-    "question": "",
+    "question": "Sense of punishment",
     "options": [
       "I don't feel I am being punished.",
       "I feel I may be punished.",
@@ -90,7 +90,7 @@ const List sample_data = [
   },
   {
     "id": 7,
-    "question": "",
+    "question": "Loathing",
     "options": [
       "I don't feel disappointed in myself.",
       "I am disappointed in myself.",
@@ -101,7 +101,7 @@ const List sample_data = [
   },
   {
     "id": 8,
-    "question": "",
+    "question": "Self-incrimination",
     "options": [
       "I don't feel I am any worse than anybody else.",
       "I am critical of myself for my weaknesses or mistakes.",
@@ -112,7 +112,7 @@ const List sample_data = [
   },
   {
     "id": 9,
-    "question": "",
+    "question": "Suicidal ideas",
     "options": [
       "I don't have any thoughts of killing myself.",
       "I have thoughts of killing myself, but I would not carry them out.",
@@ -123,7 +123,7 @@ const List sample_data = [
   },
   {
     "id": 10,
-    "question": "",
+    "question": "Crying",
     "options": [
       "I don't cry any more than usual.",
       "I cry more now than I used to.",
@@ -134,7 +134,7 @@ const List sample_data = [
   },
   {
     "id": 11,
-    "question": "",
+    "question": "Irritability",
     "options": [
       "I am no more irritated by things than I ever was.",
       "I am slightly more irritated now than usual.",
@@ -145,7 +145,7 @@ const List sample_data = [
   },
   {
     "id": 12,
-    "question": "",
+    "question": "Social withdrawal",
     "options": [
       "I have not lost interest in other people. ",
       "I am less interested in other people than I used to be.",
@@ -156,7 +156,7 @@ const List sample_data = [
   },
   {
     "id": 13,
-    "question": "",
+    "question": "Indecision",
     "options": [
       "I make decisions about as well as I ever could.",
       "I put off making decisions more than I used to.",
@@ -167,7 +167,7 @@ const List sample_data = [
   },
   {
     "id": 14,
-    "question": "",
+    "question": "Feelings of wothlessness",
     "options": [
       "I don't feel that I look any worse than I used to.",
       "I am worried that I am looking old or unattractive.",
@@ -178,7 +178,7 @@ const List sample_data = [
   },
   {
     "id": 15,
-    "question": "",
+    "question": "Difficulty of concentration",
     "options": [
       "I can work about as well as before.",
       "It takes an extra effort to get started at doing something.",
@@ -189,7 +189,7 @@ const List sample_data = [
   },
   {
     "id": 16,
-    "question": "",
+    "question": "Change of sleep",
     "options": [
       "I can sleep as well as usual.",
       "I don't sleep as well as I used to. ",
@@ -200,7 +200,7 @@ const List sample_data = [
   },
   {
     "id": 17,
-    "question": "",
+    "question": "Fatigue",
     "options": [
       "I don't get more tired than usual. ",
       "I get tired more easily than I used to.",
@@ -211,7 +211,7 @@ const List sample_data = [
   },
   {
     "id": 18,
-    "question": "",
+    "question": "Changes in appetite",
     "options": [
       "My appetite is no worse than usual. ",
       "My appetite is not as good as it used to be. ",
@@ -222,7 +222,7 @@ const List sample_data = [
   },
   {
     "id": 19,
-    "question": "",
+    "question": "Weight changes",
     "options": [
       "I haven't lost much weight, if any, lately.",
       "I have lost more than five pounds. ",
@@ -233,7 +233,7 @@ const List sample_data = [
   },
   {
     "id": 20,
-    "question": "",
+    "question": "Health",
     "options": [
       "I am no more worried about my health than usual. ",
       "I am worried about physical problems like aches ",

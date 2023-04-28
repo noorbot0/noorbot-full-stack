@@ -34,11 +34,13 @@ const String tOnBoardingCounter3 = "3/3";
 
 // -- Welcome Screen Text
 const String tWelcomeTitle = "Meet NoorBot";
+// const String tWelcomeSubTitle = "Your always-avaliable mental health ally";
 const String tWelcomeSubTitle = "Your always-avaliable mental health ally";
 
 // -- Login Screen Text
 const String tLoginTitle = "Welcome Back,";
-const String tLoginSubTitle = "Make it work, make it right, make it fast.";
+// const String tLoginSubTitle = "Make it work, make it right, make it fast.";
+const String tLoginSubTitle = "Your always-avaliable mental health ally";
 const String tRememberMe = "Remember Me?";
 const String tDontHaveAnAccount = "Don't have an Account? ";
 
