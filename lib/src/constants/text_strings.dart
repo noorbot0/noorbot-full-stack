@@ -38,7 +38,7 @@ const String tWelcomeSubTitle = "Your always-avaliable mental health ally";
 
 // -- Login Screen Text
 const String tLoginTitle = "Welcome Back,";
-const String tLoginSubTitle = "Make it work, make it right, make it fast.";
+const String tLoginSubTitle = "Small chats for big feelings.";
 const String tRememberMe = "Remember Me?";
 const String tDontHaveAnAccount = "Don't have an Account? ";
 
@@ -103,3 +103,5 @@ const String tStart = "Start";
 const String tBdiTitle = "Negative Feelings check-in";
 const String tBdiSubTitle =
     "Chat with Noor to practice CBT whenever you force an emotional challenge, and never let negative emotions build up again";
+
+// --Privacy policy

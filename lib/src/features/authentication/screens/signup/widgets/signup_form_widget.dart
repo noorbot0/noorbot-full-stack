@@ -5,6 +5,7 @@ import 'package:noorbot_app/src/features/authentication/models/user_model.dart';
 import '../../../../../constants/sizes.dart';
 import '../../../../../constants/text_strings.dart';
 import '../../../controllers/signup_controller.dart';
+import '../../privacy_policy/terms_of_use.dart';
 
 class SignUpFormWidget extends StatelessWidget {
   const SignUpFormWidget({
@@ -15,6 +16,7 @@ class SignUpFormWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(SignUpController());
     final formKey = GlobalKey<FormState>();
+    bool? check3 = false;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: tFormHeight - 10),
@@ -35,6 +37,7 @@ class SignUpFormWidget extends StatelessWidget {
               decoration: const InputDecoration(
                   label: Text(tPassword), prefixIcon: Icon(Icons.fingerprint)),
             ),
+            TermsOfUse(),
             const SizedBox(height: tFormHeight - 10),
             Obx(
               () => SizedBox(
@@ -42,13 +45,6 @@ class SignUpFormWidget extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      /// Email & Password Authentication
-
-                      /*
-                       =========
-                       Todo:Step - 3 [Get User and Pass it to Controller]
-                       =========
-                      */
                       final user = UserModel(
                         email: controller.email.text.trim(),
                         password: controller.password.text.trim(),

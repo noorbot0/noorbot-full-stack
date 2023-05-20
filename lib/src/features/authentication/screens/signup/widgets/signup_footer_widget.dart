@@ -19,9 +19,7 @@ class SignUpFooterWidget extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: OutlinedButton.icon(
-            // onPressed: () => SignUpController.instance.googleSignIn(),
-            onPressed: () => {},
-
+            onPressed: () => SignUpController.instance.googleSignIn(),
             icon: const Image(
               image: AssetImage(tGoogleLogoImage),
               width: 20.0,

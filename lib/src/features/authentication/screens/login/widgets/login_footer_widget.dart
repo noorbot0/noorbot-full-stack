@@ -23,20 +23,8 @@ class LoginFooterWidget extends StatelessWidget {
           width: double.infinity,
           child: OutlinedButton.icon(
             icon: const Image(image: AssetImage(tGoogleLogoImage), width: 20.0),
-            // onPressed: () => LoginController.instance.googleSignIn(),
-            onPressed: () =>{},
+            onPressed: () => LoginController.instance.googleSignIn(),
             label: const Text(tSignInWithGoogle),
-          ),
-        ),
-        const SizedBox(height: tFormHeight - 20),
-        SizedBox(
-          width: double.infinity,
-          child: OutlinedButton.icon(
-            icon: const Icon(LineAwesomeIcons.facebook),
-            // onPressed: () => LoginController.instance.facebookSignIn(),
-            onPressed: () => {},
-
-            label: const Text("Sign In With Facebook"),
           ),
         ),
         const SizedBox(height: tFormHeight - 20),

@@ -1,19 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:noorbot_app/src/features/authentication/screens/on_boarding/on_boarding_screen.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:noorbot_app/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
 
+import '../../features/core/screens/dashboard/dashboard.dart';
 import 'exceptions/t_exceptions.dart';
 
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
 
   /// Variables
-  // late final GoogleSignInAccount googleUser;
+  late final GoogleSignInAccount googleUser;
   final _auth = FirebaseAuth.instance;
   late final Rx<User?> _firebaseUser;
   var verificationId = ''.obs;
@@ -42,52 +42,34 @@ class AuthenticationRepository extends GetxController {
     user == null
         ? Get.offAll(() => const WelcomeScreen())
         // : await UserRepository.instance.recordExist(user.email ?? "")
-        : Get.offAll(() =>
-            const MyNavBar()); // const Dashboard()); // ------------------------------
-    // : Get.offAll(() => const WelcomeScreen());
+        : Get.offAll(() => const Dashboard());
   }
 
   /// [GoogleAuthentication]
-  // Future<UserCredential> signInWithGoogle() async {
-  //   try {
-  //     // Trigger the authentication flow
-  //     googleUser = (await GoogleSignIn().signIn())!;
+  Future<UserCredential> signInWithGoogle() async {
+    try {
+      // Trigger the authentication flow
+      googleUser = (await GoogleSignIn().signIn())!;
 
-  //     // Obtain the auth details from the request
-  //     final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
 
-  //     // Create a new credential
-  //     final credential = GoogleAuthProvider.credential(accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
+      // Create a new credential
+      final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
 
-  //     // Once signed in, return the UserCredential
-  //     return await FirebaseAuth.instance.signInWithCredential(credential);
-  //   } on FirebaseAuthException catch (e) {
-  //     final ex = TExceptions.fromCode(e.code);
-  //     throw ex.message;
-  //   } catch (e) {
-  //     throw e.toString().isEmpty ? 'Unknown Error Occurred. Try again!' : e.toString();
-  //   }
-  // }
-
-  ///[FacebookAuthentication]
-  // Future<UserCredential> signInWithFacebook() async {
-  //   try {
-  //     // Trigger the sign-in flow
-  //     final LoginResult loginResult = await FacebookAuth.instance.login(permissions: ['email']);
-
-  //     // Create a credential from the access token
-  //     final AccessToken accessToken = loginResult.accessToken!;
-  //     final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(accessToken.token);
-
-  //     // Once signed in, return the UserCredential
-  //     return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
-  //   } on FirebaseAuthException catch (e) {
-  //     final ex = TExceptions.fromCode(e.code);
-  //     throw ex.message;
-  //   } catch (e) {
-  //     throw e.toString().isEmpty ? 'Unknown Error Occurred. Try again!' : e.toString();
-  //   }
-  // }
+      // Once signed in, return the UserCredential
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      final ex = TExceptions.fromCode(e.code);
+      throw ex.message;
+    } catch (e) {
+      throw e.toString().isEmpty
+          ? 'Unknown Error Occurred. Try again!'
+          : e.toString();
+    }
+  }
 
   /// [EmailAuthentication] - LOGIN
   Future<void> loginWithEmailAndPassword(String email, String password) async {
@@ -121,9 +103,9 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  /// LOGOUT USER - Valid for GOOGLE, Facebook, Phone No, & other authentications.
+  /// LOGOUT USER - Valid for GOOGLE, Phone No, & other authentications.
   Future<void> logout() async {
-    // await GoogleSignIn().disconnect();
+    await GoogleSignIn().disconnect();
     await _auth.signOut();
   }
 }
