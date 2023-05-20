@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:intl/intl.dart';
+import 'package:noorbot_app/src/constants/firestore_constants.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/chat_provider.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/widgets/chat_waiting.dart';
 // ignore: depend_on_referenced_packages
@@ -47,13 +48,14 @@ class Chat extends State<MyHomePage> {
   //  }
 
   final messageInsert = TextEditingController();
-  List<Map> messages = List<Map>.empty(growable: true);
+  List<Map<String, String>> messages =
+      List<Map<String, String>>.empty(growable: true);
   bool sendButtonEnabled = false;
   // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late String chatRoomId;
   late final ChatProvider chatProvider = context.read<ChatProvider>();
-  final int _limit = 20;
+  final int _limit = 100;
   List<QueryDocumentSnapshot> listMessage = [];
   final ScrollController listScrollController = ScrollController();
   bool isSomeoneTyping = false;
@@ -72,7 +74,8 @@ class Chat extends State<MyHomePage> {
   void onSendMessage() async {
     if (messageInsert.text.trim().isNotEmpty) {
       setState(() {
-        messages.insert(0, {"data": 1, "message": messageInsert.text.trim()});
+        messages
+            .add({"role": "assistant", "content": messageInsert.text.trim()});
         sendButtonEnabled = false;
         isSomeoneTyping = true;
       });
@@ -81,7 +84,7 @@ class Chat extends State<MyHomePage> {
         // print(response["response"]);
         setState(() {
           messages
-              .insert(0, {"data": 0, "message": response["response"].trim()});
+              .add({"role": "user", "content": response["response"].trim()});
           isSomeoneTyping = false;
         });
       }
@@ -93,6 +96,28 @@ class Chat extends State<MyHomePage> {
       // chatProvider.chatGCFunction(_auth.currentUser!.uid, chatRoomId,
       //     messageInsert.text.trim(), okCallback, errCallback);
       chatProvider.chatter(_auth.currentUser!.uid, chatRoomId,
+          messageInsert.text.trim(), okCallback);
+
+      messageInsert.clear();
+    }
+  }
+
+  void onSendMessageGPT() async {
+    print(messages.length);
+    if (messageInsert.text.trim().isNotEmpty) {
+      setState(() {
+        messages.add({"role": "user", "content": messageInsert.text.trim()});
+        sendButtonEnabled = false;
+        isSomeoneTyping = true;
+      });
+      void okCallback(String response) {
+        setState(() {
+          messages.add({"role": "assistant", "content": response.trim()});
+          isSomeoneTyping = false;
+        });
+      }
+
+      chatProvider.chatComplete(messages, _auth.currentUser!.uid, chatRoomId,
           messageInsert.text.trim(), okCallback);
 
       messageInsert.clear();
@@ -138,37 +163,57 @@ class Chat extends State<MyHomePage> {
                 if (snapshot.hasData) {
                   listMessage = snapshot.data!.docs;
                   if (listMessage.isEmpty && messages.isEmpty) {
-                    // setState(() {
-                    chatProvider.getFirst(
+                    // First Time messageing
+                    chatProvider.storeMessage(
                         _auth.currentUser!.uid,
                         chatRoomId,
-                        (firstMsg) => {
-                              if (listMessage.isEmpty && messages.isEmpty)
-                                messages.insert(0, {
-                                  "data": 0,
-                                  "message": firstMsg,
-                                })
-                            });
+                        "Act as a Therapist. Your name is Noor. You are a helpful therapy assistant. Intreduce name and you can help people feel better and make them happy, then ask user the name. After that start asking about mental health things and how does user feel?",
+                        "system");
+                    chatProvider.storeMessage(
+                        _auth.currentUser!.uid,
+                        chatRoomId,
+                        "Hello! My name is Noor and I'm here to help you feel better and happier. What's your name?",
+                        "assistant");
+                    // setState(() {
+                    // chatProvider.getFirst(
+                    //     _auth.currentUser!.uid,
+                    //     chatRoomId,
+                    //     (firstMsg) => {
+                    //           if (listMessage.isEmpty && messages.isEmpty)
+                    //             messages.insert(0, {
+                    //               "role": "user",
+                    //               "content": firstMsg,
+                    //             })
+                    //         });
                     // });
                   }
                   if (listMessage.isNotEmpty) {
+                    messages.clear();
                     return ListView.builder(
                       padding: const EdgeInsets.all(10),
-                      itemBuilder: (context, index) => messageWidget(
-                          listMessage[index]["content"].toString(),
-                          listMessage[index]["sender"]),
-                      // buildItem(index, snapshot.data?.docs[index]),
+                      itemBuilder: (context, index) {
+                        messages.add({
+                          "role": listMessage[index]["role"],
+                          "content": listMessage[index]["content"].toString()
+                        });
+                        if (listMessage[index]["role"] != "system") {
+                          return messageWidget(
+                              listMessage[index]["content"].toString(),
+                              listMessage[index]["role"]);
+                        }
+                        return null;
+                      },
                       itemCount: snapshot.data?.docs.length,
                       reverse: true,
                       controller: listScrollController,
                     );
                   } else {
-                    // return const Center(child: Text("No message here yet..."));
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.purple,
-                      ),
-                    );
+                    return const Center(child: Text("No message here yet..."));
+                    // return const Center(
+                    //   child: CircularProgressIndicator(
+                    //     color: Colors.purple,
+                    //   ),
+                    // );
                   }
                 } else {
                   return const Center(
@@ -214,12 +259,13 @@ class Chat extends State<MyHomePage> {
 
   //for better one i have use the bubble package check out the pubspec.yaml
 
-  Widget messageWidget(String message, int sender) {
+  Widget messageWidget(String message, String role) {
     return Row(
-      mainAxisAlignment:
-          sender == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment: role == FirestoreConstants.userRole
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
       children: [
-        sender == 0
+        role == FirestoreConstants.aiRole
             ? const SizedBox(
                 // height: 60,
                 // width: 60,
@@ -233,7 +279,7 @@ class Chat extends State<MyHomePage> {
           padding: const EdgeInsets.all(5.0),
           child: Bubble(
               radius: const Radius.circular(15.0),
-              color: sender == 0
+              color: role == FirestoreConstants.aiRole
                   ? const Color.fromRGBO(23, 157, 139, 1)
                   : Colors.orangeAccent,
               elevation: 0.0,
@@ -319,7 +365,7 @@ class Chat extends State<MyHomePage> {
             size: 20.0,
             color: Colors.white,
           ),
-          onPressed: sendButtonEnabled ? onSendMessage : null,
+          onPressed: sendButtonEnabled ? onSendMessageGPT : null,
         ),
       ),
     );

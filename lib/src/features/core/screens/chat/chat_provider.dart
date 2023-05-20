@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:noorbot_app/src/constants/apis.dart';
 import 'package:noorbot_app/src/constants/firestore_constants.dart';
 import 'package:noorbot_app/src/features/core/models/chat/chat.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +14,10 @@ class ChatProvider {
   final SharedPreferences prefs;
   final FirebaseFirestore firebaseFirestore;
   final FirebaseStorage firebaseStorage;
+  final openAI = OpenAI.instance.build(
+      token: GPTAPIs.keyToken,
+      baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 10)),
+      isLog: true);
 
   ChatProvider(
       {required this.firebaseFirestore,
@@ -34,7 +40,7 @@ class ChatProvider {
     return firebaseFirestore
         .collection(FirestoreConstants.pathMessageCollection)
         .doc(chatId)
-        .collection("conv")
+        .collection(FirestoreConstants.conv)
         .orderBy(FirestoreConstants.timestamp, descending: true)
         .limit(limit)
         .snapshots();
@@ -42,9 +48,9 @@ class ChatProvider {
 
   Future<void> chatter(String currentUserId, String chatId, String content,
       Function callback) async {
-    storeMessage(currentUserId, chatId, content, 1);
+    storeMessage(currentUserId, chatId, content, FirestoreConstants.userRole);
     http.Response res = await http.post(
-      Uri.parse('https://noorbot-app.web.app/grs'),
+      Uri.parse(GCloudAPIs.parlaiRespond),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -53,23 +59,42 @@ class ChatProvider {
       }),
     );
     final Map parsed = json.decode(res.body);
-    storeMessage(currentUserId, chatId, parsed["response"], 0);
+    storeMessage(
+        currentUserId, chatId, parsed["response"], FirestoreConstants.aiRole);
     callback(parsed);
   }
 
+  void chatComplete(List<Map<String, String>> msgs, String currentUserId,
+      String chatId, String content, Function callback) async {
+    storeMessage(currentUserId, chatId, content, FirestoreConstants.userRole);
+    final request = ChatCompleteText(
+        messages: msgs, maxToken: 200, model: ChatModel.gptTurbo);
+
+    final response = await openAI.onChatCompletion(request: request);
+    String? firstRes = "";
+    print(response);
+    for (var element in response!.choices) {
+      firstRes = element.message?.content;
+      print("data -> ${element.message?.content}");
+    }
+    storeMessage(currentUserId, chatId, firstRes!, FirestoreConstants.aiRole);
+    print("callling back-----------------------");
+    callback(firstRes);
+  }
+
   void storeMessage(
-      String currentUserId, String chatId, String content, int sender) {
+      String currentUserId, String chatId, String content, String role) {
     DocumentReference documentReference = firebaseFirestore
         .collection(FirestoreConstants.pathMessageCollection)
         .doc(chatId)
-        .collection("conv")
+        .collection(FirestoreConstants.conv)
         .doc(DateTime.now().millisecondsSinceEpoch.toString());
 
     MessageChat messageChat = MessageChat(
       idFrom: currentUserId,
       timestamp: DateTime.now().millisecondsSinceEpoch.toString(),
       content: content,
-      sender: sender,
+      role: role,
     );
 
     FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -82,13 +107,10 @@ class ChatProvider {
 
   Future<void> getFirst(
       String currentUserId, String chatId, Function callback) async {
-    print("---------------------------------");
-    http.Response res =
-        await http.get(Uri.parse('https://noorbot-app.web.app/first'));
+    http.Response res = await http.get(Uri.parse(GCloudAPIs.parlaiGreet));
     final Map parsed = json.decode(res.body);
-    print("---------------------------------");
-    print(parsed);
-    storeMessage(currentUserId, chatId, parsed["response"], 0);
+    storeMessage(
+        currentUserId, chatId, parsed["response"], FirestoreConstants.aiRole);
     callback(parsed);
   }
 
