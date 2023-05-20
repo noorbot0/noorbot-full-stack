@@ -49,6 +49,9 @@ dependencies:
   ## -- requests
   http: ^0.13.5
 
+  ## -- GPT
+  chat_gpt_sdk: ^2.1.2
+
   
 dev_dependencies:
   flutter_test:
