@@ -117,8 +117,15 @@ class Chat extends State<MyHomePage> {
         });
       }
 
+      void errCallback(String response) {
+        print("ERROR---------------------\n$response");
+        setState(() {
+          isSomeoneTyping = false;
+        });
+      }
+
       chatProvider.chatComplete(messages, _auth.currentUser!.uid, chatRoomId,
-          messageInsert.text.trim(), okCallback);
+          messageInsert.text.trim(), okCallback, errCallback);
 
       messageInsert.clear();
     }
