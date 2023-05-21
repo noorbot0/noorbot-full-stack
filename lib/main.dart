@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 // import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +11,13 @@ import 'package:noorbot_app/src/features/core/screens/chat/chat_provider.dart';
 import 'package:noorbot_app/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:noorbot_app/src/utils/app_bindings.dart';
 import 'package:noorbot_app/src/utils/theme/theme.dart';
+import 'package:overlay_support/overlay_support.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
+
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   /// Show Splash Screen till data loads & when loaded call FlutterNativeSplash.remove();
@@ -46,11 +49,11 @@ class App extends StatelessWidget {
           create: (_) => ChatProvider(
             prefs: prefs,
             firebaseFirestore: firebaseFirestore,
-            firebaseStorage: firebaseStorage,
+            firebaseStorage: firebaseStorage
           ),
         ),
       ],
-      child: GetMaterialApp(
+      child: OverlaySupport( child: GetMaterialApp(
         initialBinding: AppBinding(),
         themeMode: ThemeMode.system,
         theme: TAppTheme.lightTheme,
@@ -59,7 +62,7 @@ class App extends StatelessWidget {
         defaultTransition: Transition.leftToRightWithFade,
         transitionDuration: const Duration(milliseconds: 500),
         home: const Scaffold(body: Center(child: CircularProgressIndicator())),
-      ),
+      )),
     );
   }
 }
