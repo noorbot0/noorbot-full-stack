@@ -107,9 +107,13 @@ const String tBdiSubTitle =
     "Chat with Noor to practice CBT whenever you force an emotional challenge, and never let negative emotions build up again";
 
 // -- Journaling screen
+const String tJournalingAppbar = "Journaling";
 const String tJournaling = "Your Daily Journals";
 const String tCreateOrEditTodayJournal = "Today's Journal";
-
+const String tTodayJournalCreate = "Create";
+const String tTodayJournalEdit= "Edit";
+const String tJournalingHelpDialogTitle = "What is journaling?";
+const String tJournalingHelpDialogText = "Journaling is a personal practice of writing that involves capturing thoughts, experiences, and reflections on a regular basis. It serves as a tool for self-expression, self-reflection, and personal growth.\n\r\n\rYou can only edit today's journal, previous ones are saved and read only.";
 // -- Journal Editor Screen
 const String tJournalEditor = "Today's Journal";
 const String tSavingJournal = "Title not provided, Using old title";
@@ -117,3 +121,4 @@ const String tJournalAlertTitle = "Confirmation";
 const String tJournalAlertConfirm = "Do you want to delete today's journal?";
 const String tJournalAlertYes = "DELETE";
 const String tJournalAlertNo= "CANCEL";
+
