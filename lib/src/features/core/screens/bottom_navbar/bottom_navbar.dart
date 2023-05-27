@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/chat.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
+import 'package:noorbot_app/src/features/core/screens/tracker/tracker.dart';
 
 class MyNavBar extends StatefulWidget {
   const MyNavBar({super.key});
@@ -13,9 +14,8 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
   int _selectedIndex = 0;
   static const List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
-    MyHomePage(
-      title: 'Test',
-    )
+    MyChat(),
+    Tracker()
   ];
 
   void _onItemTapped(int index) {
@@ -60,11 +60,17 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
                 activeIcon: Icon(Icons.message_outlined),
                 icon: Icon(Icons.message),
                 label: 'Chat',
+              ),
+              BottomNavigationBarItem(
+                activeIcon: Icon(Icons.track_changes_outlined),
+                icon: Icon(Icons.track_changes),
+                label: 'Tracking',
               )
             ],
             currentIndex: _selectedIndex,
             selectedItemColor: [
               // const Color.fromARGB(255, 19, 198, 88),
+              const Color.fromARGB(255, 52, 109, 225),
               const Color.fromARGB(255, 52, 109, 225),
               const Color.fromARGB(255, 52, 109, 225)
             ][_selectedIndex],
