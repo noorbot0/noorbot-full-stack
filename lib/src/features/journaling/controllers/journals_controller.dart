@@ -75,7 +75,7 @@ class JournalsController extends GetxController {
 
   /// Update User Journal Data
   updateRecord(String text, String title) async {
-    try {
+
       final currentUserId = _authRepo.getUserEmail;
       if (currentUserId.isEmpty) {
         Get.snackbar("Error", "No user found!",
@@ -85,11 +85,7 @@ class JournalsController extends GetxController {
       } else {
         await _journalRepo.updateUserJournalRecord(currentUserId, text, title);
       }
-    } catch (e) {
-      Get.snackbar("Error", e.toString(),
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 3));
-    }
+
     //Show some message or redirect to other screen here...
   }
 
