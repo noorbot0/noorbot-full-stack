@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:noorbot_app/firebase_options.dart';
-import 'package:noorbot_app/src/features/core/screens/chat/chat_provider.dart';
+import 'package:noorbot_app/src/features/core/providers/chat_provider.dart';
+import 'package:noorbot_app/src/features/core/providers/gpt_provider.dart';
+import 'package:noorbot_app/src/features/core/screens/tracker/sentiment_provider.dart';
 import 'package:noorbot_app/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:noorbot_app/src/utils/app_bindings.dart';
 import 'package:noorbot_app/src/utils/theme/theme.dart';
@@ -44,6 +46,20 @@ class App extends StatelessWidget {
       providers: [
         Provider<ChatProvider>(
           create: (_) => ChatProvider(
+            prefs: prefs,
+            firebaseFirestore: firebaseFirestore,
+            firebaseStorage: firebaseStorage,
+          ),
+        ),
+        Provider<SentimentProvider>(
+          create: (_) => SentimentProvider(
+            prefs: prefs,
+            firebaseFirestore: firebaseFirestore,
+            firebaseStorage: firebaseStorage,
+          ),
+        ),
+        Provider<GPTProvider>(
+          create: (_) => GPTProvider(
             prefs: prefs,
             firebaseFirestore: firebaseFirestore,
             firebaseStorage: firebaseStorage,

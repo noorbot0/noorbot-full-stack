@@ -105,3 +105,8 @@ const String tStart = "Start";
 const String tBdiTitle = "Negative Feelings check-in";
 const String tBdiSubTitle =
     "Chat with Noor to practice CBT whenever you force an emotional challenge, and never let negative emotions build up again";
+
+const String netSentimentAnalysisGraphSubtitle =
+    "Net Sentiment Score: Tracking Daily Sentiment Trends";
+const String NoSentimentAnalysisMessage =
+    "No sentiment analysis here yet...\nYou need to start the conversation with NoorBot for more than 1 day.";

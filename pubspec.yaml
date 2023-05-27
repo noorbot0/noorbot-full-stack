@@ -52,6 +52,7 @@ dependencies:
   ## -- GPT
   chat_gpt_sdk: ^2.1.2
 
+  fl_chart: ^0.62.0
   
 dev_dependencies:
   flutter_test:

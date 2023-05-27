@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -66,64 +67,6 @@ class ChatProvider {
     callback(parsed);
   }
 
-  void chatComplete(
-      List<Map<String, String>> msgs,
-      String currentUserId,
-      String chatId,
-      String content,
-      Function callback,
-      Function errCallback) async {
-    String time = storeMessage(
-        currentUserId, chatId, content, FirestoreConstants.userRole);
-    void analyserCallBack(String resp) {
-      updateMessage(currentUserId, chatId, time, content, resp,
-          FirestoreConstants.userRole);
-    }
-
-    messageAnalysis(content, currentUserId, chatId, analyserCallBack);
-    final request = ChatCompleteText(
-        messages: msgs, maxToken: 300, model: ChatModel.gptTurbo);
-    ChatCTResponse? response;
-    try {
-      response = await openAI.onChatCompletion(request: request);
-    } catch (e) {
-      errCallback(e.toString());
-    }
-    String? firstRes = "";
-    for (var element in response!.choices) {
-      firstRes = element.message?.content;
-    }
-    storeMessage(currentUserId, chatId, firstRes!, FirestoreConstants.aiRole);
-    callback(firstRes);
-  }
-
-  void messageAnalysis(String message, String currentUserId, String chatId,
-      Function callback) async {
-    // storeMessage(currentUserId, chatId, content, FirestoreConstants.userRole);
-    String prpt =
-        "Classify whether a sentence's sentiment is positive, neutral, or negative.\n\n$message\n";
-    // String prpt = "Classify the sentiment in these tweets:\n\n$message\n";
-    final request = CompleteText(
-        model: Model.textDavinci3,
-        prompt: prpt,
-        temperature: 0,
-        maxTokens: 60,
-        topP: 1.0,
-        frequencyPenalty: 0.0,
-        presencePenalty: 0.0);
-
-    final response = await openAI.onCompletion(request: request);
-
-    String? res = "";
-    for (var element in response!.choices) {
-      res = element.text;
-    }
-    updateAnalysis(currentUserId, chatId, res!);
-    // storeMessage(currentUserId, chatId, res!, FirestoreConstants.aiRole);
-    // print("callling back-----------------------");
-    callback(res.trim());
-  }
-
   String storeMessage(
       String currentUserId, String chatId, String content, String role) {
     String time = DateTime.now().millisecondsSinceEpoch.toString();
@@ -175,6 +118,7 @@ class ChatProvider {
 
   void updateAnalysis(
       String currentUserId, String chatId, String sentiment) async {
+    // updateAnalysisRandom(currentUserId, chatId, sentiment);
     DateTime now = DateTime.now().toUtc();
     String time = DateFormat("MM_dd_yyyy").format(now);
     DocumentReference documentReference = firebaseFirestore
@@ -185,7 +129,7 @@ class ChatProvider {
     Analysis analysis = Analysis(
         idFrom: currentUserId,
         date: time,
-        messagesNumber: 1,
+        messagesNumber: 0,
         sentimentNegative: 0,
         sentimentNeutral: 0,
         sentimentPositive: 0,
@@ -193,19 +137,23 @@ class ChatProvider {
     try {
       documentReference.get().then((DocumentSnapshot doc) {
         if (doc.exists) {
-          analysis.messagesNumber = doc[FirestoreConstants.messagesNumber] + 1;
-          if (sentiment.contains(FirestoreConstants.sentimentNegative)) {
-            analysis.sentimentNegative =
-                doc[FirestoreConstants.sentimentNegative] + 1;
-          } else if (sentiment.contains(FirestoreConstants.sentimentPositive)) {
-            analysis.sentimentPositive =
-                doc[FirestoreConstants.sentimentPositive] + 1;
-          } else if (sentiment.contains(FirestoreConstants.sentimentNeutral)) {
-            analysis.sentimentNeutral =
-                doc[FirestoreConstants.sentimentNeutral] + 1;
-          } else {
-            analysis.sentimentNone = doc[FirestoreConstants.sentimentNone] + 1;
-          }
+          analysis.messagesNumber = doc[FirestoreConstants.messagesNumber];
+          analysis.sentimentNegative =
+              doc[FirestoreConstants.sentimentNegative];
+          analysis.sentimentPositive =
+              doc[FirestoreConstants.sentimentPositive];
+          analysis.sentimentNeutral = doc[FirestoreConstants.sentimentNeutral];
+          analysis.sentimentNone = doc[FirestoreConstants.sentimentNone];
+        }
+        analysis.messagesNumber += 1;
+        if (sentiment.contains(FirestoreConstants.sentimentNegative)) {
+          analysis.sentimentNegative += 1;
+        } else if (sentiment.contains(FirestoreConstants.sentimentPositive)) {
+          analysis.sentimentPositive += 1;
+        } else if (sentiment.contains(FirestoreConstants.sentimentNeutral)) {
+          analysis.sentimentNeutral += 1;
+        } else {
+          analysis.sentimentNone += 1;
         }
         FirebaseFirestore.instance.runTransaction((transaction) async {
           transaction.set(
@@ -217,6 +165,62 @@ class ChatProvider {
     } catch (e) {
       print(e);
     }
+  }
+
+  void updateAnalysisRandom(
+      String currentUserId, String chatId, String sentiment) async {
+    DateTime now = DateTime.now().subtract(const Duration(days: 30)).toUtc();
+    for (var i = 0; i < 25; i++) {
+      String time = DateFormat("MM_dd_yyyy").format(now);
+      now = now.add(const Duration(days: 1));
+      DocumentReference documentReference = firebaseFirestore
+          .collection(FirestoreConstants.pathAnalysisCollection)
+          .doc(chatId)
+          .collection(FirestoreConstants.sentiment)
+          .doc(time);
+      int tr = Random().nextInt(100) + 30;
+      int ur = Random().nextInt(30);
+      int nor = Random().nextInt(10);
+      int nr = Random().nextInt((tr - ur) - nor);
+      int pr = ((tr - ur) - nor) - nr;
+      print("$tr $ur $nor $nr $pr");
+      Analysis analysis = Analysis(
+          idFrom: currentUserId,
+          date: time,
+          messagesNumber: tr,
+          sentimentNegative: nr,
+          sentimentNeutral: ur,
+          sentimentPositive: pr,
+          sentimentNone: nor);
+      try {
+        FirebaseFirestore.instance.runTransaction((transaction) async {
+          transaction.set(
+            documentReference,
+            analysis.toJson(),
+          );
+        });
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
+  Future<int> isThereMessages(
+      String currentUserId, String chatId, Function callback) async {
+    return await firebaseFirestore
+        .collection(FirestoreConstants.pathMessageCollection)
+        .doc(chatId)
+        .collection(FirestoreConstants.conv)
+        .limit(10)
+        .orderBy(FirestoreConstants.timestamp, descending: true)
+        .get()
+        .then((value) {
+      if (value.size > 3 &&
+          (value.docs.first.data()["role"] == FirestoreConstants.aiRole)) {
+        callback(value.docs.first.data());
+      }
+      return value.size;
+    });
   }
 
   Future<void> getFirst(
