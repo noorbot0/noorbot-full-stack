@@ -5,11 +5,11 @@ import 'package:noorbot_app/src/features/authentication/models/user_model.dart';
 import 'package:noorbot_app/src/features/bdi_test/models/Questions.dart';
 import 'package:noorbot_app/src/features/core/controllers/profile_controller.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/chat.dart';
+import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
 
 // We use get package for our state management
 
-class QuestionController extends GetxController
-    with SingleGetTickerProviderMixin {
+class QuestionController extends GetxController {
   late PageController _pageController;
   PageController get pageController => _pageController;
   final controller = Get.put(ProfileController());
@@ -79,7 +79,7 @@ class QuestionController extends GetxController
     } else {
       // Get package provide us simple way to naviigate another page
 
-      Get.to(MyHomePage(title: "Chat"));
+      Get.to(Dashboard());
       storeBdiResult();
     }
   }
