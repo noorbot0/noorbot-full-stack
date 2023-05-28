@@ -2,78 +2,66 @@ import 'package:bubble/bubble.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:noorbot_app/src/constants/apis.dart';
 // import 'package:flutter_dialogflow/dialogflow_v2.dart';
-import 'package:intl/intl.dart';
-import 'package:noorbot_app/src/features/core/screens/chat/chat_provider.dart';
+import 'package:noorbot_app/src/constants/firestore_constants.dart';
+import 'package:noorbot_app/src/features/core/providers/chat_provider.dart';
+import 'package:noorbot_app/src/features/core/providers/gpt_provider.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/widgets/chat_waiting.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
-class MyHomePage extends StatefulWidget {
-  final String title;
-
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-// This widget is the home page of your application. It is stateful, meaning
-// that it has a State object (defined below) that contains fields that affect
-// how it looks.
-
-// This class is the configuration for the state. It holds the values (in this
-// case the title) provided by the parent (in this case the App widget) and
-// used by the build method of the State. Fields in a Widget subclass are
-// always marked "final".
-
+class MyChat extends StatefulWidget {
+  const MyChat({Key? key}) : super(key: key);
   @override
-// ignore: library_private_types_in_public_api
   Chat createState() => Chat();
 }
 
-class Chat extends State<MyHomePage> {
-  // void response(query) async {
-  //   AuthGoogle authGoogle = await AuthGoogle(
-  //       fileJson: "assets/service.json")
-  //       .build();
-  //   Dialogflow dialogflow =
-  //   Dialogflow(authGoogle: authGoogle, language: Language.english);
-  //   AIResponse aiResponse = await dialogflow.detectIntent(query);
-  //   setState(() {
-  //     messsages.insert(0, {
-  //       "data": 0,
-  //       "message": aiResponse.getListMessage()[0]["text"]["text"][0].toString()
-  //     });
-  //   });
-
-  //   print(aiResponse.getListMessage()[0]["text"]["text"][0].toString());
-  //  }
-
-  final messageInsert = TextEditingController();
-  List<Map> messsages = List<Map>.empty(growable: true);
-  bool sendButtonEnabled = false;
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+class Chat extends State<MyChat> {
+  final int _limit = 100;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   late String chatRoomId;
-  late final ChatProvider chatProvider = context.read<ChatProvider>();
-  final int _limit = 20;
-  List<QueryDocumentSnapshot> listMessage = [];
+  final messageInsert = TextEditingController();
   final ScrollController listScrollController = ScrollController();
+  List<Map<String, String>> messages =
+      List<Map<String, String>>.empty(growable: true);
+  late final ChatProvider chatProvider = context.read<ChatProvider>();
+  late final GPTProvider gptProvider = context.read<GPTProvider>();
+  List<QueryDocumentSnapshot> listMessage = [];
+  late List<String>? suggestions;
+  bool sendButtonEnabled = false;
   bool isSomeoneTyping = false;
+  bool showSuggestions = false;
+  bool isFirstMessage = false;
+  bool isEverythingReady = false;
 
   @override
   void initState() {
     super.initState();
-
-    readLocal();
+    chatRoomId = _auth.currentUser!.uid;
+    checkPreviousMessages();
   }
 
-  void readLocal() {
-    String currentUserId = _auth.currentUser!.uid;
-    chatRoomId = 'noorbot-$currentUserId';
+  void checkPreviousMessages() async {
+    int prevNumber = await chatProvider.isThereMessages(
+        _auth.currentUser!.uid, chatRoomId, (Map<String, dynamic> msg) {
+      giveSuggestions(msg[FirestoreConstants.content]);
+      setState(() {
+        isEverythingReady = true;
+      });
+    });
+    if (prevNumber < 3) {
+      setState(() {
+        isFirstMessage = true;
+      });
+    }
   }
 
   void onSendMessage() async {
     if (messageInsert.text.trim().isNotEmpty) {
       setState(() {
-        messsages.insert(0, {"data": 1, "message": messageInsert.text.trim()});
+        messages
+            .add({"role": "assistant", "content": messageInsert.text.trim()});
         sendButtonEnabled = false;
         isSomeoneTyping = true;
       });
@@ -81,8 +69,8 @@ class Chat extends State<MyHomePage> {
         // print("-------------------callback");
         // print(response["response"]);
         setState(() {
-          messsages
-              .insert(0, {"data": 0, "message": response["response"].trim()});
+          messages
+              .add({"role": "user", "content": response["response"].trim()});
           isSomeoneTyping = false;
         });
       }
@@ -100,6 +88,79 @@ class Chat extends State<MyHomePage> {
     }
   }
 
+  void onSendMessageGPT() async {
+    print(messages.length);
+    if (messageInsert.text.trim().isNotEmpty) {
+      print(isFirstMessage);
+      if (isFirstMessage) {
+        isFirstMessage = false;
+        gptProvider.extractSpeakerName(
+            messageInsert.text.trim(), _auth.currentUser!.uid, chatRoomId,
+            (String name) {
+          print(name);
+        });
+      }
+      setState(() {
+        messages.add({"role": "user", "content": messageInsert.text.trim()});
+        sendButtonEnabled = false;
+        isSomeoneTyping = true;
+        showSuggestions = false;
+      });
+      void okCallback(String response, List<String>? rs) {
+        if (rs != null) {
+          setState(() {
+            suggestions = rs;
+            showSuggestions = true;
+          });
+        } else {
+          setState(() {
+            showSuggestions = false;
+          });
+        }
+        setState(() {
+          messages.add({"role": "assistant", "content": response.trim()});
+          isSomeoneTyping = false;
+        });
+      }
+
+      void errCallback(String response) {
+        print("ERROR---------------------\n$response");
+        setState(() {
+          showSuggestions = false;
+          isSomeoneTyping = false;
+        });
+      }
+
+      gptProvider.chatComplete(messages, _auth.currentUser!.uid, chatRoomId,
+          messageInsert.text.trim(), okCallback, errCallback);
+
+      messageInsert.clear();
+    }
+  }
+
+  void giveSuggestions(String response) {
+    void callback(List<String>? rs) {
+      if (rs != null) {
+        setState(() {
+          suggestions = rs;
+          showSuggestions = true;
+        });
+      } else {
+        setState(() {
+          showSuggestions = false;
+        });
+      }
+    }
+
+    gptProvider.suggestAnswers(
+        response, _auth.currentUser!.uid, chatRoomId, callback);
+  }
+
+  void clickSuggestion(String value) {
+    messageInsert.text = value;
+    onSendMessageGPT();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,25 +168,20 @@ class Chat extends State<MyHomePage> {
           title: const Text("Chat bot", style: TextStyle(color: Colors.black))),
       body: Column(
         children: <Widget>[
-          // timeSection(),
           messagesSection(context),
-          // typingRow(",", 0),
           TypingIndicator(
-            showIndicator: isSomeoneTyping,
+            showIndicator: !showSuggestions && isSomeoneTyping,
           ),
           const Divider(height: 1.0, color: Colors.grey),
+          showSuggestions && !isSomeoneTyping
+              ? Wrap(
+                  spacing: 10,
+                  alignment: WrapAlignment.center,
+                  children:
+                      suggestions!.map((value) => suggestIcon(value)).toList())
+              : Row(),
           inputSection(),
         ],
-      ),
-    );
-  }
-
-  Widget timeSection() {
-    return Container(
-      padding: const EdgeInsets.only(top: 15, bottom: 10),
-      child: Text(
-        "Today, ${DateFormat("Hm").format(DateTime.now())}",
-        style: const TextStyle(fontSize: 20),
       ),
     );
   }
@@ -138,13 +194,42 @@ class Chat extends State<MyHomePage> {
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasData) {
                   listMessage = snapshot.data!.docs;
+                  if (listMessage.isEmpty && messages.isEmpty) {
+                    isFirstMessage = true;
+                    // First Time messageing
+                    chatProvider.storeMessage(_auth.currentUser!.uid,
+                        chatRoomId, GPTAPIs.systemFirstMessagePrompt, "system");
+                    chatProvider.storeMessage(_auth.currentUser!.uid,
+                        chatRoomId, GPTAPIs.firstMessagePrompt, "assistant");
+                    // setState(() {
+                    // chatProvider.getFirst(
+                    //     _auth.currentUser!.uid,
+                    //     chatRoomId,
+                    //     (firstMsg) => {
+                    //           if (listMessage.isEmpty && messages.isEmpty)
+                    //             messages.insert(0, {
+                    //               "role": "user",
+                    //               "content": firstMsg,
+                    //             })
+                    //         });
+                    // });
+                  }
                   if (listMessage.isNotEmpty) {
+                    messages.clear();
                     return ListView.builder(
                       padding: const EdgeInsets.all(10),
-                      itemBuilder: (context, index) => messageWidget(
-                          listMessage[index]["content"].toString(),
-                          listMessage[index]["sender"]),
-                      // buildItem(index, snapshot.data?.docs[index]),
+                      itemBuilder: (context, index) {
+                        messages.add({
+                          "role": listMessage[index]["role"],
+                          "content": listMessage[index]["content"].toString()
+                        });
+                        if (listMessage[index]["role"] != "system") {
+                          return messageWidget(
+                              listMessage[index]["content"].toString(),
+                              listMessage[index]["role"]);
+                        }
+                        return null;
+                      },
                       itemCount: snapshot.data?.docs.length,
                       reverse: true,
                       controller: listScrollController,
@@ -169,42 +254,14 @@ class Chat extends State<MyHomePage> {
     );
   }
 
-  Widget typingRow(String message, int sender) {
+  Widget messageWidget(String message, String role) {
     return Row(
-      mainAxisAlignment:
-          sender == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment: role == FirestoreConstants.userRole
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
       children: [
-        sender == 0
+        role == FirestoreConstants.aiRole
             ? const SizedBox(
-                // height: 60,
-                // width: 60,
-                child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: AssetImage("assets/noor.png"),
-                ),
-              )
-            : Container(),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: TypingIndicator(
-            showIndicator: isSomeoneTyping,
-          ),
-        ),
-      ],
-    );
-  }
-
-  //for better one i have use the bubble package check out the pubspec.yaml
-
-  Widget messageWidget(String message, int sender) {
-    return Row(
-      mainAxisAlignment:
-          sender == 1 ? MainAxisAlignment.end : MainAxisAlignment.start,
-      children: [
-        sender == 0
-            ? const SizedBox(
-                // height: 60,
-                // width: 60,
                 child: CircleAvatar(
                   backgroundColor: Colors.transparent,
                   backgroundImage: AssetImage("assets/noor.png"),
@@ -215,7 +272,7 @@ class Chat extends State<MyHomePage> {
           padding: const EdgeInsets.all(5.0),
           child: Bubble(
               radius: const Radius.circular(15.0),
-              color: sender == 0
+              color: role == FirestoreConstants.aiRole
                   ? const Color.fromRGBO(23, 157, 139, 1)
                   : Colors.orangeAccent,
               elevation: 0.0,
@@ -229,7 +286,7 @@ class Chat extends State<MyHomePage> {
                     ),
                     Flexible(
                         child: Container(
-                      constraints: const BoxConstraints(maxWidth: 200),
+                      constraints: const BoxConstraints(maxWidth: 300),
                       child: Text(
                         message,
                         style: const TextStyle(
@@ -240,15 +297,6 @@ class Chat extends State<MyHomePage> {
                 ),
               )),
         ),
-        // sender == 1
-        //     ? const SizedBox(
-        //         height: 60,
-        //         width: 60,
-        //         child: CircleAvatar(
-        //           backgroundImage: AssetImage("assets/dash-person.png"),
-        //         ),
-        //       )
-        //     : Container(),
       ],
     );
   }
@@ -301,9 +349,23 @@ class Chat extends State<MyHomePage> {
             size: 20.0,
             color: Colors.white,
           ),
-          onPressed: sendButtonEnabled ? onSendMessage : null,
+          onPressed: sendButtonEnabled ? onSendMessageGPT : null,
         ),
       ),
+    );
+  }
+
+  Widget suggestIcon(String value) {
+    return OutlinedButton(
+      onPressed: () => clickSuggestion(value),
+      style: OutlinedButton.styleFrom(
+        padding: const EdgeInsets.all(10),
+        foregroundColor: Colors.green,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      child: Text(value),
     );
   }
 }

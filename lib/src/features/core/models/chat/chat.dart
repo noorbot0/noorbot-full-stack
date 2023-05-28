@@ -5,13 +5,15 @@ class MessageChat {
   final String idFrom;
   final String timestamp;
   final String content;
-  final int sender;
+  final String role;
+  final String sentiment;
 
   const MessageChat({
     required this.idFrom,
     required this.timestamp,
     required this.content,
-    required this.sender,
+    required this.role,
+    required this.sentiment,
   });
 
   Map<String, dynamic> toJson() {
@@ -19,7 +21,8 @@ class MessageChat {
       FirestoreConstants.idFrom: idFrom,
       FirestoreConstants.timestamp: timestamp,
       FirestoreConstants.content: content,
-      FirestoreConstants.sender: sender,
+      FirestoreConstants.role: role,
+      FirestoreConstants.sentiment: sentiment,
     };
   }
 
@@ -27,12 +30,14 @@ class MessageChat {
     String idFrom = doc.get(FirestoreConstants.idFrom);
     String timestamp = doc.get(FirestoreConstants.timestamp);
     String content = doc.get(FirestoreConstants.content);
-    int sender = doc.get(FirestoreConstants.sender);
+    String role = doc.get(FirestoreConstants.role);
+    String sentiment = doc.get(FirestoreConstants.sentiment);
     return MessageChat(
       idFrom: idFrom,
       timestamp: timestamp,
       content: content,
-      sender: sender,
+      role: role,
+      sentiment: sentiment,
     );
   }
 }

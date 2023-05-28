@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/image_strings.dart';
 import '../../../../../constants/text_strings.dart';
@@ -21,7 +22,7 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       backgroundColor: Colors.transparent,
       leading: IconButton(
-        onPressed: () => Get.to(() => const MyHomePage(title: "Chat")),
+        onPressed: () => Get.to(() => const MyChat()),
         // onPressed: () => AuthenticationRepository.instance.logout(),
         icon: Icon(Icons.menu, color: isDark ? tWhiteColor : tDarkColor),
       ),
