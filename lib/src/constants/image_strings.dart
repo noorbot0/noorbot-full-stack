@@ -36,3 +36,6 @@ const String tTopCourseImage3 = "assets/images/dashboard/dash-3.png";
 
 // -- Profile Images
 const String tProfileImage = "assets/images/profile/profile-pic.png";
+
+// -- Chat Images
+const String tChatImage = "assets/images/profile/head_with_bg.png";

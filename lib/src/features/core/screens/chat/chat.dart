@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:noorbot_app/src/constants/apis.dart';
 // import 'package:flutter_dialogflow/dialogflow_v2.dart';
 import 'package:noorbot_app/src/constants/firestore_constants.dart';
+import '../../../../constants/image_strings.dart';
 import 'package:noorbot_app/src/features/core/providers/chat_provider.dart';
 import 'package:noorbot_app/src/features/core/providers/gpt_provider.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/widgets/chat_waiting.dart';
@@ -165,7 +166,7 @@ class Chat extends State<MyChat> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text("Chat bot", style: TextStyle(color: Colors.black))),
+          title: const Text("NoorBot", style: TextStyle(color: Colors.black))),
       body: Column(
         children: <Widget>[
           messagesSection(context),
@@ -264,7 +265,7 @@ class Chat extends State<MyChat> {
             ? const SizedBox(
                 child: CircleAvatar(
                   backgroundColor: Colors.transparent,
-                  backgroundImage: AssetImage("assets/noor.png"),
+                  backgroundImage: AssetImage(tChatImage),
                 ),
               )
             : Container(),
