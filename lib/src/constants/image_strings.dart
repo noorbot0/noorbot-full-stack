@@ -2,8 +2,7 @@
 
 // -- Splash Screen Images
 const String tSplashTopIcon = "assets/images/splash_images/splash-top-icon.png";
-const String tSplashImage =
-    "assets/images/splash_images/splash-screen-image.png";
+const String tSplashImage = "assets/images/splash_images/noorr.png";
 
 // -- OnBoarding Screen Images
 const String tOnBoardingImage1 =

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:noorbot_app/src/features/authentication/screens/on_boarding/on_boarding_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:noorbot_app/src/features/authentication/screens/welcome/welcome_screen.dart';
-import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
 
 import '../../features/core/screens/dashboard/dashboard.dart';
 import 'exceptions/t_exceptions.dart';
@@ -24,8 +23,6 @@ class AuthenticationRepository extends GetxController {
   String get getUserID => _firebaseUser.value?.uid ?? "";
 
   String get getUserEmail => _firebaseUser.value?.email ?? "";
-
-  String get getUserPhoneNo => _firebaseUser.value?.phoneNumber ?? "";
 
   /// When App launch, this func called.
   /// It set the firebaseUser state & remove the Splash Screen
@@ -105,7 +102,7 @@ class AuthenticationRepository extends GetxController {
 
   /// LOGOUT USER - Valid for GOOGLE & other authentications.
   Future<void> logout() async {
-    // await GoogleSignIn().disconnect();
+    await GoogleSignIn().disconnect();
     await _auth.signOut();
   }
 }

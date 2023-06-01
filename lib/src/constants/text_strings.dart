@@ -55,18 +55,9 @@ const String tForgetPasswordSubTitle =
 const String tResetViaEMail = "Reset via Mail Verification";
 const String tResetViaPhone = "Reset via Phone Verification";
 
-// -- Forget Password Via Phone - Text
-const String tForgetPhoneSubTitle =
-    "Enter your registered Phone No to receive OTP";
-
 // -- Forget Password Via E-Mail - Text
 const String tForgetMailSubTitle =
     "Enter your registered E-Mail to receive OTP";
-
-// -- OTP Screen - Text
-const String tOtpTitle = "CO\nDE";
-const String tOtpSubTitle = "Verification";
-const String tOtpMessage = "Enter the verification code sent at ";
 
 // -- Dashboard Screen - Text
 const String tDashboardTitle = "Hey, Freind";
@@ -99,7 +90,7 @@ const String tJoinedAt = " 20 June 2030";
 // -- Notifications Screen
 const String tNotificationTime = "Choose a daily check-in time";
 
-// -- BDI test screen
+// -- PHQ test screen
 const String tStart = "Start";
 const String tBdiTitle = "Negative Feelings check-in";
 const String tBdiSubTitle =
