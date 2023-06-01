@@ -14,8 +14,6 @@ class SignUpFooterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Text("OR"),
-        const SizedBox(height: 10.0),
         SizedBox(
           width: double.infinity,
           child: OutlinedButton.icon(

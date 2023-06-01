@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/features/authentication/models/user_model.dart';
 import '../../../../../constants/sizes.dart';
+import '../../../../../constants/colors.dart';
 import '../../../../../constants/text_strings.dart';
 import '../../../controllers/signup_controller.dart';
 import '../../privacy_policy/terms_of_use.dart';
@@ -29,13 +30,16 @@ class SignUpFormWidget extends StatelessWidget {
               controller: controller.email,
               decoration: const InputDecoration(
                   label: Text(tEmail),
-                  prefixIcon: Icon(LineAwesomeIcons.envelope)),
+                  prefixIcon: Icon(LineAwesomeIcons.envelope),
+                  prefixIconColor: tmainGreenColor),
             ),
             const SizedBox(height: tFormHeight - 20),
             TextFormField(
               controller: controller.password,
               decoration: const InputDecoration(
-                  label: Text(tPassword), prefixIcon: Icon(Icons.fingerprint)),
+                  label: Text(tPassword),
+                  prefixIcon: Icon(Icons.fingerprint),
+                  prefixIconColor: tmainGreenColor),
             ),
             TermsOfUse(),
             const SizedBox(height: tFormHeight - 10),

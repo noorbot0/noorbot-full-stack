@@ -14,10 +14,11 @@ const String tOnBoardingImage3 =
     "assets/images/on_boarding_images/on-boarding-image-3.png";
 
 // -- Welcome Screen Images
-// -- also used in Login & SignUp
 const String tWelcomeScreenImage =
     "assets/images/welcome_images/welcome-screen-image.png";
-
+// -- Login & SignUp Logo image
+const String tWelcomeLogoImage =
+    "assets/images/welcome_images/noor-with-tabel.png";
 // -- Login & SignUp Images
 const String tGoogleLogoImage = "assets/logo/google-logo.png";
 
@@ -35,7 +36,7 @@ const String tTopCourseImage2 = "assets/images/dashboard/dash-2.png";
 const String tTopCourseImage3 = "assets/images/dashboard/dash-3.png";
 
 // -- Profile Images
-const String tProfileImage = "assets/images/profile/profile-pic.png";
+const String tProfileImage = "assets/images/profile/logo_head.png";
 
 // -- Chat Images
 const String tChatImage = "assets/images/profile/head_with_bg.png";
