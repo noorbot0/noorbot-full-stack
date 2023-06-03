@@ -15,7 +15,7 @@ class GPTProvider {
   final openAI = OpenAI.instance.build(
       token: GPTAPIs.keyToken,
       baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 20)),
-      isLog: true);
+      isLog: false);
   late ChatProvider cp;
   late final LoggerProvider log;
 
