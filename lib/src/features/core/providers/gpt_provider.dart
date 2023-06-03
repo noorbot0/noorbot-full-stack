@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:noorbot_app/src/constants/apis.dart';
 import 'package:noorbot_app/src/constants/firestore_constants.dart';
 import 'package:noorbot_app/src/features/core/providers/chat_provider.dart';
+import 'package:noorbot_app/src/features/core/providers/logger_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GPTProvider {
@@ -16,6 +17,8 @@ class GPTProvider {
       baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 20)),
       isLog: true);
   late ChatProvider cp;
+  late final LoggerProvider log;
+
   GPTProvider(
       {required this.firebaseFirestore,
       required this.prefs,
@@ -24,6 +27,7 @@ class GPTProvider {
         firebaseFirestore: firebaseFirestore,
         prefs: prefs,
         firebaseStorage: firebaseStorage);
+    log = LoggerProvider(prefs: prefs);
   }
 
   String? getPref(String key) {
@@ -36,20 +40,28 @@ class GPTProvider {
       String chatId,
       String content,
       Function callback,
-      Function errCallback) async {
-    String time = cp.storeMessage(
-        currentUserId, chatId, content, FirestoreConstants.userRole);
-    void analyserCallBack(String resp) {
-      cp.updateMessage(currentUserId, chatId, time, content, resp,
-          FirestoreConstants.userRole);
-    }
+      Function errCallback,
+      bool storeContent,
+      bool storeResponse) async {
+    log.info(
+        "Completing messages for chatId($chatId) of content($content) with storeContent($storeContent), storeResponse($storeResponse)");
+    if (storeContent) {
+      String time = cp.storeMessage(
+          currentUserId, chatId, content, FirestoreConstants.userRole);
+      void analyserCallBack(String resp) {
+        cp.updateMessage(currentUserId, chatId, time, content, resp,
+            FirestoreConstants.userRole);
+      }
 
-    sentimentAnalysis(content, currentUserId, chatId, analyserCallBack);
+      sentimentAnalysis(
+          content, currentUserId, chatId, analyserCallBack, errCallback);
+    }
     final request = ChatCompleteText(
         messages: msgs, maxToken: 300, model: ChatModel.gptTurbo);
     ChatCTResponse? response;
     try {
       response = await openAI.onChatCompletion(request: request);
+      log.info("Chat completion($response)");
     } catch (e) {
       errCallback(e.toString());
     }
@@ -59,27 +71,34 @@ class GPTProvider {
     }
 
     suggestAnswers(firstRes!, currentUserId, chatId, (List<String>? rs) {
-      print("1----------------------- $rs");
-      cp.storeMessage(
-          currentUserId, chatId, firstRes!, FirestoreConstants.aiRole);
+      log.info("Suggested answers for ($firstRes) are ($rs)");
+      if (storeResponse) {
+        cp.storeMessage(
+            currentUserId, chatId, firstRes!, FirestoreConstants.aiRole);
+      }
       callback(firstRes, rs);
     });
   }
 
-  void sentimentAnalysis(
-      String message, String currentUserId, String chatId, Function callback) {
+  void sentimentAnalysis(String message, String currentUserId, String chatId,
+      Function callback, Function errorCallback) {
+    log.info("Analysing message($message) of chatId($chatId)");
     doRequst(GPTAPIs.sentimentPrompt(message), currentUserId, chatId,
         (String rs) {
-      cp.updateAnalysis(currentUserId, chatId, rs);
+      log.info("Analysis($rs)");
+      cp.updateAnalysis(currentUserId, chatId, rs, errorCallback);
       callback(rs);
     });
   }
 
   void extractSpeakerName(
       String message, String currentUserId, String chatId, Function callback) {
+    log.info("Extract speaker name for message($message) of chatId($chatId)");
+
     doRequst(GPTAPIs.nameExtractPrompt(message), currentUserId, chatId,
         (String response) {
-      print("NAME---------------------------- $response");
+      log.info("Extracted speaker name($response)");
+
       if (response.isNotEmpty &&
           !response.contains("None") &&
           !response.contains("none")) {
@@ -91,8 +110,11 @@ class GPTProvider {
 
   void suggestAnswers(
       String message, String currentUserId, String chatId, Function callback) {
+    log.info("Suggest answers for message($message) of chatId($chatId)");
+
     doRequst(GPTAPIs.defaultAnswersPrompt(message), currentUserId, chatId,
         (String response) {
+      log.info("Got suggestions($response), started parsing...");
       List<String>? suggestions;
       if (response.isNotEmpty &&
           (!response.contains("None") || !response.contains("none"))) {
@@ -124,6 +146,8 @@ class GPTProvider {
 
   void doRequst(String prompt, String currentUserId, String chatId,
       Function callback) async {
+    log.info("Sending a request prompt($prompt) of chatId($chatId)");
+
     final request = CompleteText(
         model: Model.textDavinci3,
         prompt: prompt,
