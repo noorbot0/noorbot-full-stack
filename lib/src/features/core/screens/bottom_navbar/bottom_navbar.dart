@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/chat.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
+import 'package:noorbot_app/src/features/journaling/screens/journaling_screen.dart';
+
 import 'package:noorbot_app/src/features/core/screens/tracker/tracker.dart';
+
+import 'package:noorbot_app/src/features/notifications/notifications_screen.dart';
 
 class MyNavBar extends StatefulWidget {
   const MyNavBar({super.key});
@@ -15,11 +19,15 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
   static const List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
     MyChat(),
-    Tracker()
+    Tracker(),
+    NotificationsScreen(),
+    Journaling()
+
   ];
 
   void _onItemTapped(int index) {
     setState(() {
+      print('NavBar tapped item index: ${index} : ${_widgetOptions.length}');
       _selectedIndex = index;
     });
   }
@@ -62,9 +70,20 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
                 label: 'Chat',
               ),
               BottomNavigationBarItem(
+
                 activeIcon: Icon(Icons.track_changes_outlined),
                 icon: Icon(Icons.track_changes),
                 label: 'Tracking',
+              ),
+              BottomNavigationBarItem(
+                activeIcon: Icon(Icons.notifications_active_outlined),
+                icon: Icon(Icons.notifications),
+                label: 'Notifications',),
+  BottomNavigationBarItem(
+                activeIcon: Icon(Icons.book_outlined),
+                icon: Icon(Icons.book),
+                label: 'Journal',
+
               )
             ],
             currentIndex: _selectedIndex,
@@ -72,7 +91,11 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
               // const Color.fromARGB(255, 19, 198, 88),
               const Color.fromARGB(255, 52, 109, 225),
               const Color.fromARGB(255, 52, 109, 225),
+              const Color.fromARGB(255, 52, 109, 225),
+  const Color.fromARGB(255, 52, 109, 225),
               const Color.fromARGB(255, 52, 109, 225)
+
+
             ][_selectedIndex],
             onTap: _onItemTapped,
             showSelectedLabels: false,

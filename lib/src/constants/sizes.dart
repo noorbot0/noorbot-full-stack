@@ -10,3 +10,7 @@ const tDashboardCardPadding = 10.0;
 
 const double kDefaultPadding = 20.0;
 const double defaultPadding = 16.0;
+
+// Journaling
+const tJournalCardPadding = 10.0;
+const tSavingDuration = 2;
