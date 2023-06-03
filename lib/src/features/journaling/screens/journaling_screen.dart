@@ -25,7 +25,11 @@ class _JournalingState extends State<Journaling> {
   void initState() {
     super.initState();
     controller = Get.put(JournalsController());
-    journalExists = false;
+    controller.todayJournalExists().then((result) => {
+          setState(() {
+            journalExists = result;
+          })
+        });
   }
 
   mapJournalToCards() {
@@ -58,19 +62,14 @@ class _JournalingState extends State<Journaling> {
     );
   }
 
-  updateRecordExistence() async {
-    final result = await controller.todayJournalExists();
-
-    journalExists = result;
-  }
-
   navigateToEditJournalScreen() async {
     await Get.to(
         () => TextEditorScreen(createdAt: Timestamp.now(), editEnabled: true));
 
     mapJournalToCards();
+    final result = await controller.todayJournalExists();
     setState(() {
-      updateRecordExistence();
+      journalExists = result;
     });
   }
 
@@ -78,7 +77,6 @@ class _JournalingState extends State<Journaling> {
   Widget build(BuildContext context) {
     final txtTheme = Theme.of(context).textTheme;
     final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
-
 
     mapJournalToCards();
 
