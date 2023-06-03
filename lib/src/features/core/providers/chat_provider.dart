@@ -11,6 +11,7 @@ import 'package:noorbot_app/src/constants/apis.dart';
 import 'package:noorbot_app/src/constants/firestore_constants.dart';
 import 'package:noorbot_app/src/features/core/models/chat/analysis.dart';
 import 'package:noorbot_app/src/features/core/models/chat/chat.dart';
+import 'package:noorbot_app/src/features/core/providers/logger_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatProvider {
@@ -21,11 +22,14 @@ class ChatProvider {
       token: GPTAPIs.keyToken,
       baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 20)),
       isLog: true);
+  late final LoggerProvider log;
 
   ChatProvider(
       {required this.firebaseFirestore,
       required this.prefs,
-      required this.firebaseStorage});
+      required this.firebaseStorage}) {
+    log = LoggerProvider(prefs: prefs);
+  }
 
   String? getPref(String key) {
     return prefs.getString(key);
@@ -33,6 +37,9 @@ class ChatProvider {
 
   Future<void> updateDataFirestore(String collectionPath, String docPath,
       Map<String, dynamic> dataNeedUpdate) {
+    log.info(
+        "Update collection($collectionPath/$docPath) with data($dataNeedUpdate)");
+
     return firebaseFirestore
         .collection(collectionPath)
         .doc(docPath)
@@ -40,6 +47,7 @@ class ChatProvider {
   }
 
   Stream<QuerySnapshot> getChatStream(String chatId, int limit) {
+    log.info("Getting chat stream for chatId($chatId) with limit ($limit)");
     return firebaseFirestore
         .collection(FirestoreConstants.pathMessageCollection)
         .doc(chatId)
@@ -70,6 +78,8 @@ class ChatProvider {
   String storeMessage(
       String currentUserId, String chatId, String content, String role) {
     String time = DateTime.now().millisecondsSinceEpoch.toString();
+    log.info(
+        "Storing message($content) for chatId($chatId) by role ($role) at time($time)");
     DocumentReference documentReference = firebaseFirestore
         .collection(FirestoreConstants.pathMessageCollection)
         .doc(chatId)
@@ -95,6 +105,8 @@ class ChatProvider {
 
   void updateMessage(String currentUserId, String chatId, String time,
       String content, String sentiment, String role) {
+    log.info(
+        "Update message($content) for chatId($chatId) by role ($role) at time($time), with sentiment($sentiment)");
     DocumentReference documentReference = firebaseFirestore
         .collection(FirestoreConstants.pathMessageCollection)
         .doc(chatId)
@@ -116,11 +128,12 @@ class ChatProvider {
     });
   }
 
-  void updateAnalysis(
-      String currentUserId, String chatId, String sentiment) async {
+  void updateAnalysis(String currentUserId, String chatId, String sentiment,
+      Function errorCallback) async {
     // updateAnalysisRandom(currentUserId, chatId, sentiment);
-    DateTime now = DateTime.now().toUtc();
+    DateTime now = DateTime.now();
     String time = DateFormat("MM_dd_yyyy").format(now);
+    log.info("Storing analysis($sentiment) for chatId($chatId) at time($time)");
     DocumentReference documentReference = firebaseFirestore
         .collection(FirestoreConstants.pathAnalysisCollection)
         .doc(chatId)
@@ -136,6 +149,7 @@ class ChatProvider {
         sentimentNone: 0);
     try {
       documentReference.get().then((DocumentSnapshot doc) {
+        log.info("Checking if analysis already exist doc($doc)");
         if (doc.exists) {
           analysis.messagesNumber = doc[FirestoreConstants.messagesNumber];
           analysis.sentimentNegative =
@@ -145,6 +159,7 @@ class ChatProvider {
           analysis.sentimentNeutral = doc[FirestoreConstants.sentimentNeutral];
           analysis.sentimentNone = doc[FirestoreConstants.sentimentNone];
         }
+        log.info("Before update Analysis(${analysis.toJson()})");
         analysis.messagesNumber += 1;
         if (sentiment.contains(FirestoreConstants.sentimentNegative)) {
           analysis.sentimentNegative += 1;
@@ -155,6 +170,7 @@ class ChatProvider {
         } else {
           analysis.sentimentNone += 1;
         }
+        log.info("After update Analysis(${analysis.toJson()})");
         FirebaseFirestore.instance.runTransaction((transaction) async {
           transaction.set(
             documentReference,
@@ -163,14 +179,14 @@ class ChatProvider {
         });
       });
     } catch (e) {
-      print(e);
+      errorCallback(e.toString());
     }
   }
 
-  void updateAnalysisRandom(
-      String currentUserId, String chatId, String sentiment) async {
-    DateTime now = DateTime.now().subtract(const Duration(days: 30)).toUtc();
-    for (var i = 0; i < 25; i++) {
+  void updateAnalysisRandom(String currentUserId, String chatId,
+      String sentiment, Function errorCallback) async {
+    DateTime now = DateTime.now().subtract(const Duration(days: 30));
+    for (var i = 0; i < 30; i++) {
       String time = DateFormat("MM_dd_yyyy").format(now);
       now = now.add(const Duration(days: 1));
       DocumentReference documentReference = firebaseFirestore
@@ -183,7 +199,6 @@ class ChatProvider {
       int nor = Random().nextInt(10);
       int nr = Random().nextInt((tr - ur) - nor);
       int pr = ((tr - ur) - nor) - nr;
-      print("$tr $ur $nor $nr $pr");
       Analysis analysis = Analysis(
           idFrom: currentUserId,
           date: time,
@@ -200,13 +215,15 @@ class ChatProvider {
           );
         });
       } catch (e) {
-        print(e);
+        errorCallback(e.toString());
       }
     }
   }
 
   Future<int> isThereMessages(
       String currentUserId, String chatId, Function callback) async {
+    log.info("Checking previous messages for chatId($chatId)");
+
     return await firebaseFirestore
         .collection(FirestoreConstants.pathMessageCollection)
         .doc(chatId)
@@ -215,11 +232,29 @@ class ChatProvider {
         .orderBy(FirestoreConstants.timestamp, descending: true)
         .get()
         .then((value) {
-      if (value.size > 3 &&
-          (value.docs.first.data()["role"] == FirestoreConstants.aiRole)) {
+      log.info(
+          "Previous messages with size(${value.size}) and limit(10): ${value.docs}");
+
+      if (value.size > 2) {
         callback(value.docs.first.data());
       }
       return value.size;
+    });
+  }
+
+  void deleteAllDocsInSubCollection(
+      String collection, String doc, String subCol) {
+    log.info("Deleting all docs for subcollection($collection/$doc/$subCol)");
+
+    firebaseFirestore
+        .collection(collection)
+        .doc(doc)
+        .collection(subCol)
+        .get()
+        .then((snapshot) {
+      for (DocumentSnapshot ds in snapshot.docs) {
+        ds.reference.delete();
+      }
     });
   }
 
@@ -231,22 +266,4 @@ class ChatProvider {
         currentUserId, chatId, parsed["response"], FirestoreConstants.aiRole);
     callback(parsed);
   }
-
-  // Future<void> chatGCFunction(String currentUserId, String groupChatId,
-  //     String content, Function okCallback, Function errCallback) async {
-  //   try {
-  //     final result =
-  //         await FirebaseFunctions.instance.httpsCallable('res').call({
-  //       "message": content,
-  //       "push": true,
-  //     });
-  //     print(result.data as String);
-  //     // okCallback(result.data as String);
-  //   } on FirebaseFunctionsException {
-  //     // print(error.code);
-  //     // print(error.details);
-  //     // print(error.message);
-  //     // errCallback(error);
-  //   }
-  // }
 }

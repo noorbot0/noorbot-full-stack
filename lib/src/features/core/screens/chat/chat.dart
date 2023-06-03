@@ -7,6 +7,7 @@ import 'package:noorbot_app/src/constants/apis.dart';
 import 'package:noorbot_app/src/constants/firestore_constants.dart';
 import 'package:noorbot_app/src/features/core/providers/chat_provider.dart';
 import 'package:noorbot_app/src/features/core/providers/gpt_provider.dart';
+import 'package:noorbot_app/src/features/core/providers/logger_provider.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/widgets/chat_waiting.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
@@ -27,6 +28,7 @@ class Chat extends State<MyChat> {
       List<Map<String, String>>.empty(growable: true);
   late final ChatProvider chatProvider = context.read<ChatProvider>();
   late final GPTProvider gptProvider = context.read<GPTProvider>();
+  late final LoggerProvider log = context.read<LoggerProvider>();
   List<QueryDocumentSnapshot> listMessage = [];
   late List<String>? suggestions;
   bool sendButtonEnabled = false;
@@ -39,18 +41,35 @@ class Chat extends State<MyChat> {
   void initState() {
     super.initState();
     chatRoomId = _auth.currentUser!.uid;
+    log.info("{$chatRoomId} opened the chat");
     checkPreviousMessages();
   }
 
   void checkPreviousMessages() async {
+    log.info("Checking last messages...");
     int prevNumber = await chatProvider.isThereMessages(
         _auth.currentUser!.uid, chatRoomId, (Map<String, dynamic> msg) {
-      giveSuggestions(msg[FirestoreConstants.content]);
-      setState(() {
-        isEverythingReady = true;
-      });
+      log.info("Last message sent in the chat ($msg)");
+      if (msg["role"] == FirestoreConstants.aiRole) {
+        giveSuggestions(msg[FirestoreConstants.content]);
+      } else {
+        messageInsert.text = msg["content"];
+        onSendMessageGPT(false, true);
+        if (mounted) {
+          setState(() {
+            isEverythingReady = true;
+          });
+        } else {
+          isEverythingReady = true;
+        }
+      }
     });
-    if (prevNumber < 3) {
+    log.info("Got num($prevNumber) of last messages.");
+    if (prevNumber < 2) {
+      chatProvider.deleteAllDocsInSubCollection(
+          FirestoreConstants.pathMessageCollection,
+          chatRoomId,
+          FirestoreConstants.conv);
       setState(() {
         isFirstMessage = true;
       });
@@ -66,8 +85,6 @@ class Chat extends State<MyChat> {
         isSomeoneTyping = true;
       });
       void okCallback(Map response) {
-        // print("-------------------callback");
-        // print(response["response"]);
         setState(() {
           messages
               .add({"role": "user", "content": response["response"].trim()});
@@ -75,12 +92,6 @@ class Chat extends State<MyChat> {
         });
       }
 
-      // void errCallback(error) {
-      //   print(error);
-      // }
-
-      // chatProvider.chatGCFunction(_auth.currentUser!.uid, chatRoomId,
-      //     messageInsert.text.trim(), okCallback, errCallback);
       chatProvider.chatter(_auth.currentUser!.uid, chatRoomId,
           messageInsert.text.trim(), okCallback);
 
@@ -88,16 +99,19 @@ class Chat extends State<MyChat> {
     }
   }
 
-  void onSendMessageGPT() async {
-    print(messages.length);
+  void onSendMessageGPT(bool storeContent, bool storeResponse) async {
+    log.info(
+        "Sending message to gpt storeContent($storeContent), storeResponse($storeResponse)");
+    log.info("Messages length (${messages.length})");
     if (messageInsert.text.trim().isNotEmpty) {
-      print(isFirstMessage);
       if (isFirstMessage) {
         isFirstMessage = false;
+        log.info("Extracting user name...");
         gptProvider.extractSpeakerName(
             messageInsert.text.trim(), _auth.currentUser!.uid, chatRoomId,
             (String name) {
-          print(name);
+          log.verbose(
+              "It's the first message from the user, so I extracted the name ($name)");
         });
       }
       setState(() {
@@ -107,6 +121,8 @@ class Chat extends State<MyChat> {
         showSuggestions = false;
       });
       void okCallback(String response, List<String>? rs) {
+        log.info("GPT responded with ($response)");
+        log.info("GPT suggested messages ($rs)");
         if (rs != null) {
           setState(() {
             suggestions = rs;
@@ -124,32 +140,51 @@ class Chat extends State<MyChat> {
       }
 
       void errCallback(String response) {
-        print("ERROR---------------------\n$response");
+        log.error("Got an error when responding by gpt ($response)");
         setState(() {
           showSuggestions = false;
           isSomeoneTyping = false;
         });
       }
 
-      gptProvider.chatComplete(messages, _auth.currentUser!.uid, chatRoomId,
-          messageInsert.text.trim(), okCallback, errCallback);
-
+      gptProvider.chatComplete(
+          messages,
+          _auth.currentUser!.uid,
+          chatRoomId,
+          messageInsert.text.trim(),
+          okCallback,
+          errCallback,
+          storeContent,
+          storeResponse);
+      log.info("Clearing messageInsert");
       messageInsert.clear();
     }
   }
 
   void giveSuggestions(String response) {
+    log.info("Giving suggestions for $response...");
     void callback(List<String>? rs) {
+      log.info("Got suggestions: $rs");
       if (rs != null) {
-        setState(() {
+        if (mounted) {
+          setState(() {
+            suggestions = rs;
+            showSuggestions = true;
+            isEverythingReady = true;
+          });
+        } else {
           suggestions = rs;
           showSuggestions = true;
-        });
+          isEverythingReady = true;
+        }
       } else {
         setState(() {
           showSuggestions = false;
+          isEverythingReady = true;
         });
       }
+      log.info(
+          "After suggestions: showSuggestions($showSuggestions), isEverythingReady($isEverythingReady)");
     }
 
     gptProvider.suggestAnswers(
@@ -157,8 +192,9 @@ class Chat extends State<MyChat> {
   }
 
   void clickSuggestion(String value) {
+    log.info("Clicked suggestion ($value)");
     messageInsert.text = value;
-    onSendMessageGPT();
+    onSendMessageGPT(true, true);
   }
 
   @override
@@ -192,30 +228,22 @@ class Chat extends State<MyChat> {
           ? StreamBuilder<QuerySnapshot>(
               stream: chatProvider.getChatStream(chatRoomId, _limit),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasData) {
+                log.info(
+                    "snapshot.hasData(${snapshot.hasData}), isEverythingReady($isEverythingReady)");
+                if (snapshot.hasData && isEverythingReady) {
                   listMessage = snapshot.data!.docs;
                   if (listMessage.isEmpty && messages.isEmpty) {
                     isFirstMessage = true;
-                    // First Time messageing
+                    log.info("Storing first 2 defualt messages...");
                     chatProvider.storeMessage(_auth.currentUser!.uid,
                         chatRoomId, GPTAPIs.systemFirstMessagePrompt, "system");
                     chatProvider.storeMessage(_auth.currentUser!.uid,
                         chatRoomId, GPTAPIs.firstMessagePrompt, "assistant");
-                    // setState(() {
-                    // chatProvider.getFirst(
-                    //     _auth.currentUser!.uid,
-                    //     chatRoomId,
-                    //     (firstMsg) => {
-                    //           if (listMessage.isEmpty && messages.isEmpty)
-                    //             messages.insert(0, {
-                    //               "role": "user",
-                    //               "content": firstMsg,
-                    //             })
-                    //         });
-                    // });
                   }
                   if (listMessage.isNotEmpty) {
                     messages.clear();
+                    log.info(
+                        "messages cleared localy and started building messages list...");
                     return ListView.builder(
                       padding: const EdgeInsets.all(10),
                       itemBuilder: (context, index) {
@@ -235,9 +263,11 @@ class Chat extends State<MyChat> {
                       controller: listScrollController,
                     );
                   } else {
+                    log.info("No messages here yet");
                     return const Center(child: Text("No message here yet..."));
                   }
                 } else {
+                  log.info("Loading messages from Firebase");
                   return const Center(
                     child: CircularProgressIndicator(
                       color: Colors.purple,
@@ -349,7 +379,8 @@ class Chat extends State<MyChat> {
             size: 20.0,
             color: Colors.white,
           ),
-          onPressed: sendButtonEnabled ? onSendMessageGPT : null,
+          onPressed:
+              sendButtonEnabled ? () => onSendMessageGPT(true, true) : null,
         ),
       ),
     );

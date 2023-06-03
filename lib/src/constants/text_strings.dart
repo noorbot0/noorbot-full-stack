@@ -109,7 +109,7 @@ const String tBdiSubTitle =
 
 const String netSentimentAnalysisGraphSubtitle =
     "Net Sentiment Score: Tracking Daily Sentiment Trends";
-const String NoSentimentAnalysisMessage =
+const String noSentimentAnalysisMessage =
     "No sentiment analysis here yet...\nYou need to start the conversation with NoorBot for more than 1 day.";
 
 // -- Journaling screen
