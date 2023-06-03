@@ -41,6 +41,7 @@ class App extends StatelessWidget {
   final SharedPreferences prefs;
   final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+
   App({Key? key, required this.prefs}) : super(key: key);
 
   @override

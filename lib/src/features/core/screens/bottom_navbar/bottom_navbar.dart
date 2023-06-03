@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/chat.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
+import 'package:noorbot_app/src/features/journaling/screens/journaling_screen.dart';
 
 import 'package:noorbot_app/src/features/core/screens/tracker/tracker.dart';
 
@@ -20,6 +21,8 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
     MyChat(),
     Tracker(),
     NotificationsScreen(),
+    Journaling()
+
   ];
 
   void _onItemTapped(int index) {
@@ -67,6 +70,7 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
                 label: 'Chat',
               ),
               BottomNavigationBarItem(
+
                 activeIcon: Icon(Icons.track_changes_outlined),
                 icon: Icon(Icons.track_changes),
                 label: 'Tracking',
@@ -74,7 +78,12 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
               BottomNavigationBarItem(
                 activeIcon: Icon(Icons.notifications_active_outlined),
                 icon: Icon(Icons.notifications),
-                label: 'Notifications',
+                label: 'Notifications',),
+  BottomNavigationBarItem(
+                activeIcon: Icon(Icons.book_outlined),
+                icon: Icon(Icons.book),
+                label: 'Journal',
+
               )
             ],
             currentIndex: _selectedIndex,
@@ -83,7 +92,10 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
               const Color.fromARGB(255, 52, 109, 225),
               const Color.fromARGB(255, 52, 109, 225),
               const Color.fromARGB(255, 52, 109, 225),
+  const Color.fromARGB(255, 52, 109, 225),
               const Color.fromARGB(255, 52, 109, 225)
+
+
             ][_selectedIndex],
             onTap: _onItemTapped,
             showSelectedLabels: false,
