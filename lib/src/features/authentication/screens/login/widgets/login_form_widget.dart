@@ -78,11 +78,11 @@ class LoginFormWidget extends StatelessWidget {
                     onPressed: controller.isLoading.value
                         ? () {}
                         : () {
-                            // if (formKey.currentState!.validate()) {
-                            //   LoginController.instance
-                            //       .loginUser(controller.email.text.trim(), controller.password.text.trim());
-                            // }
-                            Get.to(Dashboard());
+                            if (formKey.currentState!.validate()) {
+                              LoginController.instance
+                                  .loginUser(controller.email.text.trim(), controller.password.text.trim());
+                            }
+                            // Get.to(Dashboard());
                           },
                     child: controller.isLoading.value
                         ? Row(
