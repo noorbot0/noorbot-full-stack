@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 // import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
-
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   /// Show Splash Screen till data loads & when loaded call FlutterNativeSplash.remove();
@@ -51,10 +49,9 @@ class App extends StatelessWidget {
       providers: [
         Provider<ChatProvider>(
           create: (_) => ChatProvider(
-            prefs: prefs,
-            firebaseFirestore: firebaseFirestore,
-            firebaseStorage: firebaseStorage
-          ),
+              prefs: prefs,
+              firebaseFirestore: firebaseFirestore,
+              firebaseStorage: firebaseStorage),
         ),
         Provider<SentimentProvider>(
           create: (_) => SentimentProvider(
@@ -74,16 +71,19 @@ class App extends StatelessWidget {
           create: (_) => LoggerProvider(prefs: prefs),
         ),
       ],
-      child: OverlaySupport( child: GetMaterialApp(
-        initialBinding: AppBinding(),
-        themeMode: ThemeMode.system,
-        theme: TAppTheme.lightTheme,
-        darkTheme: TAppTheme.darkTheme,
-        debugShowCheckedModeBanner: false,
-        defaultTransition: Transition.leftToRightWithFade,
-        transitionDuration: const Duration(milliseconds: 500),
-        home: const Scaffold(body: Center(child: CircularProgressIndicator())),
-      )),
+      child: OverlaySupport(
+        child: GetMaterialApp(
+          initialBinding: AppBinding(),
+          themeMode: ThemeMode.system,
+          theme: TAppTheme.lightTheme,
+          darkTheme: TAppTheme.darkTheme,
+          debugShowCheckedModeBanner: false,
+          defaultTransition: Transition.leftToRightWithFade,
+          transitionDuration: const Duration(milliseconds: 500),
+          home:
+              const Scaffold(body: Center(child: CircularProgressIndicator())),
+        ),
+      ),
     );
   }
 }
