@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -18,10 +17,6 @@ class ChatProvider {
   final SharedPreferences prefs;
   final FirebaseFirestore firebaseFirestore;
   final FirebaseStorage firebaseStorage;
-  final openAI = OpenAI.instance.build(
-      token: GPTAPIs.keyToken,
-      baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 20)),
-      isLog: true);
   late final LoggerProvider log;
 
   ChatProvider(

@@ -68,8 +68,8 @@ class NavBar extends State<MyNavBar> {
           child: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.track_changes_outlined),
-                icon: Icon(Icons.track_changes),
+                activeIcon: Icon(Icons.bar_chart_rounded),
+                icon: Icon(Icons.bar_chart),
                 label: 'Tracking',
               ),
               BottomNavigationBarItem(

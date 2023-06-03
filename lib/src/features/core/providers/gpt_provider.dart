@@ -15,7 +15,7 @@ class GPTProvider {
   final openAI = OpenAI.instance.build(
       token: GPTAPIs.keyToken,
       baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 20)),
-      isLog: false);
+      enableLog: false);
   late ChatProvider cp;
   late final LoggerProvider log;
 
@@ -55,9 +55,14 @@ class GPTProvider {
 
       sentimentAnalysis(
           content, currentUserId, chatId, analyserCallBack, errCallback);
+      extractSentiments(content, currentUserId, chatId);
     }
     final request = ChatCompleteText(
-        messages: msgs, maxToken: 300, model: ChatModel.gptTurbo);
+      messages: msgs,
+      maxToken: 300,
+      model: ChatModel.gptTurbo,
+      user: FirestoreConstants.userRole,
+    );
     ChatCTResponse? response;
     try {
       response = await openAI.onChatCompletion(request: request);
@@ -83,87 +88,134 @@ class GPTProvider {
   void sentimentAnalysis(String message, String currentUserId, String chatId,
       Function callback, Function errorCallback) {
     log.info("Analysing message($message) of chatId($chatId)");
-    doRequst(GPTAPIs.sentimentPrompt(message), currentUserId, chatId,
-        (String rs) {
-      log.info("Analysis($rs)");
-      cp.updateAnalysis(currentUserId, chatId, rs, errorCallback);
-      callback(rs);
-    });
+    doRequst(
+      GPTAPIs.sentimentPrompt(message),
+      currentUserId,
+      chatId,
+      (String rs) {
+        log.info("Analysis($rs)");
+        cp.updateAnalysis(currentUserId, chatId, rs, errorCallback);
+        callback(rs);
+      },
+      (String err) {
+        log.error("Sentiment Analysis failed with error $err");
+        errorCallback(err);
+      },
+    );
   }
 
   void extractSpeakerName(
       String message, String currentUserId, String chatId, Function callback) {
     log.info("Extract speaker name for message($message) of chatId($chatId)");
 
-    doRequst(GPTAPIs.nameExtractPrompt(message), currentUserId, chatId,
-        (String response) {
-      log.info("Extracted speaker name($response)");
+    doRequst(
+      GPTAPIs.nameExtractPrompt(message),
+      currentUserId,
+      chatId,
+      (String response) {
+        log.info("Extracted speaker name($response)");
 
-      if (response.isNotEmpty &&
-          !response.contains("None") &&
-          !response.contains("none")) {
-        response.replaceAll(".", "");
-        callback(response);
-      }
-    });
+        if (response.isNotEmpty &&
+            !response.contains("None") &&
+            !response.contains("none")) {
+          response.replaceAll(".", "");
+          callback(response);
+        }
+      },
+      (String err) {
+        log.error("Extract Speaker Name failed with error $err");
+        // callback(null);
+      },
+    );
   }
 
   void suggestAnswers(
       String message, String currentUserId, String chatId, Function callback) {
     log.info("Suggest answers for message($message) of chatId($chatId)");
 
-    doRequst(GPTAPIs.defaultAnswersPrompt(message), currentUserId, chatId,
-        (String response) {
-      log.info("Got suggestions($response), started parsing...");
-      List<String>? suggestions;
-      if (response.isNotEmpty &&
-          (!response.contains("None") || !response.contains("none"))) {
-        suggestions = response.split(",");
+    doRequst(
+      GPTAPIs.defaultAnswersPrompt(message),
+      currentUserId,
+      chatId,
+      (String response) {
+        log.info("Got suggestions($response), started parsing...");
+        List<String>? suggestions;
+        if (response.isNotEmpty &&
+            (!response.contains("None") || !response.contains("none")) &&
+            !response.contains("ERROR") &&
+            !response.contains("Error") &&
+            !response.contains("null")) {
+          suggestions = response.split(",");
 
-        for (int i = 0; i < suggestions.length; i++) {
-          suggestions[i] = suggestions[i].trim();
-          suggestions[i] = suggestions[i].replaceAll(".", "");
-          if (suggestions[i].isEmpty) {
-            suggestions.remove(suggestions[i]);
-            continue;
-          }
-          int counter = 0;
-          for (var el2 in suggestions) {
-            if (suggestions[i] == el2) {
-              counter++;
+          for (int i = 0; i < suggestions.length; i++) {
+            suggestions[i] = suggestions[i].trim();
+            suggestions[i] = suggestions[i].replaceAll(".", "");
+            if (suggestions[i].isEmpty) {
+              suggestions.remove(suggestions[i]);
+              continue;
+            }
+            int counter = 0;
+            for (var el2 in suggestions) {
+              if (suggestions[i] == el2) {
+                counter++;
+              }
+            }
+            if (counter > 1) {
+              suggestions.removeAt(counter);
             }
           }
-          if (counter > 1) {
-            suggestions.removeAt(counter);
-          }
+          callback(suggestions);
+        } else {
+          callback(null);
         }
-        callback(suggestions);
-      } else {
+      },
+      (String err) {
+        log.error("Suggestions failed with error $err");
         callback(null);
-      }
-    });
+      },
+    );
+  }
+
+  void extractSentiments(String message, String currentUserId, String chatId) {
+    log.info(
+        "Extracting sentiments words from message($message) of chatId($chatId)");
+    doRequst(
+      GPTAPIs.extractSentiments(message),
+      currentUserId,
+      chatId,
+      (String rs) {
+        log.info("Sentiments($rs)");
+        // cp. update sentiments
+      },
+      (String err) {
+        log.error("Extract sentiments failed with error $err");
+      },
+    );
   }
 
   void doRequst(String prompt, String currentUserId, String chatId,
-      Function callback) async {
+      Function callback, Function errCallback) async {
     log.info("Sending a request prompt($prompt) of chatId($chatId)");
 
     final request = CompleteText(
-        model: Model.textDavinci3,
         prompt: prompt,
+        model: Model.textDavinci3,
         temperature: 0,
         maxTokens: 60,
         topP: 1.0,
         frequencyPenalty: 0.0,
         presencePenalty: 0.0);
-
-    final response = await openAI.onCompletion(request: request);
-
-    String? res = "";
-    for (var element in response!.choices) {
-      res = element.text;
+    try {
+      final response = await openAI.onCompletion(request: request);
+      log.info("From doRequest responded with ($response)");
+      String? res = "";
+      for (var element in response!.choices) {
+        res = element.text;
+      }
+      callback(res!.trim());
+    } catch (e) {
+      log.error("Error from doRequest (${e.toString()})");
+      errCallback(e.toString());
     }
-
-    callback(res!.trim());
   }
 }

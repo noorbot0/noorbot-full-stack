@@ -23,4 +23,7 @@ class GPTAPIs {
   // "Respond to the following message with at most 3 responses, using 3 words or less for each response. A comma separates them:\n\nMessage: \"$message\"";
   // "Respond with 2 responses to this message with 3 words only. A comma separates them. No full stop. No repetition.\n\n$message\n";
   // "Respond with 3 responses only to this message with 1 to 3 words only. A comma separates them. Don't say anything else. No full stop. No repetition.\n\n$message\n";
+
+  static extractSentiments(String message) =>
+      "Extract sentiments words, otherwise, say none: $message \n\nPositive:\nNegative:";
 }
