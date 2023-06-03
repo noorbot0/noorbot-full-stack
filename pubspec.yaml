@@ -37,7 +37,7 @@ dependencies:
   flutter_native_splash: ^2.2.16
 
   ## -- FIREBASE PACKAGES
-  firebase_core: ^2.9.0
+  firebase_core: ^2.13.0
   firebase_auth: ^4.4.2
   cloud_firestore: ^4.2.0
   firebase_database: ^10.1.0
@@ -48,6 +48,8 @@ dependencies:
 
   ## -- requests
   http: ^0.13.5
+  firebase_messaging: ^14.6.1
+  overlay_support: ^2.1.0
 
   ## -- GPT
   chat_gpt_sdk: ^2.1.2
