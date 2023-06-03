@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:noorbot_app/src/constants/colors.dart';
 import 'package:noorbot_app/src/constants/firestore_constants.dart';
 import 'package:noorbot_app/src/constants/text_strings.dart';
+import 'package:noorbot_app/src/features/core/providers/logger_provider.dart';
 import 'package:noorbot_app/src/features/core/screens/tracker/sentiment_provider.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
@@ -21,6 +22,8 @@ class MyTracker extends State<Tracker> {
   late String chatRoomId;
   late final SentimentProvider sentimentProvider =
       context.read<SentimentProvider>();
+  late final LoggerProvider log = context.read<LoggerProvider>();
+
   List<Map<String, dynamic>> listMessage = [];
   List<FlSpot> sentimentSpots = [];
   bool isLoading = true;
@@ -34,31 +37,28 @@ class MyTracker extends State<Tracker> {
   }
 
   void prepareSentimentAnalysis() async {
-    setState(() {
-      isLoading = true;
-    });
+    log.info("Prepare sentiments analysis for chatId($chatRoomId)...");
+    // setState(() {
+    //   isLoading = true;
+    // });
+    void errCallback(String errMsg) {
+      log.error("Error when fetching sentiments with msg($errMsg)");
+    }
+
     listMessage = await sentimentProvider.getSentiments(
-        _auth.currentUser!.uid, chatRoomId);
+        _auth.currentUser!.uid, chatRoomId, errCallback);
     if (listMessage.isEmpty) {
       setState(() {
         noSentiment = true;
       });
     } else {
-      // double xDay = 0;
-      // DateTime ref = DateTime.now().subtract(const Duration(days: 30));
-      // for (var day in listMessage) {
-      //   double x = xDay;
-      //   double y = double.parse(sentimentProvider
-      //       .calculateNetSentimentScore(day)
-      //       .toStringAsFixed(3));
-      //   print("$x, $y");
-      //   sentimentSpots.add(FlSpot(x, y));
-      //   xDay++;
-      //   ref = ref.add(const Duration(days: 1));
-      // }
-      DateTime prev = DateTime.now().subtract(const Duration(days: 30));
-      for (var i = 1, j = 0; i < 30; i++) {
-        DateTime date = DateTime.now().toUtc();
+      DateTime prev = DateFormat("MM_dd_yyyy")
+          .parse(
+              "${DateTime.now().month}_${DateTime.now().day}_${DateTime.now().year}")
+          .subtract(const Duration(days: 30));
+
+      for (var i = 0, j = 0; i < 31; i++) {
+        DateTime date = DateTime.now();
         if (j < listMessage.length) {
           date = DateFormat("MM_dd_yyyy")
               .parse(listMessage[j][FirestoreConstants.date]);
@@ -66,19 +66,28 @@ class MyTracker extends State<Tracker> {
         Duration diff = date.difference(prev);
         double x = i * 1.0;
         double y = 0;
-        if (j < listMessage.length && diff.inDays == 0) {
-          y = double.parse(sentimentProvider
-              .calculateNetSentimentScore(listMessage[j])
-              .toStringAsFixed(3));
+        if (j < listMessage.length) {
+          if (diff.inDays == 0) {
+            y = double.parse(sentimentProvider
+                .calculateNetSentimentScore(listMessage[j])
+                .toStringAsFixed(3));
 
-          j++;
+            j++;
+          } else if (diff.inDays < 0) {
+            j++;
+            if (i == 0 || i == 1) {
+              i = 0;
+            } else {
+              i--;
+            }
+            continue;
+          }
         }
         if (j >= listMessage.length &&
             diff.inDays == 0 &&
             (date.compareTo(DateTime.now().toUtc()) == 0)) {
           break;
         }
-        // print("$x, $y");
         prev = prev.add(const Duration(days: 1));
         sentimentSpots.add(FlSpot(x, y));
       }
@@ -94,7 +103,7 @@ class MyTracker extends State<Tracker> {
         ? myChart(chartData, sentimentSpots)
         : const Center(
             child: Text(
-            NoSentimentAnalysisMessage,
+            noSentimentAnalysisMessage,
             textAlign: TextAlign.center,
           ));
   }
