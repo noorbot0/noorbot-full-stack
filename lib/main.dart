@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:noorbot_app/firebase_options.dart';
 import 'package:noorbot_app/src/features/core/providers/chat_provider.dart';
 import 'package:noorbot_app/src/features/core/providers/gpt_provider.dart';
+import 'package:noorbot_app/src/features/core/providers/logger_provider.dart';
 import 'package:noorbot_app/src/features/core/screens/tracker/sentiment_provider.dart';
 import 'package:noorbot_app/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:noorbot_app/src/utils/app_bindings.dart';
@@ -64,6 +65,9 @@ class App extends StatelessWidget {
             firebaseFirestore: firebaseFirestore,
             firebaseStorage: firebaseStorage,
           ),
+        ),
+        Provider<LoggerProvider>(
+          create: (_) => LoggerProvider(prefs: prefs),
         ),
       ],
       child: GetMaterialApp(
