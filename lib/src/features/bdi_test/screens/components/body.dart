@@ -3,14 +3,20 @@ import 'package:get/get.dart';
 import 'package:noorbot_app/src/constants/colors.dart';
 import 'package:noorbot_app/src/features/bdi_test/controllers/question_controller.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'question_card.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   const Body({
     Key? key,
   }) : super(key: key);
+  @override
+  State<StatefulWidget> createState() => _BodyState();
+}
 
+class _BodyState extends State<Body> {
+  int _processValue = 0;
   @override
   Widget build(BuildContext context) {
     // So that we have acccess our controller
@@ -21,19 +27,22 @@ class Body extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-                child: LinearPercentIndicator(
-                  width: MediaQuery.of(context).size.width - 50,
-                  animation: true,
-                  lineHeight: 20.0,
-                  animationDuration: 500,
-                  percent: (questionController.questionNumber.value * 1.0) /
-                      questionController.questions.length,
-                  // ignore: deprecated_member_use
-                  linearStrokeCap: LinearStrokeCap.roundAll,
-                  progressColor: tPrimaryColor,
+              // Padding(
+              //   padding:
+              //       const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+              //   child:
+              // ),
+              SmoothPageIndicator(
+                controller: questionController.pageController,
+                count: questionController.questions.length,
+                effect: JumpingDotEffect(
+                  activeDotColor: tmainGreenColor,
+                  dotColor: Colors.deepPurple.shade100,
+                  dotHeight: 10,
+                  dotWidth: 10,
+                  spacing: 6,
+                  verticalOffset: 50,
+                  jumpScale: 1,
                 ),
               ),
               const SizedBox(height: kDefaultPadding),
@@ -42,7 +51,12 @@ class Body extends StatelessWidget {
                   // Block swipe to next qn
                   physics: const NeverScrollableScrollPhysics(),
                   controller: questionController.pageController,
-                  onPageChanged: questionController.updateTheQnNum,
+                  onPageChanged: (int x) {
+                    setState(() {
+                      _processValue = questionController.updateTheQnNum(
+                          questionController.questionNumber.value);
+                    });
+                  },
                   itemCount: questionController.questions.length,
                   itemBuilder: (context, index) => QuestionCard(
                       question: questionController.questions[index]),

@@ -7,7 +7,7 @@ import 'components/body.dart';
 class BdiScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController());
+    QuestionController controller = Get.put(QuestionController());
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -16,7 +16,7 @@ class BdiScreen extends StatelessWidget {
         elevation: 0,
         actions: [
           TextButton(
-              onPressed: _controller.nextQuestion, child: const Text("Skip")),
+              onPressed: controller.nextQuestion, child: const Text("Skip")),
         ],
       ),
       body: const Body(),

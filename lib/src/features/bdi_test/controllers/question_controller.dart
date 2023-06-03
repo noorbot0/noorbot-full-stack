@@ -61,7 +61,6 @@ class QuestionController extends GetxController {
     _selectedAns = selectedIndex;
 
     _score.value = _score.value + _selectedAns;
-    print(_selectedAns);
     print(_score.value);
     update();
 
@@ -78,14 +77,14 @@ class QuestionController extends GetxController {
           duration: const Duration(milliseconds: 100), curve: Curves.ease);
     } else {
       // Get package provide us simple way to naviigate another page
-
-      Get.to(Dashboard());
       storeBdiResult();
+      Get.to(Dashboard());
     }
   }
 
-  void updateTheQnNum(int index) {
+  int updateTheQnNum(int index) {
     _questionNumber.value = index + 1;
+    return _questionNumber.value;
   }
 
   void storeBdiResult() {
@@ -98,5 +97,7 @@ class QuestionController extends GetxController {
       testScore: _score.value,
     );
     controller.updateRecord(userData);
+    _score.value = 0;
+    _questionNumber.value = 0;
   }
 }

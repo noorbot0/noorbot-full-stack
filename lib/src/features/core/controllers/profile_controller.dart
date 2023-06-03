@@ -16,14 +16,16 @@ class ProfileController extends GetxController {
       final currentUserEmail = _authRepo.getUserEmail;
       if (currentUserEmail.isEmpty) {
         Get.snackbar("Error", "No user found!",
-            snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 3));
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 3));
         return;
       } else {
         return _userRepo.getUserDetails(currentUserEmail);
       }
     } catch (e) {
       Get.snackbar("Error", e.toString(),
-          snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 3));
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 3));
     }
   }
 
@@ -34,6 +36,7 @@ class ProfileController extends GetxController {
   updateRecord(UserModel user) async {
     await _userRepo.updateUserRecord(user);
     //Show some message or redirect to other screen here...
+    Get.snackbar("Updated", "User has been updated.");
   }
 
   Future<void> deleteUser() async {
