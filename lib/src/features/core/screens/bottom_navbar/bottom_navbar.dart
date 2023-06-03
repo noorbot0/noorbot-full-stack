@@ -1,34 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:noorbot_app/src/features/core/providers/logger_provider.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/chat.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
-import 'package:noorbot_app/src/features/journaling/screens/journaling_screen.dart';
-
 import 'package:noorbot_app/src/features/core/screens/tracker/tracker.dart';
-
+import 'package:noorbot_app/src/features/journaling/screens/journaling_screen.dart';
 import 'package:noorbot_app/src/features/notifications/notifications_screen.dart';
+// ignore: depend_on_referenced_packages
+import 'package:provider/provider.dart';
 
 class MyNavBar extends StatefulWidget {
-  const MyNavBar({super.key});
+  const MyNavBar({Key? key}) : super(key: key);
 
   @override
-  State<MyNavBar> createState() => _MyStatefulWidgetState();
+  NavBar createState() => NavBar();
 }
 
-class _MyStatefulWidgetState extends State<MyNavBar> {
-  int _selectedIndex = 0;
-  static const List<Widget> _widgetOptions = <Widget>[
-    Dashboard(),
-    MyChat(),
-    Tracker(),
-    NotificationsScreen(),
-    Journaling()
+class NavBar extends State<MyNavBar> {
+  int selectedIndex = 2;
+  late final LoggerProvider log = context.read<LoggerProvider>();
 
+  static const List<Widget> options = <Widget>[
+    Tracker(),
+    MyChat(),
+    Dashboard(),
+    Journaling(),
+    NotificationsScreen(),
   ];
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   void _onItemTapped(int index) {
+    log.info(
+        "Navigating from ($selectedIndex: ${options[selectedIndex].toStringShort()}) to ($index: ${options[index].toStringShort()})");
     setState(() {
-      print('NavBar tapped item index: ${index} : ${_widgetOptions.length}');
-      _selectedIndex = index;
+      selectedIndex = index;
     });
   }
 
@@ -36,7 +44,7 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: options.elementAt(selectedIndex),
       ),
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
@@ -60,9 +68,9 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
           child: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.home_outlined),
-                icon: Icon(Icons.home),
-                label: 'Dashboard',
+                activeIcon: Icon(Icons.bar_chart_rounded),
+                icon: Icon(Icons.bar_chart),
+                label: 'Tracking',
               ),
               BottomNavigationBarItem(
                 activeIcon: Icon(Icons.message_outlined),
@@ -70,36 +78,28 @@ class _MyStatefulWidgetState extends State<MyNavBar> {
                 label: 'Chat',
               ),
               BottomNavigationBarItem(
-
-                activeIcon: Icon(Icons.track_changes_outlined),
-                icon: Icon(Icons.track_changes),
-                label: 'Tracking',
+                activeIcon: Icon(Icons.home_outlined),
+                icon: Icon(Icons.home),
+                label: 'Dashboard',
+              ),
+              BottomNavigationBarItem(
+                activeIcon: Icon(Icons.book_outlined),
+                icon: Icon(Icons.book),
+                label: 'Journal',
               ),
               BottomNavigationBarItem(
                 activeIcon: Icon(Icons.notifications_active_outlined),
                 icon: Icon(Icons.notifications),
-                label: 'Notifications',),
-  BottomNavigationBarItem(
-                activeIcon: Icon(Icons.book_outlined),
-                icon: Icon(Icons.book),
-                label: 'Journal',
-
-              )
+                label: 'Notifications',
+              ),
             ],
-            currentIndex: _selectedIndex,
-            selectedItemColor: [
-              // const Color.fromARGB(255, 19, 198, 88),
-              const Color.fromARGB(255, 52, 109, 225),
-              const Color.fromARGB(255, 52, 109, 225),
-              const Color.fromARGB(255, 52, 109, 225),
-  const Color.fromARGB(255, 52, 109, 225),
-              const Color.fromARGB(255, 52, 109, 225)
-
-
-            ][_selectedIndex],
+            currentIndex: selectedIndex,
             onTap: _onItemTapped,
             showSelectedLabels: false,
             showUnselectedLabels: false,
+            type: BottomNavigationBarType.fixed,
+            selectedIconTheme: const IconThemeData(size: 30),
+            unselectedIconTheme: const IconThemeData(size: 24),
           ),
         ),
       ),
