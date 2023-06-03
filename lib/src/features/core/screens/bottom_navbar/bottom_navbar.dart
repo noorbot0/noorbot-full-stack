@@ -16,15 +16,15 @@ class MyNavBar extends StatefulWidget {
 }
 
 class NavBar extends State<MyNavBar> {
-  int selectedIndex = 0;
+  int selectedIndex = 2;
   late final LoggerProvider log = context.read<LoggerProvider>();
 
   static const List<Widget> options = <Widget>[
-    Dashboard(),
-    MyChat(),
     Tracker(),
+    MyChat(),
+    Dashboard(),
+    Journaling(),
     NotificationsScreen(),
-    Journaling()
   ];
 
   @override
@@ -68,9 +68,9 @@ class NavBar extends State<MyNavBar> {
           child: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.home_outlined),
-                icon: Icon(Icons.home),
-                label: 'Dashboard',
+                activeIcon: Icon(Icons.track_changes_outlined),
+                icon: Icon(Icons.track_changes),
+                label: 'Tracking',
               ),
               BottomNavigationBarItem(
                 activeIcon: Icon(Icons.message_outlined),
@@ -78,26 +78,28 @@ class NavBar extends State<MyNavBar> {
                 label: 'Chat',
               ),
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.track_changes_outlined),
-                icon: Icon(Icons.track_changes),
-                label: 'Tracking',
+                activeIcon: Icon(Icons.home_outlined),
+                icon: Icon(Icons.home),
+                label: 'Dashboard',
+              ),
+              BottomNavigationBarItem(
+                activeIcon: Icon(Icons.book_outlined),
+                icon: Icon(Icons.book),
+                label: 'Journal',
               ),
               BottomNavigationBarItem(
                 activeIcon: Icon(Icons.notifications_active_outlined),
                 icon: Icon(Icons.notifications),
                 label: 'Notifications',
               ),
-              BottomNavigationBarItem(
-                activeIcon: Icon(Icons.book_outlined),
-                icon: Icon(Icons.book),
-                label: 'Journal',
-              )
             ],
             currentIndex: selectedIndex,
             onTap: _onItemTapped,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             type: BottomNavigationBarType.fixed,
+            selectedIconTheme: const IconThemeData(size: 30),
+            unselectedIconTheme: const IconThemeData(size: 24),
           ),
         ),
       ),
