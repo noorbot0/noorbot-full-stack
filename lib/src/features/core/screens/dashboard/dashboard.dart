@@ -4,7 +4,6 @@ import 'package:noorbot_app/src/constants/text_strings.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/appbar.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/banners.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/categories.dart';
-import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/search.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/tests.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/top_courses.dart';
 
@@ -22,6 +21,7 @@ class Dashboard extends StatelessWidget {
       child: Scaffold(
         appBar: DashboardAppBar(
           isDark: isDark,
+          topTitle: tDashboardPageName,
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -35,8 +35,8 @@ class Dashboard extends StatelessWidget {
                 const SizedBox(height: tDashboardPadding),
 
                 //Search Box
-                DashboardSearchBox(txtTheme: txtTheme),
-                const SizedBox(height: tDashboardPadding),
+                // DashboardSearchBox(txtTheme: txtTheme),
+                // const SizedBox(height: tDashboardPadding),
 
                 //Categories
                 DashboardCategories(txtTheme: txtTheme),
