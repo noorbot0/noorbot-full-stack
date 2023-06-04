@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noorbot_app/src/constants/image_strings.dart';
-import 'package:noorbot_app/src/constants/text_strings.dart';
 import 'package:noorbot_app/src/features/bdi_test/screens/bdi_screen.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/animation_design.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/fade_in_animation_controller.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/fade_in_animation_model.dart';
 import '../../../constants/sizes.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/appbar.dart';
+
+import '../../../constants/text_strings.dart';
 
 class BdiTest extends StatelessWidget {
   const BdiTest({Key? key}) : super(key: key);

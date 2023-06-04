@@ -20,10 +20,10 @@ class SignUpScreen extends StatelessWidget {
             child: Column(
               children: const [
                 FormHeaderWidget(
-                  image: tWelcomeScreenImage,
+                  image: tWelcomeLogoImage,
                   title: tSignUpTitle,
                   subTitle: tSignUpSubTitle,
-                  imageHeight: 0.1,
+                  // imageHeight: 0.1,
                 ),
                 SignUpFormWidget(),
                 SignUpFooterWidget(),

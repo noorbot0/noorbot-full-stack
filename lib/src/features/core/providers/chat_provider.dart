@@ -123,8 +123,13 @@ class ChatProvider {
     });
   }
 
-  void updateAnalysis(String currentUserId, String chatId, String sentiment,
-      Function errorCallback) async {
+  void updateAnalysis(
+    String currentUserId,
+    String chatId,
+    String sentiment,
+    List<String> sentiments,
+    Function errorCallback,
+  ) async {
     // updateAnalysisRandom(currentUserId, chatId, sentiment);
     DateTime now = DateTime.now();
     String time = DateFormat("MM_dd_yyyy").format(now);
@@ -141,7 +146,8 @@ class ChatProvider {
         sentimentNegative: 0,
         sentimentNeutral: 0,
         sentimentPositive: 0,
-        sentimentNone: 0);
+        sentimentNone: 0,
+        sentiments: {});
     try {
       documentReference.get().then((DocumentSnapshot doc) {
         log.info("Checking if analysis already exist doc($doc)");
@@ -153,6 +159,7 @@ class ChatProvider {
               doc[FirestoreConstants.sentimentPositive];
           analysis.sentimentNeutral = doc[FirestoreConstants.sentimentNeutral];
           analysis.sentimentNone = doc[FirestoreConstants.sentimentNone];
+          analysis.sentiments = doc[FirestoreConstants.sentiments];
         }
         log.info("Before update Analysis(${analysis.toJson()})");
         analysis.messagesNumber += 1;
@@ -164,6 +171,15 @@ class ChatProvider {
           analysis.sentimentNeutral += 1;
         } else {
           analysis.sentimentNone += 1;
+        }
+        for (var key1 in sentiments) {
+          analysis.sentiments.forEach((key2, value2) {
+            if (key1 == key2) {
+              analysis.sentiments[key1] = analysis.sentiments[key1]! + 1;
+            } else {
+              analysis.sentiments.addAll({key1: 1});
+            }
+          });
         }
         log.info("After update Analysis(${analysis.toJson()})");
         FirebaseFirestore.instance.runTransaction((transaction) async {
@@ -201,7 +217,8 @@ class ChatProvider {
           sentimentNegative: nr,
           sentimentNeutral: ur,
           sentimentPositive: pr,
-          sentimentNone: nor);
+          sentimentNone: nor,
+          sentiments: {});
       try {
         FirebaseFirestore.instance.runTransaction((transaction) async {
           transaction.set(

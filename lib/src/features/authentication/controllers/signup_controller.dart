@@ -17,11 +17,6 @@ class SignUpController extends GetxController {
   /// Loader
   final isLoading = false.obs;
 
-  // As in the AuthenticationRepository we are calling _setScreen() Method
-  // so, whenever there is change in the user state(), screen will be updated.
-  // Therefore, when new user is authenticated, AuthenticationRepository() detects
-  // the change and call _setScreen() to switch screens
-
   /// Register New User using  [EmailAndPassword] authentication
   Future<void> createUser(UserModel user) async {
     try {
@@ -46,14 +41,14 @@ class SignUpController extends GetxController {
 
 
 
-  // /// [GoogleSignInAuthentication]
-  // Future<void> googleSignIn() async {
-  //   try {
-  //     isLoading.value = true;
-  //     await AuthenticationRepository.instance.signInWithGoogle();
-  //   } catch (e) {
-  //     isLoading.value = false;
-  //     Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
-  //   }
-  // }
+  /// [GoogleSignInAuthentication]
+  Future<void> googleSignIn() async {
+    try {
+      isLoading.value = true;
+      await AuthenticationRepository.instance.signInWithGoogle();
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+    }
+  }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/sizes.dart';
 import '../../../models/dashboard/courses_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DashboardTopCourses extends StatelessWidget {
   const DashboardTopCourses({
@@ -13,6 +14,15 @@ class DashboardTopCourses extends StatelessWidget {
 
   final TextTheme txtTheme;
   final bool isDark;
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri(scheme: "https", host: url);
+    if (!await launchUrl(
+      uri,
+      mode: LaunchMode.externalApplication,
+    )) {
+      throw "Can not launch url";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +34,9 @@ class DashboardTopCourses extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: list.length,
         itemBuilder: (context, index) => GestureDetector(
-          onTap: list[index].onPress,
+          onTap: () {
+            _launchURL("www.youtube.com");
+          },
           child: SizedBox(
             width: 270,
             height: 160,
@@ -62,7 +74,7 @@ class DashboardTopCourses extends StatelessWidget {
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               shape: const CircleBorder()),
-                          onPressed: () {},
+                          onPressed: () => {},
                           child: const Icon(Icons.play_arrow),
                         ),
                         const SizedBox(width: tDashboardCardPadding),

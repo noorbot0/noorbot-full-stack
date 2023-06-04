@@ -11,6 +11,12 @@ const tWhiteColor = Colors.white;
 const tDarkColor = Color(0xff000000);
 const tCardBgColor = Color(0xFFF7F5F1);
 
+const tbackgroundColor = [
+  const Color(0xFFFFF7AD),
+  const Color(0xFFABD1A7)
+];
+
+const tmainGreenColor =  const Color(0xFFABD1A7);
 // -- ON-BOARDING COLORS
 const tOnBoardingPage1Color = Colors.white;
 const tOnBoardingPage2Color = Color(0xfffddcdf);
@@ -32,6 +38,7 @@ class GradientColors {
   static List<Color> mango = [const Color(0xFF2C3333), const Color(0xFFCBE4DE)];
   static List<Color> fire = [const Color(0xFFFF5DCD), const Color(0xFFFF8484)];
 }
+
 
 class GradientTemplate {
   static List<GradientColors> gradientTemplate = [

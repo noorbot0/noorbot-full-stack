@@ -4,6 +4,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/constants/sizes.dart';
 import 'package:noorbot_app/src/constants/text_strings.dart';
 import 'package:noorbot_app/src/features/bdi_test/screens/bdi_test.dart';
+import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/update_profile_screen.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/widgets/image_with_icon.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/widgets/profile_menu.dart';
@@ -22,7 +23,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => Get.to(Dashboard()),
             icon: const Icon(LineAwesomeIcons.angle_left)),
         title:
             Text(tProfile, style: Theme.of(context).textTheme.headlineMedium),
