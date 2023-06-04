@@ -3,36 +3,47 @@ import 'package:get/get.dart';
 
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/image_strings.dart';
-import '../../../../../constants/text_strings.dart';
-import '../../chat/chat.dart';
 import '../../profile/profile_screen.dart';
 
 class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DashboardAppBar({
     Key? key,
     required this.isDark,
+    required this.topTitle,
   }) : super(key: key);
 
   final bool isDark;
+  final String topTitle;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      elevation: 0,
-      centerTitle: true,
-      backgroundColor: Colors.transparent,
-      leading: IconButton(
-        onPressed: () => Get.to(() => const MyChat()),
-        // onPressed: () => AuthenticationRepository.instance.logout(),
-        icon: Icon(Icons.menu, color: isDark ? tWhiteColor : tDarkColor),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          bottom: Radius.circular(20),
+          // top: Radius.circular(20),
+        ),
       ),
-      title: Text(tAppName, style: Theme.of(context).textTheme.headlineMedium),
+      elevation: 10,
+      centerTitle: true,
+      backgroundColor: tAppbarBGColor,
+      automaticallyImplyLeading: false,
+      // leading:
+      // IconButton(
+      //   onPressed: () => Get.to(() => const MyChat()),
+      //   // onPressed: () => AuthenticationRepository.instance.logout(),
+      //   icon: Icon(Icons.menu, color: isDark ? tWhiteColor : tDarkColor),
+      // ),
+      title: Text(topTitle, style: Theme.of(context).textTheme.headlineMedium),
       actions: [
         Container(
-          margin: const EdgeInsets.only(right: 20, top: 7),
+          margin: const EdgeInsets.only(right: 15, top: 8, bottom: 8),
+          // width: 40,
+          // height: 40,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: isDark ? tSecondaryColor : tCardBgColor,
+            // borderRadius: BorderRadius.circular(10),
+            color: isDark ? tSecondaryColor : tAppbarProbileBGColor,
+            shape: BoxShape.circle,
           ),
           child: IconButton(
             onPressed: () => Get.to(() => const ProfileScreen()),
