@@ -16,68 +16,70 @@ class MyChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List<Color> gradientColors = [
-      AppColors.backgroundOne,
-      AppColors.backgroundThree
-    ];
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20),
-      child: Center(
-        child: Container(
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: gradientColors.first,
-                  spreadRadius: 1,
-                  blurRadius: 5,
-                  offset: const Offset(0, 0),
-                ),
-              ],
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              gradient: const LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: gradientColors),
+    const List<Color> gradientColors = [backgroundOne, backgroundThree];
+    return
+        // Padding(
+        //   padding: const EdgeInsets.only(left: 20, right: 20),
+        //   child:
+        Container(
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: gradientColors.first,
+            spreadRadius: 1,
+            blurRadius: 5,
+            offset: const Offset(0, 0),
+          ),
+        ],
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        gradient: const LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: gradientColors),
+      ),
+      // width: 420,
+      height: 280,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: SizedBox(
+              // width: 370,
+              height: 220,
+              child: LineChart(
+                lineChartData(allSpots),
+              ),
             ),
-            width: 420,
-            height: 280,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                    width: 370,
-                    height: 220,
-                    child: LineChart(
-                      lineChartData(allSpots),
-                    )),
-                const SizedBox(
-                  height: 10,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          SizedBox(
+            // width: 375,
+            height: 20,
+            child: Center(
+              child: Text(
+                subtitle,
+                textAlign: TextAlign.right,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
                 ),
-                SizedBox(
-                  width: 375,
-                  height: 20,
-                  child: Center(
-                    child: Text(
-                      subtitle,
-                      textAlign: TextAlign.right,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                )
-              ],
-            )),
+              ),
+            ),
+          ),
+        ],
+        // )
       ),
     );
   }
 
   static LineChartData chartData(List<FlSpot> allSpots) {
     List<Color> gradientColors = [
-      AppColors.underLineOne,
-      AppColors.underLineTwo,
+      underLineOne,
+      underLineTwo,
     ];
     return LineChartData(
       gridData: FlGridData(
@@ -87,13 +89,13 @@ class MyChart extends StatelessWidget {
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: AppColors.mainGridLineColor,
+            color: mainGridLineColor,
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: AppColors.mainGridLineColor,
+            color: mainGridLineColor,
             strokeWidth: 1,
           );
         },
@@ -126,7 +128,7 @@ class MyChart extends StatelessWidget {
       borderData: FlBorderData(
         show: true,
         border: const Border.fromBorderSide(
-            BorderSide(width: 0.5, color: AppColors.backgroundOne)),
+            BorderSide(width: 0.5, color: backgroundOne)),
       ),
       minX: 1,
       maxX: 30,

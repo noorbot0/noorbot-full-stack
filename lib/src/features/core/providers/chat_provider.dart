@@ -134,11 +134,60 @@ class ChatProvider {
     DateTime now = DateTime.now();
     String time = DateFormat("MM_dd_yyyy").format(now);
     log.info("Storing analysis($sentiment) for chatId($chatId) at time($time)");
-    DocumentReference documentReference = firebaseFirestore
+    DocumentReference dayDoc = firebaseFirestore
         .collection(FirestoreConstants.pathAnalysisCollection)
         .doc(chatId)
         .collection(FirestoreConstants.sentiment)
         .doc(time);
+    DocumentReference overallDoc = firebaseFirestore
+        .collection(FirestoreConstants.pathAnalysisCollection)
+        .doc(chatId)
+        .collection(FirestoreConstants.overall)
+        .doc(FirestoreConstants.allSentiments);
+    try {
+      dayDoc.get().then((DocumentSnapshot doc) {
+        log.info("Checking if analysis already exist doc($doc)");
+
+        Analysis dailyAnalysis = processTheAnalysis(
+            currentUserId, time, sentiment, sentiments, doc, errorCallback);
+
+        log.info("After update daily Analysis(${dailyAnalysis.toJson()})");
+        FirebaseFirestore.instance.runTransaction((transaction) async {
+          transaction.set(
+            dayDoc,
+            dailyAnalysis.toJson(),
+          );
+        });
+      });
+
+      overallDoc.get().then((DocumentSnapshot doc) {
+        log.info("Checking if analysis already exist doc($doc)");
+
+        Analysis overallAnalysis = processTheAnalysis(
+            currentUserId, time, sentiment, sentiments, doc, errorCallback);
+
+        log.info("After update overall Analysis(${overallAnalysis.toJson()})");
+        FirebaseFirestore.instance.runTransaction((transaction) async {
+          transaction.set(
+            overallDoc,
+            overallAnalysis.toJson(),
+          );
+        });
+      });
+    } catch (e) {
+      errorCallback(e.toString());
+    }
+  }
+
+  Analysis processTheAnalysis(
+    String currentUserId,
+    String time,
+    String sentiment,
+    List<String> sentiments,
+    DocumentSnapshot doc,
+    Function errorCallback,
+  ) {
+    Map<String, int> temp = <String, int>{};
     Analysis analysis = Analysis(
         idFrom: currentUserId,
         date: time,
@@ -147,51 +196,52 @@ class ChatProvider {
         sentimentNeutral: 0,
         sentimentPositive: 0,
         sentimentNone: 0,
-        sentiments: {});
+        sentiments: temp);
     try {
-      documentReference.get().then((DocumentSnapshot doc) {
-        log.info("Checking if analysis already exist doc($doc)");
-        if (doc.exists) {
-          analysis.messagesNumber = doc[FirestoreConstants.messagesNumber];
-          analysis.sentimentNegative =
-              doc[FirestoreConstants.sentimentNegative];
-          analysis.sentimentPositive =
-              doc[FirestoreConstants.sentimentPositive];
-          analysis.sentimentNeutral = doc[FirestoreConstants.sentimentNeutral];
-          analysis.sentimentNone = doc[FirestoreConstants.sentimentNone];
-          analysis.sentiments = doc[FirestoreConstants.sentiments];
-        }
-        log.info("Before update Analysis(${analysis.toJson()})");
-        analysis.messagesNumber += 1;
-        if (sentiment.contains(FirestoreConstants.sentimentNegative)) {
-          analysis.sentimentNegative += 1;
-        } else if (sentiment.contains(FirestoreConstants.sentimentPositive)) {
-          analysis.sentimentPositive += 1;
-        } else if (sentiment.contains(FirestoreConstants.sentimentNeutral)) {
-          analysis.sentimentNeutral += 1;
-        } else {
-          analysis.sentimentNone += 1;
-        }
-        for (var key1 in sentiments) {
-          analysis.sentiments.forEach((key2, value2) {
-            if (key1 == key2) {
-              analysis.sentiments[key1] = analysis.sentiments[key1]! + 1;
-            } else {
-              analysis.sentiments.addAll({key1: 1});
-            }
-          });
-        }
-        log.info("After update Analysis(${analysis.toJson()})");
-        FirebaseFirestore.instance.runTransaction((transaction) async {
-          transaction.set(
-            documentReference,
-            analysis.toJson(),
-          );
+      if (doc.exists) {
+        analysis.messagesNumber = doc[FirestoreConstants.messagesNumber];
+        analysis.sentimentNegative = doc[FirestoreConstants.sentimentNegative];
+        analysis.sentimentPositive = doc[FirestoreConstants.sentimentPositive];
+        analysis.sentimentNeutral = doc[FirestoreConstants.sentimentNeutral];
+        analysis.sentimentNone = doc[FirestoreConstants.sentimentNone];
+        analysis.sentiments =
+            Map<String, int>.from(doc[FirestoreConstants.sentiments]);
+      }
+      log.info("Before update Analysis(${analysis.toJson()})");
+      analysis.messagesNumber += 1;
+      // String sentimentTemp = FirestoreConstants.sentimentNone;
+      if (sentiment.contains(FirestoreConstants.sentimentNegative)) {
+        analysis.sentimentNegative += 1;
+        // sentimentTemp = FirestoreConstants.sentimentNegative;
+      } else if (sentiment.contains(FirestoreConstants.sentimentPositive)) {
+        analysis.sentimentPositive += 1;
+        // sentimentTemp = FirestoreConstants.sentimentPositive;
+      } else if (sentiment.contains(FirestoreConstants.sentimentNeutral)) {
+        analysis.sentimentNeutral += 1;
+        // sentimentTemp = FirestoreConstants.sentimentNeutral;
+      } else {
+        analysis.sentimentNone += 1;
+        // sentimentTemp = FirestoreConstants.sentimentNone;
+      }
+      for (var key1 in sentiments) {
+        bool isExist = false;
+        String tempKey1 = key1.trim().replaceAll(" ", "_");
+        analysis.sentiments.forEach((key2, value2) {
+          if (tempKey1 == key2) {
+            isExist = true;
+            return;
+          }
         });
-      });
+        if (isExist) {
+          analysis.sentiments[tempKey1] = analysis.sentiments[tempKey1]! + 1;
+        } else {
+          analysis.sentiments.addAll({tempKey1: 1});
+        }
+      }
     } catch (e) {
       errorCallback(e.toString());
     }
+    return analysis;
   }
 
   void updateAnalysisRandom(String currentUserId, String chatId,

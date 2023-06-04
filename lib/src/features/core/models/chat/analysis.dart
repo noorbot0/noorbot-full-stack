@@ -3,7 +3,7 @@ import 'package:noorbot_app/src/constants/firestore_constants.dart';
 
 class Analysis {
   final String idFrom;
-  final String date;
+  String date;
   int messagesNumber;
   int sentimentNegative;
   int sentimentPositive;

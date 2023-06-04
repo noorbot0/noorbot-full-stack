@@ -3,10 +3,14 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:noorbot_app/src/constants/firestore_constants.dart';
+import 'package:noorbot_app/src/constants/sizes.dart';
 import 'package:noorbot_app/src/constants/text_strings.dart';
+import 'package:noorbot_app/src/features/core/models/chat/analysis.dart';
 import 'package:noorbot_app/src/features/core/providers/logger_provider.dart';
 import 'package:noorbot_app/src/features/core/providers/tracker_provider.dart';
+import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/appbar.dart';
 import 'package:noorbot_app/src/features/core/screens/tracker/widgets/my_chart.dart';
+import 'package:noorbot_app/src/features/core/screens/tracker/widgets/my_pie_chart.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
@@ -27,16 +31,21 @@ class MyTracker extends State<Tracker> {
   List<Map<String, dynamic>> listMessage = [];
   List<FlSpot> sentimentSpots = [];
   bool isLoading = true;
+  bool isOverallLoading = true;
   bool noSentiment = false;
+  double posValue = 0;
+  double negValue = 0;
+  double neuValue = 0;
 
   @override
   void initState() {
     super.initState();
     chatRoomId = _auth.currentUser!.uid;
-    prepareSentimentAnalysis();
+    prepareDailySentimentAnalysis();
+    prepareOverallSentimentAnalysis();
   }
 
-  void prepareSentimentAnalysis() async {
+  void prepareDailySentimentAnalysis() async {
     log.info("Prepare sentiments analysis for chatId($chatRoomId)...");
     // setState(() {
     //   isLoading = true;
@@ -97,25 +106,103 @@ class MyTracker extends State<Tracker> {
     });
   }
 
+  void prepareOverallSentimentAnalysis() async {
+    log.info("Prepare overall sentiments analysis for chatId($chatRoomId)...");
+    setState(() {
+      isOverallLoading = true;
+    });
+    void errCallback(String errMsg) {
+      log.error("Error when fetching overall sentiments with msg($errMsg)");
+    }
+
+    Analysis overall = await sentimentProvider.getOverallSentimentsAnalysis(
+        _auth.currentUser!.uid, chatRoomId, errCallback);
+
+    posValue = overall.sentimentPositive * 100.0 / overall.messagesNumber;
+    neuValue = overall.sentimentNeutral * 100.0 / overall.messagesNumber;
+    negValue = overall.sentimentNegative * 100.0 / overall.messagesNumber;
+    setState(() {
+      isOverallLoading = false;
+    });
+  }
+
+  // Added total messages in overall
+  // full day analysis
+  // top used sentiments with emojies
+
   @override
   Widget build(BuildContext context) {
-    return !noSentiment
-        ? !isLoading
-            ? MyChart(
-                lineChartData: MyChart.chartData,
-                allSpots: sentimentSpots,
-                subtitle: netSentimentAnalysisGraphSubtitle,
+    final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    return SafeArea(
+      child: Scaffold(
+        appBar: DashboardAppBar(
+          isDark: isDark,
+          topTitle: tTrackingPageName,
+        ),
+        body: !isLoading && !isOverallLoading
+            ? SingleChildScrollView(
+                child: Container(
+                  padding: const EdgeInsets.all(tDashboardPadding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      //sentimentsChartSection
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: overallSentimentsChartSection(),
+                          ),
+                          const SizedBox(width: tDashboardPadding),
+
+                          Flexible(
+                            child: overallSentimentsChartSection(),
+                          )
+                          // overallSentimentsChartSection()
+                        ],
+                      ),
+                      const SizedBox(height: tDashboardPadding),
+
+                      overallSentimentsChartSection(),
+                      const SizedBox(height: tDashboardPadding),
+
+                      sentimentsChartSection(),
+                      const SizedBox(height: tDashboardPadding),
+                    ],
+                  ),
+                ),
               )
             : const Center(
                 child: CircularProgressIndicator(
                   color: Colors.purple,
                 ),
-              )
+              ),
+      ),
+    );
+  }
+
+  Widget sentimentsChartSection() {
+    return !noSentiment
+        ? MyChart(
+            lineChartData: MyChart.chartData,
+            allSpots: sentimentSpots,
+            subtitle: netSentimentAnalysisGraphSubtitle,
+          )
         : const Center(
             child: Text(
               noSentimentAnalysisMessage,
               textAlign: TextAlign.center,
             ),
           );
+  }
+
+  overallSentimentsChartSection() {
+    return MyPieChart(
+      subtitle: overallAnalysisGraphSubtitle,
+      negativeValue: negValue,
+      neutralValue: neuValue,
+      positiveValue: posValue,
+    );
   }
 }
