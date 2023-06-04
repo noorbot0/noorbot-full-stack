@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/features/authentication/controllers/login_controller.dart';
+
 import '../../../../../constants/sizes.dart';
 import '../../../../../constants/text_strings.dart';
-import '../../../../core/screens/dashboard/dashboard.dart';
 import '../../forget_password/forget_password_options/forget_password_model_bottom_sheet.dart';
 
 class LoginFormWidget extends StatelessWidget {
@@ -79,15 +79,17 @@ class LoginFormWidget extends StatelessWidget {
                         ? () {}
                         : () {
                             if (formKey.currentState!.validate()) {
-                              LoginController.instance
-                                  .loginUser(controller.email.text.trim(), controller.password.text.trim());
+                              LoginController.instance.loginUser(
+                                  controller.email.text.trim(),
+                                  controller.password.text.trim());
                             }
+                            // Get.to(MyNavBar()); USE THIS PLZ
                             // Get.to(Dashboard());
                           },
                     child: controller.isLoading.value
-                        ? Row(
+                        ? const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               SizedBox(
                                 width: 20,
                                 height: 20,
