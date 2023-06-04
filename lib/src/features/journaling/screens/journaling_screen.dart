@@ -1,13 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/appbar.dart';
+import 'package:noorbot_app/src/features/journaling/controllers/journals_controller.dart';
 import 'package:noorbot_app/src/features/journaling/models/journal_model.dart';
 import 'package:noorbot_app/src/features/journaling/screens/components/journal_card.dart';
-import 'package:noorbot_app/src/features/journaling/screens/components/journals_appbar.dart';
 import 'package:noorbot_app/src/features/journaling/screens/journal_screen.dart';
+
 import '../../../constants/sizes.dart';
 import '../../../constants/text_strings.dart';
-import 'package:noorbot_app/src/features/journaling/controllers/journals_controller.dart';
 
 class Journaling extends StatefulWidget {
   const Journaling({Key? key}) : super(key: key);
@@ -82,9 +83,13 @@ class _JournalingState extends State<Journaling> {
 
     return SafeArea(
         child: Scaffold(
-            appBar: JournalsAppBar(
+            appBar: DashboardAppBar(
               isDark: isDark,
+              topTitle: tJournalsPageName,
             ),
+            // JournalsAppBar(
+            //   isDark: isDark,
+            // ),
             body: Container(
                 padding: const EdgeInsets.all(tDashboardPadding),
                 child: Column(
