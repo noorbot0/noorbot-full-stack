@@ -11,12 +11,9 @@ const tWhiteColor = Colors.white;
 const tDarkColor = Color(0xff000000);
 const tCardBgColor = Color(0xFFF7F5F1);
 
-const tbackgroundColor = [
-  const Color(0xFFFFF7AD),
-  const Color(0xFFABD1A7)
-];
+const tbackgroundColor = [Color(0xFFFFF7AD), Color(0xFFABD1A7)];
 
-const tmainGreenColor =  const Color(0xFFABD1A7);
+const tmainGreenColor = Color(0xFFABD1A7);
 // -- ON-BOARDING COLORS
 const tOnBoardingPage1Color = Colors.white;
 const tOnBoardingPage2Color = Color(0xfffddcdf);
@@ -24,6 +21,7 @@ const tOnBoardingPage3Color = Color(0xffffdcbd);
 
 /* -- Navbar colors -- */
 const selectedItemColor = Color.fromARGB(255, 52, 109, 225);
+const nbShadowColor = Color.fromARGB(45, 0, 0, 0);
 
 class GradientColors {
   final List<Color> colors;
@@ -38,7 +36,6 @@ class GradientColors {
   static List<Color> mango = [const Color(0xFF2C3333), const Color(0xFFCBE4DE)];
   static List<Color> fire = [const Color(0xFFFF5DCD), const Color(0xFFFF8484)];
 }
-
 
 class GradientTemplate {
   static List<GradientColors> gradientTemplate = [
@@ -66,32 +63,21 @@ const kPrimaryGradient = LinearGradient(
 
 const double kDefaultPadding = 20.0;
 
-class AppColors {
-  static const Color primary = contentColorCyan;
-  static const Color menuBackground = Color(0xFF090912);
-  static const Color itemsBackground = Color(0xFF1B2339);
-  static const Color pageBackground = Color(0xFF282E45);
-  static const Color mainTextColor1 = Colors.white;
-  static const Color mainTextColor2 = Colors.white70;
-  static const Color mainTextColor3 = Colors.white38;
-  static const Color mainGridLineColor = Colors.white10;
-  static const Color borderColor = Colors.white54;
-  static const Color gridLinesColor = Color(0x11FFFFFF);
+// Net Sentiment Score Chart Colors
+const Color mainGridLineColor = Colors.white10;
+const Color underLineOne = Color.fromARGB(255, 57, 243, 162);
+const Color underLineTwo = Color.fromARGB(255, 207, 241, 111);
+const Color backgroundOne = Color(0xFF625ed7);
+const Color backgroundTwo = Color.fromARGB(255, 108, 105, 189);
+const Color backgroundThree = Color.fromARGB(255, 201, 91, 231);
 
-  static const Color contentColorBlack = Colors.black;
-  static const Color contentColorWhite = Colors.white;
-  static const Color contentColorBlue = Color(0xFF2196F3);
-  static const Color contentColorYellow = Color(0xFFFFC300);
-  static const Color contentColorOrange = Color(0xFFFF683B);
-  static const Color contentColorGreen = Color(0xFF3BFF49);
-  static const Color contentColorPurple = Color(0xFF6E1BFF);
-  static const Color contentColorPink = Color(0xFFFF3AF2);
-  static const Color contentColorRed = Color(0xFFE80054);
-  static const Color contentColorCyan = Color(0xFF50E4FF);
+// Overall Chart Colors
+const Color oaPosSectorColor = Color(0xFF5b9e2e);
+const Color oaNeuSectorColor = Color(0xFFefee5b);
+const Color oaNegSectorColor = Color(0xFFd44848);
+const Color oaBackgroundOne = Color(0xFFe87e7c);
+const Color oaBackgroundTwo = Color(0xFFfeb4b4);
 
-  static const Color underLineOne = Color.fromARGB(255, 57, 243, 162);
-  static const Color underLineTwo = Color.fromARGB(255, 207, 241, 111);
-  static const Color backgroundOne = Color(0xFF625ed7);
-  static const Color backgroundTwo = Color.fromARGB(255, 108, 105, 189);
-  static const Color backgroundThree = Color.fromARGB(255, 201, 91, 231);
-}
+// App Colors
+const Color tAppbarBGColor = Color(0xFFF0E37F);
+const Color tAppbarProbileBGColor = Color.fromARGB(255, 125, 158, 218);

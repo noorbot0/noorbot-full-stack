@@ -16,6 +16,16 @@ const String tSignInWithGoogle = "Sign-In with Google";
 
 // -- Splash Screen Text
 const String tAppName = "NoorBot";
+
+// App pages top title names
+const String tDashboardPageName = "Dashboard";
+const String tTrackingPageName = "Tracker";
+const String tChatPageName = "Chat";
+const String tJournalsPageName = "Journals";
+const String tProfilePageName = "Profile";
+const String tNotificationsPageName = "Notifications";
+const String tBDITestPageName = "BDI Test";
+
 const String tAppTagLine = "Your always-avaliable mental health ally";
 
 // -- On Boarding Text
@@ -96,9 +106,12 @@ const String tBdiTitle = "Negative Feelings check-in";
 const String tBdiSubTitle =
     "Chat with Noor to practice CBT whenever you force an emotional challenge, and never let negative emotions build up again";
 
-
+// Charts/Graphs subtitles
 const String netSentimentAnalysisGraphSubtitle =
     "Net Sentiment Score: Tracking Daily Sentiment Trends";
+const String overallAnalysisGraphSubtitle = "Overall Analysis";
+
+// Tracker Info
 const String noSentimentAnalysisMessage =
     "No sentiment analysis here yet...\nYou need to start the conversation with NoorBot for more than 1 day.";
 
@@ -107,15 +120,14 @@ const String tJournalingAppbar = "Journaling";
 const String tJournaling = "Your Daily Journals";
 const String tCreateOrEditTodayJournal = "Today's Journal";
 const String tTodayJournalCreate = "Create";
-const String tTodayJournalEdit= "Edit";
+const String tTodayJournalEdit = "Edit";
 const String tJournalingHelpDialogTitle = "What is journaling?";
-const String tJournalingHelpDialogText = "Journaling is a personal practice of writing that involves capturing thoughts, experiences, and reflections on a regular basis. It serves as a tool for self-expression, self-reflection, and personal growth.\n\r\n\rYou can only edit today's journal, previous ones are saved and read only.";
+const String tJournalingHelpDialogText =
+    "Journaling is a personal practice of writing that involves capturing thoughts, experiences, and reflections on a regular basis. It serves as a tool for self-expression, self-reflection, and personal growth.\n\r\n\rYou can only edit today's journal, previous ones are saved and read only.";
 // -- Journal Editor Screen
 const String tJournalEditor = "Today's Journal";
 const String tSavingJournal = "Title not provided, Using old title";
 const String tJournalAlertTitle = "Confirmation";
 const String tJournalAlertConfirm = "Do you want to delete today's journal?";
 const String tJournalAlertYes = "DELETE";
-const String tJournalAlertNo= "CANCEL";
-
-
+const String tJournalAlertNo = "CANCEL";
