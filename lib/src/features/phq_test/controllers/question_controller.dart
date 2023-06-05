@@ -1,14 +1,13 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:noorbot_app/src/features/authentication/models/user_model.dart';
-import 'package:noorbot_app/src/features/bdi_test/models/Questions.dart';
+import 'package:noorbot_app/src/features/phq_test/models/Questions.dart';
 import 'package:noorbot_app/src/features/core/controllers/profile_controller.dart';
-import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
+import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
 
 // We use get package for our state management
 
-class QuestionController extends GetxController
-    with SingleGetTickerProviderMixin {
+class QuestionController extends GetxController {
   late PageController _pageController;
   PageController get pageController => _pageController;
   final controller = Get.put(ProfileController());
@@ -61,7 +60,6 @@ class QuestionController extends GetxController
     _selectedAns = selectedIndex;
 
     _score.value = _score.value + _selectedAns;
-    print(_selectedAns);
     print(_score.value);
     update();
 
@@ -78,18 +76,17 @@ class QuestionController extends GetxController
           duration: const Duration(milliseconds: 100), curve: Curves.ease);
     } else {
       // Get package provide us simple way to naviigate another page
-
-      // Get.to(MyHomePage(title: "Chat"));
-      Get.to(const MyNavBar());
-      storeBdiResult();
+      storePHQResult();
+      Get.to(const Dashboard());
     }
   }
 
-  void updateTheQnNum(int index) {
+  int updateTheQnNum(int index) {
     _questionNumber.value = index + 1;
+    return _questionNumber.value;
   }
 
-  void storeBdiResult() {
+  void storePHQResult() {
     UserModel user = controller.getUserData() as UserModel;
     final userData = UserModel(
       id: user.id,
@@ -99,5 +96,7 @@ class QuestionController extends GetxController
       testScore: _score.value,
     );
     controller.updateRecord(userData);
+    _score.value = 0;
+    _questionNumber.value = 0;
   }
 }

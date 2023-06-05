@@ -39,8 +39,7 @@ const String tWelcomeSubTitle = "Your always-avaliable mental health ally";
 
 // -- Login Screen Text
 const String tLoginTitle = "Welcome Back,";
-// const String tLoginSubTitle = "Make it work, make it right, make it fast.";
-const String tLoginSubTitle = "Your always-avaliable mental health ally";
+const String tLoginSubTitle = "Small chats for big feelings.";
 const String tRememberMe = "Remember Me?";
 const String tDontHaveAnAccount = "Don't have an Account? ";
 
@@ -56,23 +55,13 @@ const String tForgetPasswordSubTitle =
 const String tResetViaEMail = "Reset via Mail Verification";
 const String tResetViaPhone = "Reset via Phone Verification";
 
-// -- Forget Password Via Phone - Text
-const String tForgetPhoneSubTitle =
-    "Enter your registered Phone No to receive OTP";
-
 // -- Forget Password Via E-Mail - Text
 const String tForgetMailSubTitle =
     "Enter your registered E-Mail to receive OTP";
 
-// -- OTP Screen - Text
-const String tOtpTitle = "CO\nDE";
-const String tOtpSubTitle = "Verification";
-const String tOtpMessage = "Enter the verification code sent at ";
-
 // -- Dashboard Screen - Text
 const String tDashboardTitle = "Hey, Freind";
 const String tDashboardHeading = "Explore CBT exercises and more..";
-const String tDashboardSearch = "Search...";
 const String tDashboardBannerTitle2 = "Noorbot Model";
 const String tDashboardButton = "View All";
 const String tDashboardTopCourses = "Top Courses";
@@ -100,12 +89,11 @@ const String tJoinedAt = " 20 June 2030";
 // -- Notifications Screen
 const String tNotificationTime = "Choose a daily check-in time";
 
-// -- BDI test screen
+// -- PHQ test screen
 const String tStart = "Start";
-const String tBdiTitle = "Negative Feelings check-in";
-const String tBdiSubTitle =
+const String tPHQTitle = "Negative Feelings check-in";
+const String tPHQSubTitle =
     "Chat with Noor to practice CBT whenever you force an emotional challenge, and never let negative emotions build up again";
-
 
 const String netSentimentAnalysisGraphSubtitle =
     "Net Sentiment Score: Tracking Daily Sentiment Trends";
@@ -117,15 +105,14 @@ const String tJournalingAppbar = "Journaling";
 const String tJournaling = "Your Daily Journals";
 const String tCreateOrEditTodayJournal = "Today's Journal";
 const String tTodayJournalCreate = "Create";
-const String tTodayJournalEdit= "Edit";
+const String tTodayJournalEdit = "Edit";
 const String tJournalingHelpDialogTitle = "What is journaling?";
-const String tJournalingHelpDialogText = "Journaling is a personal practice of writing that involves capturing thoughts, experiences, and reflections on a regular basis. It serves as a tool for self-expression, self-reflection, and personal growth.\n\r\n\rYou can only edit today's journal, previous ones are saved and read only.";
+const String tJournalingHelpDialogText =
+    "Journaling is a personal practice of writing that involves capturing thoughts, experiences, and reflections on a regular basis. It serves as a tool for self-expression, self-reflection, and personal growth.\n\r\n\rYou can only edit today's journal, previous ones are saved and read only.";
 // -- Journal Editor Screen
 const String tJournalEditor = "Today's Journal";
 const String tSavingJournal = "Title not provided, Using old title";
 const String tJournalAlertTitle = "Confirmation";
 const String tJournalAlertConfirm = "Do you want to delete today's journal?";
 const String tJournalAlertYes = "DELETE";
-const String tJournalAlertNo= "CANCEL";
-
-
+const String tJournalAlertNo = "CANCEL";

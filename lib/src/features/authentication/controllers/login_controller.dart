@@ -17,33 +17,26 @@ class LoginController extends GetxController {
   Future<void> loginUser(String email, String password) async {
     try {
       isLoading.value = true;
-      await AuthenticationRepository.instance.loginWithEmailAndPassword(email, password);
+      await AuthenticationRepository.instance
+          .loginWithEmailAndPassword(email, password);
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+      Get.snackbar("Error", e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
     }
   }
 
-
-  // /// [GoogleSignInAuthentication]
-  // Future<void> googleSignIn() async {
-  //   try {
-  //     isLoading.value = true;
-  //     await AuthenticationRepository.instance.signInWithGoogle();
-  //   } catch (e) {
-  //     isLoading.value = false;
-  //     Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
-  //   }
-  // }
-
-  // /// [FacebookSignInAuthentication]
-  // Future<void> facebookSignIn() async {
-  //   try {
-  //     isLoading.value = true;
-  //     await AuthenticationRepository.instance.signInWithFacebook();
-  //   } catch (e) {
-  //     isLoading.value = false;
-  //     Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
-  //   }
-  // }
+  /// [GoogleSignInAuthentication]
+  Future<void> googleSignIn() async {
+    try {
+      isLoading.value = true;
+      await AuthenticationRepository.instance.signInWithGoogle();
+    } catch (e) {
+      isLoading.value = false;
+      Get.snackbar("Error", e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 5));
+    }
+  }
 }
