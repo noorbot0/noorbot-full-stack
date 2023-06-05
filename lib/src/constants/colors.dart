@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 const tBGPrimaryColor = Color.fromARGB(255, 255, 255, 255);
 const tPrimaryColor = Color(0xFFE5B74E);
 const tSecondaryColor = Color(0xFF272727);
+const tLightGreyColor = Color.fromARGB(255, 122, 122, 122);
 const tAccentColor = Color(0xFF001BFF);
 
 const tWhiteColor = Colors.white;
@@ -20,6 +21,9 @@ const tmainGreenColor =  const Color(0xFFABD1A7);
 const tOnBoardingPage1Color = Colors.white;
 const tOnBoardingPage2Color = Color(0xfffddcdf);
 const tOnBoardingPage3Color = Color(0xffffdcbd);
+
+/* -- Navbar colors -- */
+const selectedItemColor = Color.fromARGB(255, 52, 109, 225);
 
 class GradientColors {
   final List<Color> colors;

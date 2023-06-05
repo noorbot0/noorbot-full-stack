@@ -2,6 +2,7 @@ class FirestoreConstants {
   static const pathUserCollection = "users";
   static const pathMessageCollection = "messages";
   static const pathAnalysisCollection = "analysis";
+  static const pathJournalsCollection = "journalss";
   static const nickname = "nickname";
   static const aboutMe = "aboutMe";
   static const photoUrl = "photoUrl";
@@ -23,4 +24,6 @@ class FirestoreConstants {
   static const sentimentNegative = "Negative";
   static const sentimentNeutral = "Neutral";
   static const sentimentNone = "None";
+  static const journal = "journal";
+  static const createdAt = "created_at";
 }
