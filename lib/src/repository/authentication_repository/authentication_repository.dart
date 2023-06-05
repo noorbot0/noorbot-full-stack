@@ -23,7 +23,7 @@ class AuthenticationRepository extends GetxController {
   String get getUserID => _firebaseUser.value?.uid ?? "";
 
   String get getUserEmail => _firebaseUser.value?.email ?? "";
-
+  
   /// When App launch, this func called.
   /// It set the firebaseUser state & remove the Splash Screen
   @override
@@ -106,3 +106,4 @@ class AuthenticationRepository extends GetxController {
     await _auth.signOut();
   }
 }
+

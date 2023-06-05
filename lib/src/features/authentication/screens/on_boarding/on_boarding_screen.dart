@@ -25,24 +25,6 @@ class OnBoardingScreen extends StatelessWidget {
             waveType: WaveType.circularReveal,
           ),
           Positioned(
-            bottom: 60.0,
-            child: OutlinedButton(
-              onPressed: () => obController.animateToNextSlide(),
-              style: ElevatedButton.styleFrom(
-                side: const BorderSide(color: Colors.black26),
-                shape: const CircleBorder(),
-                padding: const EdgeInsets.all(20),
-                foregroundColor: Colors.white,
-              ),
-              child: Container(
-                padding: const EdgeInsets.all(20.0),
-                decoration: const BoxDecoration(
-                    color: tDarkColor, shape: BoxShape.circle),
-                child: const Icon(Icons.arrow_forward_ios),
-              ),
-            ),
-          ),
-          Positioned(
             top: 50,
             right: 20,
             child: TextButton(
@@ -66,6 +48,4 @@ class OnBoardingScreen extends StatelessWidget {
       ),
     );
   }
-
-
 }

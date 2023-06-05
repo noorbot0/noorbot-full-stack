@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noorbot_app/src/features/bdi_test/controllers/question_controller.dart';
+import 'package:noorbot_app/src/features/phq_test/controllers/question_controller.dart';
 
 import 'components/body.dart';
 
-class BdiScreen extends StatelessWidget {
+class PHQScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     QuestionController controller = Get.put(QuestionController());

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noorbot_app/src/constants/colors.dart';
-import 'package:noorbot_app/src/features/bdi_test/controllers/question_controller.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:noorbot_app/src/features/phq_test/controllers/question_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import 'question_card.dart';

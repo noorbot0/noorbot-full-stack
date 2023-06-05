@@ -36,10 +36,6 @@ class OnBoardingPageWidget extends StatelessWidget {
               ),
             ],
           ),
-          Text(
-            model.counterText,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
           const SizedBox(
             height: 80.0,
           )

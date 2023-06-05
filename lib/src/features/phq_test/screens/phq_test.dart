@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noorbot_app/src/constants/image_strings.dart';
-import 'package:noorbot_app/src/features/bdi_test/screens/bdi_screen.dart';
+import 'package:noorbot_app/src/features/phq_test/screens/phq_screen.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/animation_design.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/fade_in_animation_controller.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/fade_in_animation_model.dart';
@@ -10,8 +10,8 @@ import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/appbar.d
 
 import '../../../constants/text_strings.dart';
 
-class BdiTest extends StatelessWidget {
-  const BdiTest({Key? key}) : super(key: key);
+class PHQTest extends StatelessWidget {
+  const PHQTest({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,11 +57,11 @@ class BdiTest extends StatelessWidget {
                                   height: height * 0.3)),
                           Column(
                             children: [
-                              Text(tBdiTitle,
+                              Text(tPHQTitle,
                                   style: Theme.of(context)
                                       .textTheme
                                       .displayMedium),
-                              Text(tBdiSubTitle,
+                              Text(tPHQSubTitle,
                                   style: Theme.of(context).textTheme.bodyLarge,
                                   textAlign: TextAlign.center),
                             ],
@@ -70,7 +70,7 @@ class BdiTest extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: OutlinedButton(
-                                  onPressed: () => Get.to(() => BdiScreen()),
+                                  onPressed: () => Get.to(() => PHQScreen()),
                                   child: Text(tStart.toUpperCase()),
                                 ),
                               ),
