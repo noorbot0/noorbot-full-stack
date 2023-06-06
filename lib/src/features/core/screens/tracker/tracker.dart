@@ -10,7 +10,10 @@ import 'package:noorbot_app/src/features/core/providers/logger_provider.dart';
 import 'package:noorbot_app/src/features/core/providers/tracker_provider.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/appbar.dart';
 import 'package:noorbot_app/src/features/core/screens/tracker/widgets/my_chart.dart';
+import 'package:noorbot_app/src/features/core/screens/tracker/widgets/my_daily_chart.dart';
 import 'package:noorbot_app/src/features/core/screens/tracker/widgets/my_pie_chart.dart';
+import 'package:noorbot_app/src/features/core/screens/tracker/widgets/rank.dart';
+import 'package:noorbot_app/src/features/core/screens/tracker/widgets/ranking.dart';
 // ignore: depend_on_referenced_packages
 import 'package:provider/provider.dart';
 
@@ -121,6 +124,16 @@ class MyTracker extends State<Tracker> {
     posValue = overall.sentimentPositive * 100.0 / overall.messagesNumber;
     neuValue = overall.sentimentNeutral * 100.0 / overall.messagesNumber;
     negValue = overall.sentimentNegative * 100.0 / overall.messagesNumber;
+    List<Rank> topRanks = [];
+    Map<String, int> top5 = {};
+    overall.sentiments.forEach(
+      (key, value) {
+        // top5.
+      },
+    );
+    // for (var el in overall.sentiments.entries) {
+
+    // }
     setState(() {
       isOverallLoading = false;
     });
@@ -152,7 +165,7 @@ class MyTracker extends State<Tracker> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Flexible(
-                            child: overallSentimentsChartSection(),
+                            child: MyRankChart(subtitle: "Rank Chart"),
                           ),
                           const SizedBox(width: tDashboardPadding),
 
@@ -164,7 +177,19 @@ class MyTracker extends State<Tracker> {
                       ),
                       const SizedBox(height: tDashboardPadding),
 
-                      overallSentimentsChartSection(),
+                      !noSentiment
+                          ? MyDailyChart(
+                              lineChartData: MyDailyChart.chartData,
+                              allSpots: sentimentSpots,
+                              subtitle: netSentimentAnalysisGraphSubtitle,
+                            )
+                          : const Center(
+                              child: Text(
+                                noSentimentAnalysisMessage,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                      // overallSentimentsChartSection(),
                       const SizedBox(height: tDashboardPadding),
 
                       sentimentsChartSection(),
