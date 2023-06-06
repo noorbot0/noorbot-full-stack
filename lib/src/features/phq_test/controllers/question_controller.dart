@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:noorbot_app/src/features/authentication/models/user_model.dart';
-import 'package:noorbot_app/src/features/bdi_test/models/Questions.dart';
 import 'package:noorbot_app/src/features/core/controllers/profile_controller.dart';
 import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
+import 'package:noorbot_app/src/features/phq_test/models/Questions.dart';
 
 // We use get package for our state management
 
@@ -76,7 +76,7 @@ class QuestionController extends GetxController {
           duration: const Duration(milliseconds: 100), curve: Curves.ease);
     } else {
       // Get package provide us simple way to naviigate another page
-      storeBdiResult();
+      storePHQResult();
       // Get.to(Dashboard());
       Get.to(const MyNavBar());
     }
@@ -87,7 +87,7 @@ class QuestionController extends GetxController {
     return _questionNumber.value;
   }
 
-  void storeBdiResult() {
+  void storePHQResult() {
     UserModel user = controller.getUserData() as UserModel;
     final userData = UserModel(
       id: user.id,

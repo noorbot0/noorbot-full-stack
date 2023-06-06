@@ -54,7 +54,6 @@ dependencies:
   firebase_messaging: ^14.6.1
   overlay_support: ^2.1.0
 
-
   ## -- GPT
   chat_gpt_sdk: 2.1.6
 

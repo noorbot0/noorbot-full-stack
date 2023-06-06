@@ -72,7 +72,6 @@ const String tForgetMailSubTitle =
 // -- Dashboard Screen - Text
 const String tDashboardTitle = "Hey, Freind";
 const String tDashboardHeading = "Explore CBT exercises and more..";
-const String tDashboardSearch = "Search...";
 const String tDashboardBannerTitle2 = "Noorbot Model";
 const String tDashboardButton = "View All";
 const String tDashboardTopCourses = "Top Courses";
@@ -102,8 +101,8 @@ const String tNotificationTime = "Choose a daily check-in time";
 
 // -- PHQ test screen
 const String tStart = "Start";
-const String tBdiTitle = "Negative Feelings check-in";
-const String tBdiSubTitle =
+const String tPHQTitle = "Negative Feelings check-in";
+const String tPHQSubTitle =
     "Chat with Noor to practice CBT whenever you force an emotional challenge, and never let negative emotions build up again";
 
 // Charts/Graphs subtitles
