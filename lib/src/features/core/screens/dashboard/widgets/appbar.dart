@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:noorbot_app/src/features/notifications/notifications_screen.dart';
 
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/image_strings.dart';
@@ -18,16 +19,9 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(20),
-          // top: Radius.circular(20),
-        ),
-      ),
       elevation: 10,
       centerTitle: true,
       backgroundColor: tmainGreenColor,
-
       automaticallyImplyLeading: false,
       // leading:
       // IconButton(
@@ -35,21 +29,27 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       //   // onPressed: () => AuthenticationRepository.instance.logout(),
       //   icon: Icon(Icons.menu, color: isDark ? tWhiteColor : tDarkColor),
       // ),
+      // color:tSecondaryColor,
       title: Text(topTitle, style: Theme.of(context).textTheme.headlineMedium),
       actions: [
         Container(
           margin: const EdgeInsets.only(right: 15, top: 8, bottom: 8),
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            // borderRadius: BorderRadius.circular(10),
-            color: tAppbarBGColor,
-            shape: BoxShape.circle,
-          ),
+          // width: 40,
+          // height: 40,
+          // decoration: BoxDecoration(
+          //   // borderRadius: BorderRadius.circular(10),
+          //   color: tAppbarBGColor,
+          //   shape: BoxShape.circle,
+          // ),
           child: IconButton(
-            onPressed: () => Get.to(() => const ProfileScreen()),
+            onPressed: () => Get.to(() => const NotificationsScreen()),
             // onPressed: () => AuthenticationRepository.instance.logout(),
-            icon: const Image(image: AssetImage(tUserProfileImage)),
+            icon: const Icon(
+              Icons.notifications,
+              color: tAppbarBGColor,
+              shadows: <Shadow>[Shadow(color: Colors.black, blurRadius: 15.0)],
+              size: 30,
+            ),
           ),
         )
       ],
@@ -57,6 +57,5 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(55);
 }

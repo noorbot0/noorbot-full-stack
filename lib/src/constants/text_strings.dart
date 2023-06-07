@@ -71,8 +71,8 @@ const String tForgetMailSubTitle =
     "Enter your registered E-Mail to receive OTP";
 
 // -- Dashboard Screen - Text
-const String tDashboardTitle = "Hey, Freind";
-const String tDashboardHeading = "Explore CBT exercises and more..";
+const String tDashboardTitle = "";
+const String tDashboardHeading = "";
 const String tDashboardBannerTitle2 = "Noorbot Model";
 const String tDashboardButton = "View All";
 const String tDashboardTopCourses = "Top Courses";
