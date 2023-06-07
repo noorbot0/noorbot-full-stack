@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/constants/sizes.dart';
 import 'package:noorbot_app/src/constants/text_strings.dart';
-import 'package:noorbot_app/src/features/phq_test/screens/phq_test.dart';
-import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
+import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/update_profile_screen.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/widgets/image_with_icon.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/widgets/profile_menu.dart';
+import 'package:noorbot_app/src/features/phq_test/screens/phq_test.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../repository/authentication_repository/authentication_repository.dart';
@@ -19,13 +19,14 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _authRepo = AuthenticationRepository.instance;
+    final authRepo = AuthenticationRepository.instance;
 
     var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            onPressed: () => Get.to(Dashboard()),
+            onPressed: () => Get.to(const MyNavBar()),
+            // onPressed: () => Get.to(Dashboard()),
             icon: const Icon(LineAwesomeIcons.angle_left)),
         title:
             Text(tProfile, style: Theme.of(context).textTheme.headlineMedium),
@@ -43,7 +44,7 @@ class ProfileScreen extends StatelessWidget {
               /// -- IMAGE with ICON
               const ImageWithIcon(),
               const SizedBox(height: 5),
-              Text(_authRepo.getUserEmail,
+              Text(authRepo.getUserEmail,
                   style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: 10),
 

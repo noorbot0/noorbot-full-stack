@@ -39,3 +39,15 @@ const String tProfileImage = "assets/images/profile/logo_head.png";
 
 // -- Chat Images
 const String tChatImage = "assets/images/profile/head_with_bg.png";
+const String tChatImage2 = "assets/images/profile/head_with_bg_02.png";
+const String tChatImage3 = "assets/images/profile/head_with_bg_03.png";
+const String tChatImage4 = "assets/images/profile/head_with_bg_04.png";
+const String tChatImage5 = "assets/images/profile/head_with_bg_05.png";
+const String tChatImage6 = "assets/images/profile/head_with_bg_06.png";
+const String tChatImage7 = "assets/images/profile/head_with_bg_07.png";
+const String tChatWithoutBGImage = "assets/images/profile/head_without_bg.png";
+
+// -- Tracker Charts Images
+const String tChartHappyFaceImage = "assets/icons/Happy_face_Outline.svg";
+const String tChartNeutralFaceImage = "assets/icons/Neutral_face_Outline.svg";
+const String tChartSadFaceImage = "assets/icons/Sad_face_Outline.svg";

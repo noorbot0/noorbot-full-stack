@@ -16,6 +16,16 @@ const String tSignInWithGoogle = "Sign-In with Google";
 
 // -- Splash Screen Text
 const String tAppName = "NoorBot";
+
+// App pages top title names
+const String tDashboardPageName = "Dashboard";
+const String tTrackingPageName = "Tracker";
+const String tChatPageName = "Chat";
+const String tJournalsPageName = "Journals";
+const String tProfilePageName = "Profile";
+const String tNotificationsPageName = "Notifications";
+const String tBDITestPageName = "BDI Test";
+
 const String tAppTagLine = "Your always-avaliable mental health ally";
 
 // -- On Boarding Text
@@ -95,10 +105,20 @@ const String tPHQTitle = "Negative Feelings check-in";
 const String tPHQSubTitle =
     "Chat with Noor to practice CBT whenever you force an emotional challenge, and never let negative emotions build up again";
 
+// Charts/Graphs subtitles
+const String trackerIntroText =
+    "Track your sentiment trends effortlessly with the Tracker feature. Gain valuable insights into your daily sentiment and observe your overall emotional patterns. With a comprehensive view of the past 30 days, understand your journey towards emotional well-being and uncover trends that can guide your self-reflection and personal growth.";
 const String netSentimentAnalysisGraphSubtitle =
     "Net Sentiment Score: Tracking Daily Sentiment Trends";
+const String dailyAnalysisGraphSubtitle = "Tracking Today Sentiments Trends";
+const String overallAnalysisGraphSubtitle = "Overall Analysis";
+
+// Tracker Info
 const String noSentimentAnalysisMessage =
     "No sentiment analysis here yet...\nYou need to start the conversation with NoorBot for more than 1 day.";
+const String dailyTitle = "Daily Analysis";
+const String overallTitle = "Overall Analysis";
+const String over30DaysTitle = "Last 30 Days Analysis";
 
 // -- Journaling screen
 const String tJournalingAppbar = "Journaling";

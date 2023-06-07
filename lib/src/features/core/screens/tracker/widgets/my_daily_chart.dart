@@ -2,8 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:noorbot_app/src/constants/colors.dart';
 
-class MyChart extends StatelessWidget {
-  const MyChart({
+class MyDailyChart extends StatelessWidget {
+  const MyDailyChart({
     super.key,
     required this.lineChartData,
     required this.allSpots,
@@ -16,7 +16,7 @@ class MyChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const List<Color> gradientColors = [backgroundOne, backgroundThree];
+    const List<Color> gradientColors = [dailyBackgroundOne, dailyBackgroundTwo];
     return
         // Padding(
         //   padding: const EdgeInsets.only(left: 20, right: 20),
@@ -91,13 +91,13 @@ class MyChart extends StatelessWidget {
         verticalInterval: 1,
         getDrawingHorizontalLine: (value) {
           return FlLine(
-            color: mainGridLineColor,
+            color: dailyGridColor,
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return FlLine(
-            color: mainGridLineColor,
+            color: dailyGridColor,
             strokeWidth: 1,
           );
         },
@@ -130,7 +130,7 @@ class MyChart extends StatelessWidget {
       borderData: FlBorderData(
         show: true,
         border: const Border.fromBorderSide(
-            BorderSide(width: 0.5, color: backgroundOne)),
+            BorderSide(width: 0.5, color: oaBackgroundTwo)),
       ),
       minX: 1,
       maxX: 30,
