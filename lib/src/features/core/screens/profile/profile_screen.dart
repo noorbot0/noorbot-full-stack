@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/constants/sizes.dart';
 import 'package:noorbot_app/src/constants/text_strings.dart';
+import 'package:noorbot_app/src/features/hotlines/hotlines_screen.dart';
 import 'package:noorbot_app/src/features/phq_test/screens/phq_test.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/update_profile_screen.dart';
@@ -12,7 +13,6 @@ import 'package:noorbot_app/src/features/core/screens/profile/widgets/profile_me
 import '../../../../constants/colors.dart';
 import '../../../../repository/authentication_repository/authentication_repository.dart';
 import '../NotifcationsTime/notifications_time.dart';
-import 'all_users.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -71,9 +71,9 @@ class ProfileScreen extends StatelessWidget {
               const Divider(),
               const SizedBox(height: 10),
               ProfileMenuWidget(
-                  title: "Information",
+                  title: tMenu4,
                   icon: LineAwesomeIcons.info,
-                  onPress: () {}),
+                  onPress: () => Get.to(HotLines())),
               ProfileMenuWidget(
                   title: "Logout",
                   icon: LineAwesomeIcons.alternate_sign_out,

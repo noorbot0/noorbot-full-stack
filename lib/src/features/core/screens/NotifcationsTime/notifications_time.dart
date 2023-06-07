@@ -30,14 +30,14 @@ class NotificationsTime extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(tNotificationTime, style: txtTheme.bodyMedium),
-                        // const SizedBox(height: defaultPadding * 2),
+                        
                         const TimesList(),
                         Row(
                           children: [
                             Expanded(
                               child: OutlinedButton(
-                                onPressed: () =>
-                                    Get.to(() => const Dashboard()),
+                                onPressed: () => Get.snackbar(
+                                    "Updated", "You will receive notifications at this time"),
                                 child: Text(tSave.toUpperCase()),
                               ),
                             ),

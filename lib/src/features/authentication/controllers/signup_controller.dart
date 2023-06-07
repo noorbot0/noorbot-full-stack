@@ -26,7 +26,7 @@ class SignUpController extends GetxController {
       // AuthenticationRepository.instance.firebaseUser.refresh();
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+      Get.snackbar("Sorry", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }
   }
 
@@ -48,7 +48,7 @@ class SignUpController extends GetxController {
       await AuthenticationRepository.instance.signInWithGoogle();
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
+      Get.snackbar("Sorry", e.toString(), snackPosition: SnackPosition.BOTTOM, duration: const Duration(seconds: 5));
     }
   }
 }

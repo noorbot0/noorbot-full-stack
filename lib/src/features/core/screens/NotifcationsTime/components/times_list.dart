@@ -31,6 +31,8 @@ class TimesList extends StatelessWidget {
           icon: Icons.bed,
           gradientColorIndex: 3),
     ];
+    String notifications_time = 'Evening';
+    
     return SizedBox(
         height: 450,
         width: 300,

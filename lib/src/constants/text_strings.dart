@@ -78,7 +78,7 @@ const String tProfileSubHeading = "noor@gmail.com";
 // -- Menu
 const String tMenu5 = tLogout;
 const String tMenu1 = "Settings";
-const String tMenu4 = "Information";
+const String tMenu4 = "HotLines Adress";
 const String tMenu2 = "Billing Details";
 const String tMenu3 = "User Management";
 

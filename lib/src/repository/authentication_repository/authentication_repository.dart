@@ -23,7 +23,7 @@ class AuthenticationRepository extends GetxController {
   String get getUserID => _firebaseUser.value?.uid ?? "";
 
   String get getUserEmail => _firebaseUser.value?.email ?? "";
-  
+
   /// When App launch, this func called.
   /// It set the firebaseUser state & remove the Splash Screen
   @override
@@ -102,8 +102,7 @@ class AuthenticationRepository extends GetxController {
 
   /// LOGOUT USER - Valid for GOOGLE & other authentications.
   Future<void> logout() async {
-    await GoogleSignIn().disconnect();
+    // await GoogleSignIn().disconnect();
     await _auth.signOut();
   }
 }
-
