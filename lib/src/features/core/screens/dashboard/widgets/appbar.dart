@@ -26,7 +26,8 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       elevation: 10,
       centerTitle: true,
-      backgroundColor: tAppbarBGColor,
+      backgroundColor: tmainGreenColor,
+
       automaticallyImplyLeading: false,
       // leading:
       // IconButton(
@@ -38,11 +39,11 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Container(
           margin: const EdgeInsets.only(right: 15, top: 8, bottom: 8),
-          // width: 40,
-          // height: 40,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
             // borderRadius: BorderRadius.circular(10),
-            color: isDark ? tSecondaryColor : tAppbarProbileBGColor,
+            color: tAppbarBGColor,
             shape: BoxShape.circle,
           ),
           child: IconButton(

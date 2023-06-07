@@ -26,7 +26,6 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () => Get.to(const MyNavBar()),
-            // onPressed: () => Get.to(Dashboard()),
             icon: const Icon(LineAwesomeIcons.angle_left)),
         title:
             Text(tProfile, style: Theme.of(context).textTheme.headlineMedium),
@@ -57,8 +56,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              const Divider(),
-              const SizedBox(height: 10),
 
               /// -- MENU
               ProfileMenuWidget(
@@ -69,8 +66,6 @@ class ProfileScreen extends StatelessWidget {
                   title: "PHQ-9 Test",
                   icon: LineAwesomeIcons.wallet,
                   onPress: () => Get.to(const PHQTest())),
-              const Divider(),
-              const SizedBox(height: 10),
               ProfileMenuWidget(
                   title: tMenu4,
                   icon: LineAwesomeIcons.info,

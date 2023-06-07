@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/features/authentication/controllers/login_controller.dart';
+import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
 
 import '../../../../../constants/sizes.dart';
 import '../../../../../constants/text_strings.dart';
@@ -83,7 +84,8 @@ class LoginFormWidget extends StatelessWidget {
                                   controller.email.text.trim(),
                                   controller.password.text.trim());
                             }
-                            // Get.to(MyNavBar()); USE THIS PLZ
+                            Get.to(MyNavBar()); 
+                            //USE THIS PLZ
                             // Get.to(Dashboard());
                           },
                     child: controller.isLoading.value

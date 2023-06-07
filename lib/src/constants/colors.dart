@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 /* -- LIST OF ALL COLORS -- */
 const tBGPrimaryColor = Color.fromARGB(255, 255, 255, 255);
-const tPrimaryColor = Color(0xFFE5B74E);
+const tPrimaryColor = Color(0xFFABD1A7);
+const tDarkPrimaryColor = Color.fromARGB(255, 84, 190, 73);
 const tSecondaryColor = Color(0xFF272727);
 const tLightGreyColor = Color.fromARGB(255, 122, 122, 122);
 const tAccentColor = Color(0xFF001BFF);
@@ -12,6 +13,10 @@ const tDarkColor = Color(0xff000000);
 const tCardBgColor = Color(0xFFF7F5F1);
 
 const tbackgroundColor = [Color(0xFFFFF7AD), Color(0xFFABD1A7)];
+const tbackgroundColorFlipped = [
+  Color.fromARGB(255, 159, 206, 154),
+  Color.fromARGB(255, 248, 237, 139)
+];
 
 const tmainGreenColor = Color(0xFFABD1A7);
 // -- ON-BOARDING COLORS
@@ -20,7 +25,7 @@ const tOnBoardingPage2Color = Color(0xfffddcdf);
 const tOnBoardingPage3Color = Color(0xffffdcbd);
 
 /* -- Navbar colors -- */
-const selectedItemColor = Color.fromARGB(255, 52, 109, 225);
+const selectedItemColor = Color.fromARGB(255, 84, 190, 73);
 const nbShadowColor = Color.fromARGB(45, 0, 0, 0);
 
 class GradientColors {
