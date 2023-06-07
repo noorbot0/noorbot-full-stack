@@ -19,7 +19,7 @@ class NotificationsTime extends StatelessWidget {
         child: Scaffold(
             appBar: AppBar(
               leading: IconButton(
-                  onPressed: () => Get.to(ProfileScreen()),
+                  onPressed: () => Get.to(const ProfileScreen()),
                   icon: const Icon(LineAwesomeIcons.angle_left)),
               title: Text(tNotifications,
                   style: Theme.of(context).textTheme.headlineMedium),

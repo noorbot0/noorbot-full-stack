@@ -17,16 +17,16 @@ class TermsOfUse extends StatelessWidget {
         textAlign: TextAlign.center,
         text: TextSpan(
           text: "By creating an account, you are agreeing to our\n",
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
           children: [
             TextSpan(
               text: "Terms & Conditions ",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   showModal(
                     context: context,
-                    configuration: FadeScaleTransitionConfiguration(),
+                    configuration: const FadeScaleTransitionConfiguration(),
                     builder: (context) {
                       return PolicyDialog(
                         mdFileName: 'terms_and_conditions.md',
@@ -35,10 +35,10 @@ class TermsOfUse extends StatelessWidget {
                   );
                 },
             ),
-            TextSpan(text: "and "),
+            const TextSpan(text: "and "),
             TextSpan(
               text: "Privacy Policy! ",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   showDialog(

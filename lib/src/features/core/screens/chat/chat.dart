@@ -55,7 +55,7 @@ class Chat extends State<MyChat> {
         .isThereMessages(_auth.currentUser!.uid, chatRoomId,
             (Map<String, dynamic> msg, int length) {
       log.info("Last message sent in the chat ($msg)");
-      print(length);
+      // print(length);
       if (length == 2) {
         if (mounted) {
           setState(() {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noorbot_app/src/features/authentication/controllers/login_controller.dart';
 import 'package:noorbot_app/src/features/authentication/screens/signup/signup_screen.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+
 import '../../../../../constants/image_strings.dart';
 import '../../../../../constants/sizes.dart';
 import '../../../../../constants/text_strings.dart';

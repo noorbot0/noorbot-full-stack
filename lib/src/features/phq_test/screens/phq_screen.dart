@@ -5,6 +5,8 @@ import 'package:noorbot_app/src/features/phq_test/controllers/question_controlle
 import 'components/body.dart';
 
 class PHQScreen extends StatelessWidget {
+  const PHQScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     QuestionController controller = Get.put(QuestionController());

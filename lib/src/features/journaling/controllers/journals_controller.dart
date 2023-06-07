@@ -1,13 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:noorbot_app/src/features/authentication/models/user_model.dart';
 import 'package:noorbot_app/src/features/journaling/models/journal_model.dart';
 import 'package:noorbot_app/src/repository/authentication_repository/authentication_repository.dart';
-import 'package:noorbot_app/src/repository/user_repository/user_repository.dart';
 import 'package:noorbot_app/src/repository/journals_repository/journals_repository.dart';
+import 'package:noorbot_app/src/repository/user_repository/user_repository.dart';
 
 class JournalsController extends GetxController {
-
   static JournalsController get instance => Get.find();
 
   /// Repositories
@@ -72,19 +69,17 @@ class JournalsController extends GetxController {
     }
   }
 
-
   /// Update User Journal Data
   updateRecord(String text, String title) async {
-
-      final currentUserId = _authRepo.getUserEmail;
-      if (currentUserId.isEmpty) {
-        Get.snackbar("Error", "No user found!",
-            snackPosition: SnackPosition.BOTTOM,
-            duration: const Duration(seconds: 3));
-        return;
-      } else {
-        await _journalRepo.updateUserJournalRecord(currentUserId, text, title);
-      }
+    final currentUserId = _authRepo.getUserEmail;
+    if (currentUserId.isEmpty) {
+      Get.snackbar("Error", "No user found!",
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 3));
+      return;
+    } else {
+      await _journalRepo.updateUserJournalRecord(currentUserId, text, title);
+    }
 
     //Show some message or redirect to other screen here...
   }
@@ -108,7 +103,6 @@ class JournalsController extends GetxController {
     //Show some message or redirect to other screen here...
   }
 
-
   deleteTodaysJournal() async {
     try {
       final currentUserId = _authRepo.getUserEmail;
@@ -121,12 +115,10 @@ class JournalsController extends GetxController {
         await _journalRepo.deleteJournal(currentUserId);
       }
     } catch (e) {
-    Get.snackbar("Error", e.toString(),
-    snackPosition: SnackPosition.BOTTOM,
-    duration: const Duration(seconds: 3));
+      Get.snackbar("Error", e.toString(),
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 3));
     }
     //Show some message or redirect to other screen here...
-
   }
-
 }

@@ -71,7 +71,8 @@ class PHQTest extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: OutlinedButton(
-                                  onPressed: () => Get.to(() => PHQScreen()),
+                                  onPressed: () =>
+                                      Get.to(() => const PHQScreen()),
                                   child: Text(tStart.toUpperCase()),
                                 ),
                               ),

@@ -11,7 +11,7 @@ class QuestionController extends GetxController {
   late PageController _pageController;
   PageController get pageController => _pageController;
   final controller = Get.put(ProfileController());
-  final List<Question> _questions = sample_data
+  final List<Question> _questions = sampleData
       .map(
         (question) => Question(
             id: question['id'],
@@ -60,7 +60,7 @@ class QuestionController extends GetxController {
     _selectedAns = selectedIndex;
 
     _score.value = _score.value + _selectedAns;
-    print(_score.value);
+    // print(_score.value);
     update();
 
     // Once user select an ans after 3s it will go to the next qn

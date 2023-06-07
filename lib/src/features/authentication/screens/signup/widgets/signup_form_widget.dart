@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/features/authentication/models/user_model.dart';
-import '../../../../../constants/sizes.dart';
+
 import '../../../../../constants/colors.dart';
+import '../../../../../constants/sizes.dart';
 import '../../../../../constants/text_strings.dart';
 import '../../../controllers/signup_controller.dart';
 import '../../privacy_policy/terms_of_use.dart';
@@ -41,7 +42,7 @@ class SignUpFormWidget extends StatelessWidget {
                   prefixIcon: Icon(Icons.fingerprint),
                   prefixIconColor: tmainGreenColor),
             ),
-            TermsOfUse(),
+            const TermsOfUse(),
             const SizedBox(height: tFormHeight - 10),
             Obx(
               () => SizedBox(
@@ -58,9 +59,9 @@ class SignUpFormWidget extends StatelessWidget {
                     }
                   },
                   child: controller.isLoading.value
-                      ? Row(
+                      ? const Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
+                          children: [
                             SizedBox(
                               width: 20,
                               height: 20,

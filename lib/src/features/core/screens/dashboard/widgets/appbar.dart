@@ -41,7 +41,7 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
           margin: const EdgeInsets.only(right: 15, top: 8, bottom: 8),
           width: 40,
           height: 40,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             // borderRadius: BorderRadius.circular(10),
             color: tAppbarBGColor,
             shape: BoxShape.circle,
@@ -57,6 +57,5 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(55);
 }
