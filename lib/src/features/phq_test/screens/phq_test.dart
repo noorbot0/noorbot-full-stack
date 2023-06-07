@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:noorbot_app/src/constants/image_strings.dart';
+import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/appbar.dart';
 import 'package:noorbot_app/src/features/phq_test/screens/phq_screen.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/animation_design.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/fade_in_animation_controller.dart';
 import 'package:noorbot_app/src/utils/animations/fade_in_animation/fade_in_animation_model.dart';
-import '../../../constants/sizes.dart';
-import 'package:noorbot_app/src/features/core/screens/dashboard/widgets/appbar.dart';
 
+import '../../../constants/sizes.dart';
 import '../../../constants/text_strings.dart';
 
 class PHQTest extends StatelessWidget {
@@ -29,6 +29,7 @@ class PHQTest extends StatelessWidget {
         child: Scaffold(
             appBar: DashboardAppBar(
               isDark: isDark,
+              topTitle: tBDITestPageName,
             ),
             body: Stack(children: [
               TFadeInAnimation(

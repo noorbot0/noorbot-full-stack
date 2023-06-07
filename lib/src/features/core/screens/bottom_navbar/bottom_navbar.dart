@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noorbot_app/src/constants/colors.dart';
 import 'package:noorbot_app/src/features/core/providers/logger_provider.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/chat.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
@@ -43,27 +44,33 @@ class NavBar extends State<MyNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.transparent,
       body: Center(
         child: options.elementAt(selectedIndex),
       ),
       bottomNavigationBar: Container(
+        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
-            topRight: Radius.circular(30),
-            topLeft: Radius.circular(30),
-            // bottomRight: Radius.circular(30),
-            // bottomLeft: Radius.circular(30),
+            topRight: Radius.circular(20),
+            topLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+            bottomLeft: Radius.circular(20),
           ),
           boxShadow: [
-            BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+            BoxShadow(
+                color: nbShadowColor,
+                spreadRadius: 0,
+                blurRadius: 50,
+                offset: Offset(0, 0)),
           ],
         ),
         child: ClipRRect(
           borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
-            // bottomLeft: Radius.circular(30.0),
-            // bottomRight: Radius.circular(30.0),
+            topLeft: Radius.circular(20.0),
+            topRight: Radius.circular(20.0),
+            bottomLeft: Radius.circular(20.0),
+            bottomRight: Radius.circular(20.0),
           ),
           child: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[

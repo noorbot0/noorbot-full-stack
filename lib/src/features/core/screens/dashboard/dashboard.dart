@@ -21,6 +21,7 @@ class Dashboard extends StatelessWidget {
       child: Scaffold(
         appBar: DashboardAppBar(
           isDark: isDark,
+          topTitle: tDashboardPageName,
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -32,6 +33,10 @@ class Dashboard extends StatelessWidget {
                 Text(tDashboardTitle, style: txtTheme.bodyMedium),
                 Text(tDashboardHeading, style: txtTheme.headlineSmall),
                 const SizedBox(height: tDashboardPadding),
+
+                //Search Box
+                // DashboardSearchBox(txtTheme: txtTheme),
+                // const SizedBox(height: tDashboardPadding),
 
                 //Categories
                 DashboardCategories(txtTheme: txtTheme),

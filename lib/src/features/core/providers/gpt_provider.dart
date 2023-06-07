@@ -55,7 +55,6 @@ class GPTProvider {
 
       sentimentAnalysis(
           content, currentUserId, chatId, analyserCallBack, errCallback);
-      extractSentiments(content, currentUserId, chatId);
     }
     final request = ChatCompleteText(
       messages: msgs,
@@ -94,7 +93,10 @@ class GPTProvider {
       chatId,
       (String rs) {
         log.info("Analysis($rs)");
-        cp.updateAnalysis(currentUserId, chatId, rs, errorCallback);
+        extractSentiments(message, currentUserId, chatId,
+            (List<String> values) {
+          cp.updateAnalysis(currentUserId, chatId, rs, values, errorCallback);
+        });
         callback(rs);
       },
       (String err) {
@@ -145,25 +147,7 @@ class GPTProvider {
             !response.contains("ERROR") &&
             !response.contains("Error") &&
             !response.contains("null")) {
-          suggestions = response.split(",");
-
-          for (int i = 0; i < suggestions.length; i++) {
-            suggestions[i] = suggestions[i].trim();
-            suggestions[i] = suggestions[i].replaceAll(".", "");
-            if (suggestions[i].isEmpty) {
-              suggestions.remove(suggestions[i]);
-              continue;
-            }
-            int counter = 0;
-            for (var el2 in suggestions) {
-              if (suggestions[i] == el2) {
-                counter++;
-              }
-            }
-            if (counter > 1) {
-              suggestions.removeAt(counter);
-            }
-          }
+          suggestions = parseToArray(response);
           callback(suggestions);
         } else {
           callback(null);
@@ -176,7 +160,32 @@ class GPTProvider {
     );
   }
 
-  void extractSentiments(String message, String currentUserId, String chatId) {
+  List<String> parseToArray(String value) {
+    List<String>? values = value.split(",");
+
+    for (int i = 0; i < values.length; i++) {
+      values[i] = values[i].trim();
+      values[i] = values[i].replaceAll(".", "");
+      if (values[i].isEmpty) {
+        values.remove(values[i]);
+        continue;
+      }
+      int counter = 0;
+      for (var el2 in values) {
+        if (values[i] == el2) {
+          counter++;
+        }
+      }
+      if (counter > 1) {
+        values.removeAt(counter);
+      }
+    }
+
+    return values;
+  }
+
+  void extractSentiments(
+      String message, String currentUserId, String chatId, Function callback) {
     log.info(
         "Extracting sentiments words from message($message) of chatId($chatId)");
     doRequst(
@@ -185,10 +194,41 @@ class GPTProvider {
       chatId,
       (String rs) {
         log.info("Sentiments($rs)");
+        List<String> sentiments = parseToArray(rs);
+        callback(sentiments);
         // cp. update sentiments
       },
       (String err) {
         log.error("Extract sentiments failed with error $err");
+      },
+    );
+  }
+
+  void giveEmojis(
+      String message, String currentUserId, String chatId, Function callback) {
+    log.info("Giving emojis for message($message) of chatId($chatId)");
+
+    doRequst(
+      GPTAPIs.giveEmojisToSentiments(message),
+      currentUserId,
+      chatId,
+      (String response) {
+        log.info("Got emojis($response), started parsing...");
+        List<String>? emojis;
+        if (response.isNotEmpty &&
+            (!response.contains("None") || !response.contains("none")) &&
+            !response.contains("ERROR") &&
+            !response.contains("Error") &&
+            !response.contains("null")) {
+          emojis = parseToArray(response);
+          callback(emojis);
+        } else {
+          callback(null);
+        }
+      },
+      (String err) {
+        log.error("Emojis failed with error $err");
+        callback(null);
       },
     );
   }
@@ -207,7 +247,7 @@ class GPTProvider {
         presencePenalty: 0.0);
     try {
       final response = await openAI.onCompletion(request: request);
-      log.info("From doRequest responded with ($response)");
+      log.info("From doRequest responded with (${response.toString()})");
       String? res = "";
       for (var element in response!.choices) {
         res = element.text;
