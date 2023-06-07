@@ -45,7 +45,7 @@ class _JournalingState extends State<Journaling> {
         } else if (snapshot.hasError) {
           // Handle any errors that occurred during data fetching
 
-          return Text('Error: ${snapshot.error}');
+          return Text('${snapshot.error}');
         } else {
           // Data fetching is complete, map the list of JournalModel objects to widgets
           List<JournalModel> journalList = snapshot.data!;
@@ -90,31 +90,23 @@ class _JournalingState extends State<Journaling> {
             // JournalsAppBar(
             //   isDark: isDark,
             // ),
+            floatingActionButton: CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.green.shade50,
+                child: IconButton(
+                  icon: journalExists
+                      ? const Icon(Icons.edit)
+                      : const Icon(Icons.add),
+                  onPressed: () => {navigateToEditJournalScreen()},
+                )),
             body: Container(
-                padding: const EdgeInsets.all(tDashboardPadding),
-                child: Column(
-                  children: [
-                    Text(tJournaling, style: txtTheme.bodyMedium),
-                    journalCards,
-                    Row(
-                      children: [
-                        Expanded(
-                          child: OutlinedButton(
-                            onPressed: () => {navigateToEditJournalScreen()},
-                            child: Column(children: [
-                              Text(tCreateOrEditTodayJournal.toUpperCase()),
-                              Text(
-                                journalExists
-                                    ? tTodayJournalEdit.toLowerCase()
-                                    : tTodayJournalCreate.toLowerCase(),
-                                style: const TextStyle(color: Colors.grey),
-                              )
-                            ]),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ))));
+              padding: const EdgeInsets.all(tDashboardPadding),
+              child: Column(
+                children: [
+                  Text(tJournaling, style: txtTheme.bodyMedium),
+                  journalCards,
+                ],
+              ),
+            )));
   }
 }
