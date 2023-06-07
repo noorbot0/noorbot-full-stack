@@ -26,4 +26,7 @@ class FirestoreConstants {
   static const sentimentNone = "None";
   static const journal = "journal";
   static const createdAt = "created_at";
+  static const sentiments = "sentiments";
+  static const overall = "overall";
+  static const allSentiments = "allSentiments";
 }

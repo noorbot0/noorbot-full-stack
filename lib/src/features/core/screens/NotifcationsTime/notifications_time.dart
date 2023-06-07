@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
+import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
+
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
 import '../dashboard/widgets/appbar.dart';
@@ -17,6 +18,7 @@ class NotificationsTime extends StatelessWidget {
         child: Scaffold(
             appBar: DashboardAppBar(
               isDark: isDark,
+              topTitle: tNotificationsPageName,
             ),
             body: SingleChildScrollView(
                 child: Container(
@@ -30,8 +32,8 @@ class NotificationsTime extends StatelessWidget {
                           children: [
                             Expanded(
                               child: OutlinedButton(
-                                onPressed: () =>
-                                    Get.to(() => const Dashboard()),
+                                onPressed: () => Get.to(() => const MyNavBar()),
+                                // onPressed: () => Get.to(() => const Dashboard()),
                                 child: Text(tNext.toUpperCase()),
                               ),
                             ),

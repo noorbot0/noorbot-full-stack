@@ -3,12 +3,13 @@ import 'package:noorbot_app/src/constants/firestore_constants.dart';
 
 class Analysis {
   final String idFrom;
-  final String date;
+  String date;
   int messagesNumber;
   int sentimentNegative;
   int sentimentPositive;
   int sentimentNeutral;
   int sentimentNone;
+  Map<String, int> sentiments;
 
   Analysis({
     required this.idFrom,
@@ -18,6 +19,7 @@ class Analysis {
     required this.sentimentPositive,
     required this.sentimentNeutral,
     required this.sentimentNone,
+    required this.sentiments,
   });
 
   Map<String, dynamic> toJson() {
@@ -29,6 +31,7 @@ class Analysis {
       FirestoreConstants.sentimentNegative: sentimentNegative,
       FirestoreConstants.sentimentNeutral: sentimentNeutral,
       FirestoreConstants.sentimentNone: sentimentNone,
+      FirestoreConstants.sentiments: sentiments,
     };
   }
 
@@ -40,6 +43,7 @@ class Analysis {
     int sentimentNegative = doc.get(FirestoreConstants.sentiment);
     int sentimentNeutral = doc.get(FirestoreConstants.sentiment);
     int sentimentNone = doc.get(FirestoreConstants.sentimentNone);
+    Map<String, int> sentiments = doc.get(FirestoreConstants.sentiments);
     return Analysis(
       idFrom: idFrom,
       date: date,
@@ -48,6 +52,7 @@ class Analysis {
       sentimentNegative: sentimentNegative,
       sentimentNeutral: sentimentNeutral,
       sentimentNone: sentimentNone,
+      sentiments: sentiments,
     );
   }
 }
