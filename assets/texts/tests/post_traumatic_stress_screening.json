@@ -1,0 +1,146 @@
+[
+    {
+        "id": 1,
+        "question": "Have you experienced, witnessed, or heard from a person close to you (family or friend) about a threatening event? Examples include actual or threatened death, serious injury, or sexual violence.",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 2,
+        "question": "Since this event occurred, do you experience recurrent involuntary memories or dreams that make you suffer?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 3,
+        "question": "Do you become distressed by sights, sounds, smells or feelings that remind you of the traumatic event?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 4,
+        "question": "Do you try not to think about the traumatic event?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 5,
+        "question": "Do you try not to see people, go to places or see objects that are associated with the traumatic event?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 6,
+        "question": "Do you have trouble remembering an important aspect of the traumatic event?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 7,
+        "question": "Because of the event, do you now believe that no one can be trusted?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 8,
+        "question": "Do you blame yourself for the event happening?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 9,
+        "question": "Do you feel fear, guilt or shame about the traumatic event?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 10,
+        "question": "Are you uninterested in activities you enjoyed before the traumatic event?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 11,
+        "question": "Do you feel disconnected from people?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 12,
+        "question": "Is it very difficult for you to feel happiness, satisfaction or love?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 13,
+        "question": "Are you feeling angrier than before the traumatic event occurred?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 14,
+        "question": "Are you more self-destructive?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 15,
+        "question": "Are you always on high alert?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 16,
+        "question": "Have you developed problems with sleep?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 17,
+        "question": "Could any of the new behaviors or thoughts you're experiencing be attributed to substance use or a medical condition (ie, a head injury)?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    },
+    {
+        "id": 18,
+        "question": "Have these issues caused significant difficulties in your relationships, work or school?",
+        "options": [
+            "No",
+            "Yes"
+        ]
+    }
+]

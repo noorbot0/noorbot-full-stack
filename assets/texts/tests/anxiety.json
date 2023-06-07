@@ -1,0 +1,123 @@
+[
+    {
+        "id": 1,
+        "question": "Do you worry about lots of different things?",
+        "options": [
+            "Never",
+            "Rarely",
+            "Sometimes",
+            "Often",
+            "Very Often"
+        ]
+    },
+    {
+        "id": 2,
+        "question": "Do you have trouble controlling your worries?",
+        "options": [
+            "Never",
+            "Rarely",
+            "Sometimes",
+            "Often",
+            "Very Often"
+        ]
+    },
+    {
+        "id": 3,
+        "question": "Do you get irritable and/or easily annoyed when anxious?",
+        "options": [
+            "Never",
+            "Rarely",
+            "Sometimes",
+            "Often",
+            "Very Often"
+        ]
+    },
+    {
+        "id": 4,
+        "question": "Does worry or anxiety make you feel fatigued or worn out?",
+        "options": [
+            "Never",
+            "Rarely",
+            "Sometimes",
+            "Often",
+            "Very Often"
+        ]
+    },
+    {
+        "id": 5,
+        "question": "Does worry or anxiety interfere with falling and/or staying asleep?",
+        "options": [
+            "Never",
+            "Rarely",
+            "Sometimes",
+            "Often",
+            "Very Often"
+        ]
+    },
+    {
+        "id": 6,
+        "question": "Does worry or anxiety make it hard to concentrate?",
+        "options": [
+            "Never",
+            "Rarely",
+            "Sometimes",
+            "Often",
+            "Very Often"
+        ]
+    },
+    {
+        "id": 7,
+        "question": "Do you feel jumpy?",
+        "options": [
+            "Never",
+            "Rarely",
+            "Sometimes",
+            "Often",
+            "Very Often"
+        ]
+    },
+    {
+        "id": 8,
+        "question": "Do you worry about how well you do things?",
+        "options": [
+            "Never",
+            "Rarely",
+            "Sometimes",
+            "Often",
+            "Very Often"
+        ]
+    },
+    {
+        "id": 9,
+        "question": "Do you worry about things working out in the future?",
+        "options": [
+            "Never",
+            "Rarely",
+            "Sometimes",
+            "Often",
+            "Very Often"
+        ]
+    },
+    {
+        "id": 10,
+        "question": "Do you worry about things that have already happened in the past?",
+        "Noptions": [
+            "ever",
+            "Rarely",
+            "Sometimes",
+            "Often",
+            "Very Often"
+        ]
+    },
+    {
+        "id": 11,
+        "question": "Do your muscles get tense when you are worried or anxious?",
+        "Noptions": [
+            "ever",
+            "Rarely",
+            "Sometimes",
+            "Often",
+            "Very Often"
+        ]
+    }
+]

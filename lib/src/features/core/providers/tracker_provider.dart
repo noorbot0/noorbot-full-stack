@@ -60,8 +60,8 @@ class TrackerProvider {
     );
   }
 
-  Future<Analysis> getOverallSentimentsAnalysis(
-      String currentUserId, String chatId, Function errorCallback) async {
+  Future<Analysis> getOverallSentimentsAnalysis(String currentUserId,
+      String chatId, Function okCallback, Function errorCallback) async {
     log.info("Getting overall sentiments for chatId($chatId)");
     return await firebaseFirestore
         .collection(FirestoreConstants.pathAnalysisCollection)
@@ -99,6 +99,8 @@ class TrackerProvider {
             analysis.sentimentNone = doc[FirestoreConstants.sentimentNone];
             analysis.sentiments =
                 Map<String, int>.from(doc[FirestoreConstants.sentiments]);
+          } else {
+            okCallback(FirestoreConstants.sentimentNone);
           }
         } catch (e) {
           errorCallback(e.toString());

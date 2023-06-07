@@ -1,0 +1,216 @@
+[
+    {
+        "id": 1,
+        "question": "Have you ever experienced an abrupt surge of intense fear or discomfort seemingly out of the blue, that lasted several minutes?",
+        "options": [
+            "Yes",
+            "No"
+        ]
+    },
+    {
+        "id": 2,
+        "question": "If yes, have you experienced any of the following symptoms during those minutes? Palpitations, pounding heart, or accelerated heart rate?",
+        "options": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 3,
+        "question": "Sweating?",
+        "options": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 4,
+        "question": "Trembling or shaking?",
+        "options": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 5,
+        "question": "Shortness of breath or a feeling that you are being smothered?",
+        "options": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 6,
+        "question": "Feeling like you are choking?",
+        "options": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 7,
+        "question": "Chest pain or discomfort?",
+        "options": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 8,
+        "question": "Nausea or stomach ache?",
+        "options": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 9,
+        "question": "Feeling dizzy, light-headed or faint?",
+        "options": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 10,
+        "question": "Chills or heat sensations?",
+        "Aoptions": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 11,
+        "question": "\"Pins and needles\" (numbness or a tingling sensation)?",
+        "Aoptions": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 12,
+        "question": "A feeling that you are crazy or losing control?",
+        "Aoptions": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 13,
+        "question": "A sense of being detached from yourself or your surroundings, or observing yourself from outside your body? Or, that things are not real?",
+        "Aoptions": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 14,
+        "question": "Worried that you are going to die?",
+        "Aoptions": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 15,
+        "question": "For at least one month after you've had this experience, have you worried that you might experience these symptoms again?",
+        "Aoptions": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 16,
+        "question": "Taken steps to avoid a repeat attack—for example, avoiding unfamiliar situations?",
+        "Aoptions": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 17,
+        "question": "Have you been diagnosed with cardiac arrhythmias, hyperthyroidism, asthma, COPD, or irritable bowel syndrome?",
+        "Yoptions": [
+            "Yes",
+            "No"
+        ]
+    },
+    {
+        "id": 18,
+        "question": "Do you have a fear of a certain situation, animal, or object that causes you to experience the panic, sweating, trembling, and/or heart palpitations?",
+        "Aoptions": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 19,
+        "question": "Do you experience persistent and excessive worry about a number of different things, so much so that it interferes with your daily life?",
+        "Aoptions": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    },
+    {
+        "id": 20,
+        "question": "Do people tell you that you look nervous?",
+        "Aoptions": [
+            "Always",
+            "Often",
+            "Sometimes",
+            "Rarely",
+            "Never"
+        ]
+    }
+]
