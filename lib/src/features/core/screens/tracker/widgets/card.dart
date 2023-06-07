@@ -47,6 +47,7 @@ class MyCard extends StatelessWidget {
                 title,
                 textAlign: TextAlign.left,
                 style: const TextStyle(
+                  color: titleColor,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   fontFamily: "RaleWay",

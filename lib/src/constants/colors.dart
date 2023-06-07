@@ -99,6 +99,7 @@ const Color dailyGridColor = Color.fromARGB(255, 80, 174, 166);
 const Color dailyRanksColor = Color(0xFFE192E8);
 
 // Tracking card colors
+const titleColor = Color.fromARGB(255, 106, 159, 94);
 const cardBGColor = Color.fromARGB(255, 255, 255, 255);
 const cardShadowColor = Color.fromARGB(255, 225, 225, 225);
 

@@ -83,4 +83,10 @@ flutter:
     - assets/images/on_boarding_images/
 
     - assets/service.json
+    
+  fonts:
+    - family: Noto
+      fonts:
+        - asset: assets/fonts/NotoColorEmoji-Regular.ttf
+
 # Splash screen has been added in the 'splash.yaml' file in main project directory

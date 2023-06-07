@@ -40,6 +40,7 @@ class MyTracker extends State<Tracker> {
   List<FlSpot> sentimentSpots = [];
   bool isLoading = true;
   bool isOverallLoading = true;
+  bool showOverallAnalysis = false;
   bool noSentiment = false;
   double posValue = 0;
   double negValue = 0;
@@ -131,14 +132,36 @@ class MyTracker extends State<Tracker> {
       log.error("Error when fetching overall sentiments with msg($errMsg)");
     }
 
-    Analysis overall = await sentimentProvider.getOverallSentimentsAnalysis(
-        _auth.currentUser!.uid, chatRoomId, errCallback);
+    void okCallback(String msg) {
+      if (msg == FirestoreConstants.sentimentNone) {
+        if (mounted) {
+          setState(() {
+            showOverallAnalysis = false;
+          });
+        } else {
+          showOverallAnalysis = false;
+        }
+      }
+      // log.error("Error when fetching overall sentiments with msg($errMsg)");
+    }
 
+    Analysis overall = await sentimentProvider.getOverallSentimentsAnalysis(
+        _auth.currentUser!.uid, chatRoomId, okCallback, errCallback);
     posValue = overall.sentimentPositive * 100.0 / overall.messagesNumber;
     neuValue = overall.sentimentNeutral * 100.0 / overall.messagesNumber;
     negValue = overall.sentimentNegative * 100.0 / overall.messagesNumber;
     Map<String, int> top5 = overall.sentiments;
     topRanks = top5.entries.toList();
+    if (topRanks!.isEmpty) {
+      if (mounted) {
+        setState(() {
+          isOverallLoading = false;
+        });
+      } else {
+        isOverallLoading = false;
+      }
+      return;
+    }
     topRanks!.sort((a, b) => b.value.compareTo(a.value));
     log.info("----------------------------------- $topRanks");
     String sentiments = "";
@@ -152,9 +175,8 @@ class MyTracker extends State<Tracker> {
       }
     }
     void callback(List<String>? rs) {
-      log.info("Got suggestions: $rs");
+      log.info("Got emojis: $rs");
 
-      log.info("After emojis: ($rs)");
       int j = 0;
       for (var i = 0; i < maxI; i++) {
         if (topRanks![i].key != FirestoreConstants.sentimentNone) {
@@ -180,10 +202,13 @@ class MyTracker extends State<Tracker> {
       if (mounted) {
         setState(() {
           isOverallLoading = false;
+          showOverallAnalysis = true;
         });
       } else {
         isOverallLoading = false;
+        showOverallAnalysis = true;
       }
+      print(myRanks);
     }
 
     gptProvider.giveEmojis(
@@ -193,7 +218,6 @@ class MyTracker extends State<Tracker> {
     // setState(() {
     //   isOverallLoading = false;
     // });
-    print(myRanks);
   }
 
   // Added total messages in overall
@@ -216,48 +240,19 @@ class MyTracker extends State<Tracker> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Intro
                       const MyCard(
-                          title: "Overview", widget: Text(trackerIntroText)),
+                        title: "Overview",
+                        widget: Text(trackerIntroText),
+                      ),
                       const SizedBox(height: tDashboardPadding),
-                      //sentimentsChartSection
-                      !noSentiment
-                          ? MyCard(
-                              title: dailyTitle,
-                              widget: MyDailyChart(
-                                lineChartData: MyDailyChart.chartData,
-                                allSpots: sentimentSpots,
-                                subtitle: dailyAnalysisGraphSubtitle,
-                              ),
-                            )
-                          : const Center(
-                              child: Text(
-                                noSentimentAnalysisMessage,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                      // overallSentimentsChartSection(),
+                      MyCard(
+                        title: dailyTitle,
+                        widget: dayAnalysis(),
+                      ),
                       const SizedBox(height: tDashboardPadding),
                       MyCard(
                         title: overallTitle,
-                        widget: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              child: MyRankChart(
-                                subtitle: "Rank Chart",
-                                ranks: myRanks,
-                              ),
-                            ),
-                            const SizedBox(width: tDashboardPadding),
-
-                            Flexible(
-                              child: overallSentimentsChartSection(),
-                            )
-                            // overallSentimentsChartSection()
-                          ],
-                        ),
+                        widget: overallSentimentsAnaylsis(),
                       ),
                       const SizedBox(height: tDashboardPadding),
                       MyCard(
@@ -278,6 +273,21 @@ class MyTracker extends State<Tracker> {
     );
   }
 
+  Widget dayAnalysis() {
+    return !noSentiment
+        ? MyDailyChart(
+            lineChartData: MyDailyChart.chartData,
+            allSpots: sentimentSpots,
+            subtitle: dailyAnalysisGraphSubtitle,
+          )
+        : const Center(
+            child: Text(
+              noSentimentAnalysisMessage,
+              textAlign: TextAlign.center,
+            ),
+          );
+  }
+
   Widget sentimentsChartSection() {
     return !noSentiment
         ? MyChart(
@@ -293,12 +303,40 @@ class MyTracker extends State<Tracker> {
           );
   }
 
-  overallSentimentsChartSection() {
-    return MyPieChart(
-      subtitle: overallAnalysisGraphSubtitle,
-      negativeValue: negValue,
-      neutralValue: neuValue,
-      positiveValue: posValue,
-    );
+  overallSentimentsAnaylsis() {
+    return showOverallAnalysis
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              myRanks.isNotEmpty
+                  ? Flexible(
+                      child: MyRankChart(
+                        subtitle: "Rank Chart",
+                        ranks: myRanks,
+                      ),
+                    )
+                  : const Row(),
+              myRanks.isNotEmpty
+                  ? const SizedBox(width: tDashboardPadding)
+                  : const Row(),
+
+              Flexible(
+                child: MyPieChart(
+                  subtitle: overallAnalysisGraphSubtitle,
+                  negativeValue: negValue,
+                  neutralValue: neuValue,
+                  positiveValue: posValue,
+                ),
+              )
+              // overallSentimentsChartSection()
+            ],
+          )
+        : const Center(
+            child: Text(
+              noSentimentAnalysisMessage,
+              textAlign: TextAlign.center,
+            ),
+          );
   }
 }
