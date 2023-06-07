@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:noorbot_app/src/constants/sizes.dart';
+import 'package:noorbot_app/src/features/core/screens/NotifcationsTime/components/times_list.dart';
 import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
+import 'package:noorbot_app/src/features/core/screens/profile/profile_screen.dart';
 
-import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
-import '../dashboard/widgets/appbar.dart';
-import 'components/times_list.dart';
 
 class NotificationsTime extends StatelessWidget {
   const NotificationsTime({Key? key}) : super(key: key);
@@ -16,9 +17,12 @@ class NotificationsTime extends StatelessWidget {
     final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return SafeArea(
         child: Scaffold(
-            appBar: DashboardAppBar(
-              isDark: isDark,
-              topTitle: tNotificationsPageName,
+            appBar: AppBar(
+              leading: IconButton(
+                  onPressed: () => Get.to(ProfileScreen()),
+                  icon: const Icon(LineAwesomeIcons.angle_left)),
+              title: Text(tNotifications,
+                  style: Theme.of(context).textTheme.headlineMedium),
             ),
             body: SingleChildScrollView(
                 child: Container(
@@ -26,7 +30,6 @@ class NotificationsTime extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(tNotificationTime, style: txtTheme.bodyMedium),
-                        // const SizedBox(height: defaultPadding * 2),
                         const TimesList(),
                         Row(
                           children: [
@@ -34,7 +37,7 @@ class NotificationsTime extends StatelessWidget {
                               child: OutlinedButton(
                                 onPressed: () => Get.to(() => const MyNavBar()),
                                 // onPressed: () => Get.to(() => const Dashboard()),
-                                child: Text(tNext.toUpperCase()),
+                                child: Text(tSave.toUpperCase()),
                               ),
                             ),
                           ],

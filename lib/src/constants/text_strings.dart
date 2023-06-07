@@ -4,6 +4,7 @@
 const String tNo = "No";
 const String tYes = "Yes";
 const String tNext = "Next";
+const String tSave = "Save";
 const String tLogin = "Login";
 const String tEmail = "E-Mail";
 const String tSignup = "Signup";
@@ -79,7 +80,7 @@ const String tDashboardBannerSubTitle = "Read More..";
 const String tDashboardBannerTitle1 = "What is CBT";
 
 // -- Profile Screen - Text
-const String tProfile = "Profile";
+const String tProfile = "Settings";
 const String tEditProfile = "Edit Profile";
 const String tLogoutDialogHeading = "Logout";
 const String tProfileHeading = "Noorbot";
@@ -87,7 +88,7 @@ const String tProfileSubHeading = "noor@gmail.com";
 // -- Menu
 const String tMenu5 = tLogout;
 const String tMenu1 = "Settings";
-const String tMenu4 = "Information";
+const String tMenu4 = "HotLines Adress";
 const String tMenu2 = "Billing Details";
 const String tMenu3 = "User Management";
 
@@ -97,6 +98,7 @@ const String tJoined = "Joined";
 const String tJoinedAt = " 20 June 2030";
 
 // -- Notifications Screen
+const String tNotifications = "Notifications";
 const String tNotificationTime = "Choose a daily check-in time";
 
 // -- PHQ test screen

@@ -34,7 +34,7 @@ class LoginController extends GetxController {
       await AuthenticationRepository.instance.signInWithGoogle();
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", e.toString(),
+      Get.snackbar("Sorry", e.toString(),
           snackPosition: SnackPosition.BOTTOM,
           duration: const Duration(seconds: 5));
     }

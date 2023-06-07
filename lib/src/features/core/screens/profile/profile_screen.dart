@@ -3,16 +3,16 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/constants/sizes.dart';
 import 'package:noorbot_app/src/constants/text_strings.dart';
+import 'package:noorbot_app/src/features/hotlines/hotlines_screen.dart';
+import 'package:noorbot_app/src/features/phq_test/screens/phq_test.dart';
 import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/update_profile_screen.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/widgets/image_with_icon.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/widgets/profile_menu.dart';
-import 'package:noorbot_app/src/features/phq_test/screens/phq_test.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../repository/authentication_repository/authentication_repository.dart';
 import '../NotifcationsTime/notifications_time.dart';
-import 'all_users.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -26,15 +26,9 @@ class ProfileScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
             onPressed: () => Get.to(const MyNavBar()),
-            // onPressed: () => Get.to(Dashboard()),
             icon: const Icon(LineAwesomeIcons.angle_left)),
         title:
             Text(tProfile, style: Theme.of(context).textTheme.headlineMedium),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon))
-        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -62,8 +56,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30),
-              const Divider(),
-              const SizedBox(height: 10),
 
               /// -- MENU
               ProfileMenuWidget(
@@ -75,15 +67,9 @@ class ProfileScreen extends StatelessWidget {
                   icon: LineAwesomeIcons.wallet,
                   onPress: () => Get.to(const PHQTest())),
               ProfileMenuWidget(
-                  title: "User Management",
-                  icon: LineAwesomeIcons.user_check,
-                  onPress: () => Get.to(AllUsers())),
-              const Divider(),
-              const SizedBox(height: 10),
-              ProfileMenuWidget(
-                  title: "Information",
+                  title: tMenu4,
                   icon: LineAwesomeIcons.info,
-                  onPress: () {}),
+                  onPress: () => Get.to(HotLines())),
               ProfileMenuWidget(
                   title: "Logout",
                   icon: LineAwesomeIcons.alternate_sign_out,

@@ -48,6 +48,7 @@ class ProfileController extends GetxController {
       Get.snackbar("Success", "Account has been deleted.");
       // You can call your redirection to other screen here...
       // OR call the LOGOUT() function.
+      _authRepo.logout();
     }
   }
 }
