@@ -14,7 +14,7 @@ class NotificationsTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final txtTheme = Theme.of(context).textTheme;
-    final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    // final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(

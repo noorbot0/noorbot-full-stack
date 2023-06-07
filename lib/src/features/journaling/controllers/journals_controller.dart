@@ -2,14 +2,13 @@ import 'package:get/get.dart';
 import 'package:noorbot_app/src/features/journaling/models/journal_model.dart';
 import 'package:noorbot_app/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:noorbot_app/src/repository/journals_repository/journals_repository.dart';
-import 'package:noorbot_app/src/repository/user_repository/user_repository.dart';
 
 class JournalsController extends GetxController {
   static JournalsController get instance => Get.find();
 
   /// Repositories
   final _authRepo = AuthenticationRepository.instance;
-  final _userRepo = UserRepository.instance;
+  // final _userRepo = UserRepository.instance;
   final _journalRepo = JournalsRepository.instance;
 
   /// Get User Journals' Data

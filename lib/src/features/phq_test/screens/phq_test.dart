@@ -21,7 +21,7 @@ class PHQTest extends StatelessWidget {
     var mediaQuery = MediaQuery.of(context);
     var width = mediaQuery.size.width;
     var height = mediaQuery.size.height;
-    var brightness = mediaQuery.platformBrightness;
+    // var brightness = mediaQuery.platformBrightness;
 
     final isDark = MediaQuery.of(context).platformBrightness ==
         Brightness.dark; //Dark mode

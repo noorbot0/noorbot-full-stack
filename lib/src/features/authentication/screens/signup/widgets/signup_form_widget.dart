@@ -18,7 +18,7 @@ class SignUpFormWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(SignUpController());
     final formKey = GlobalKey<FormState>();
-    bool? check3 = false;
+    // bool? check3 = false;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: tFormHeight - 10),

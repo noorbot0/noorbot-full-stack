@@ -20,11 +20,12 @@ class NotificationsScreen extends StatefulWidget {
   NotificationsPageState createState() => NotificationsPageState();
 }
 
-class NotificationsPageState extends State {
+class NotificationsPageState extends State<NotificationsScreen> {
   late final FirebaseMessaging _messaging;
   late int _totalNotifications;
+
   final List<Widget> _notificationCards = [
-    NotificationCard(
+    const NotificationCard(
       title: "TEST TITLE",
       message: "TEST BODy",
     )
@@ -35,7 +36,6 @@ class NotificationsPageState extends State {
   void initState() {
     _totalNotifications = 0;
     registerNotification();
-
     checkForInitialMessage();
     // For handling notification when the app is in background
     // but not terminated
@@ -122,8 +122,8 @@ class NotificationsPageState extends State {
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-    String? token = await _messaging.getToken();
-    print('Registration Token=$token');
+    // String? token = await _messaging.getToken();
+    // print('Registration Token=$token');
 
     // 3. On iOS, this helps to take the user permissions
     NotificationSettings settings = await _messaging.requestPermission(

@@ -15,7 +15,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  int _processValue = 0;
+  // int _processValue = 0;
   @override
   Widget build(BuildContext context) {
     // So that we have acccess our controller
@@ -50,12 +50,12 @@ class _BodyState extends State<Body> {
                   // Block swipe to next qn
                   physics: const NeverScrollableScrollPhysics(),
                   controller: questionController.pageController,
-                  onPageChanged: (int x) {
-                    setState(() {
-                      _processValue = questionController.updateTheQnNum(
-                          questionController.questionNumber.value);
-                    });
-                  },
+                  // onPageChanged: (int x) {
+                  // setState(() {
+                  //   _processValue = questionController.updateTheQnNum(
+                  //       questionController.questionNumber.value);
+                  // });
+                  // },
                   itemCount: questionController.questions.length,
                   itemBuilder: (context, index) => QuestionCard(
                       question: questionController.questions[index]),
