@@ -51,20 +51,32 @@ class Chat extends State<MyChat> {
 
   void checkPreviousMessages() async {
     log.info("Checking last messages...");
-    int prevNumber = await chatProvider.isThereMessages(
-        _auth.currentUser!.uid, chatRoomId, (Map<String, dynamic> msg) {
+    int prevNumber = await chatProvider
+        .isThereMessages(_auth.currentUser!.uid, chatRoomId,
+            (Map<String, dynamic> msg, int length) {
       log.info("Last message sent in the chat ($msg)");
-      if (msg["role"] == FirestoreConstants.aiRole) {
-        giveSuggestions(msg[FirestoreConstants.content]);
-      } else {
-        messageInsert.text = msg["content"];
-        onSendMessageGPT(false, true);
+      print(length);
+      if (length == 2) {
         if (mounted) {
           setState(() {
             isEverythingReady = true;
           });
         } else {
           isEverythingReady = true;
+        }
+      } else {
+        if (msg["role"] == FirestoreConstants.aiRole) {
+          giveSuggestions(msg[FirestoreConstants.content]);
+        } else {
+          messageInsert.text = msg["content"];
+          onSendMessageGPT(false, true);
+          if (mounted) {
+            setState(() {
+              isEverythingReady = true;
+            });
+          } else {
+            isEverythingReady = true;
+          }
         }
       }
     });
@@ -75,7 +87,15 @@ class Chat extends State<MyChat> {
           chatRoomId,
           FirestoreConstants.conv);
       // setState(() {
-      isFirstMessage = true;
+      if (mounted) {
+        setState(() {
+          isFirstMessage = true;
+          isEverythingReady = true;
+        });
+      } else {
+        isEverythingReady = true;
+        isFirstMessage = true;
+      }
       // });
     }
   }
