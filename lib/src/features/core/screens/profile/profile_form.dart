@@ -71,43 +71,30 @@ class ProfileFormScreen extends StatelessWidget {
                 await controller.updateRecord(userData);
               },
               style: ElevatedButton.styleFrom(
-                  backgroundColor: tPrimaryColor,
+                  backgroundColor: tmainGreenColor,
                   side: BorderSide.none,
                   shape: const StadiumBorder()),
               child:
                   const Text(tEditProfile, style: TextStyle(color: tDarkColor)),
             ),
           ),
-          const SizedBox(height: tFormHeight),
+          const SizedBox(height: tDefaultSize),
 
-          /// -- Created Date and Delete Button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text.rich(
-                TextSpan(
-                  text: tJoined,
-                  style: TextStyle(fontSize: 12),
-                  children: [
-                    TextSpan(
-                        text: tJoinedAt,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 12))
-                  ],
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.redAccent.withOpacity(0.1),
-                    elevation: 0,
-                    foregroundColor: Colors.red,
-                    shape: const StadiumBorder(),
-                    side: BorderSide.none),
-                child: const Text(tDelete),
-              ),
-            ],
-          )
+          /// -- Created Delete Button
+
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+              onPressed: () async {
+                await controller.deleteUser();
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: kRedColor,
+                  side: BorderSide.none,
+                  shape: const StadiumBorder()),
+              child: const Text(tDelete, style: TextStyle(color: tWhiteColor)),
+            ),
+          ),
         ],
       ),
     );
