@@ -295,12 +295,12 @@ class ChatProvider {
         .get()
         .then((value) {
       log.info(
-          "Previous messages with size(${value.size}) and limit(10): ${value.docs}");
+          "Previous messages with size(${value.docs.length}) and limit(10): ${value.docs}");
 
-      if (value.size > 2) {
-        callback(value.docs.first.data());
+      if (value.docs.length >= 2) {
+        callback(value.docs.first.data(), value.docs.length);
       }
-      return value.size;
+      return value.docs.length;
     });
   }
 
