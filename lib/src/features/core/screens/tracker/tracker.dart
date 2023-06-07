@@ -152,9 +152,8 @@ class MyTracker extends State<Tracker> {
       }
     }
     void callback(List<String>? rs) {
-      log.info("Got suggestions: $rs");
+      log.info("Got emojis: $rs");
 
-      log.info("After emojis: ($rs)");
       int j = 0;
       for (var i = 0; i < maxI; i++) {
         if (topRanks![i].key != FirestoreConstants.sentimentNone) {
@@ -184,6 +183,7 @@ class MyTracker extends State<Tracker> {
       } else {
         isOverallLoading = false;
       }
+      print(myRanks);
     }
 
     gptProvider.giveEmojis(
@@ -193,7 +193,6 @@ class MyTracker extends State<Tracker> {
     // setState(() {
     //   isOverallLoading = false;
     // });
-    print(myRanks);
   }
 
   // Added total messages in overall

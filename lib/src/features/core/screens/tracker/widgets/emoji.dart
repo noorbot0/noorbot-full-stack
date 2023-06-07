@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:noorbot_app/src/constants/colors.dart';
 
-class Emoji extends StatelessWidget {
-  const Emoji({
-    Key? key,
-    required this.text,
-  }) : super(key: key);
-
+class MyEmoji extends StatefulWidget {
   final String text;
+  const MyEmoji({
+    super.key,
+    required this.text,
+  });
 
+  @override
+  Emoji createState() => Emoji();
+}
+
+class Emoji extends State<MyEmoji> {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
@@ -20,7 +24,7 @@ class Emoji extends StatelessWidget {
         //   ),
         // ),
         child: RichText(
-          text: _buildText(text),
+          text: _buildText(widget.text),
         ));
   }
 
@@ -35,7 +39,7 @@ class Emoji extends StatelessWidget {
       // in Extended-ASCII set is an emoji...
       final isEmoji = current > 255;
       final shouldBreak = isEmoji ? (x) => x <= 255 : (x) => x > 255;
-
+      print("$shouldBreak, $isEmoji");
       final chunk = <int>[];
       while (!shouldBreak(current)) {
         chunk.add(current);
@@ -47,7 +51,8 @@ class Emoji extends StatelessWidget {
         TextSpan(
           text: String.fromCharCodes(chunk),
           style: TextStyle(
-            fontFamily: isEmoji ? 'EmojiOne' : null,
+            fontSize: 12,
+            fontFamily: isEmoji ? "Noto" : null,
           ),
         ),
       );
