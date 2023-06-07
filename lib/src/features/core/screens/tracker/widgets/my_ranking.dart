@@ -8,16 +8,19 @@ import 'package:noorbot_app/src/features/core/screens/tracker/widgets/rank.dart'
 
 class MyRankChart extends StatefulWidget {
   final String subtitle;
-  final List<Rank> ranks = [
-    Rank(name: "Sad", emoji: "😔", number: 324),
-    Rank(name: "Happy", emoji: "😃", number: 289),
-    Rank(name: "boring", emoji: "😑", number: 267),
-    Rank(name: "Hopeless", emoji: "😩", number: 203),
-    Rank(name: "Exciting", emoji: "😆", number: 154),
-  ];
-  MyRankChart({
+  final List<Rank> ranks;
+
+  // [
+  //   Rank(name: "Sad", emoji: "😔", number: 324),
+  //   Rank(name: "Happy", emoji: "😃", number: 289),
+  //   Rank(name: "boring", emoji: "😑", number: 267),
+  //   Rank(name: "Hopeless", emoji: "😩", number: 203),
+  //   Rank(name: "Exciting", emoji: "😆", number: 154),
+  // ];
+  const MyRankChart({
     super.key,
     required this.subtitle,
+    required this.ranks,
   }); //required this.ranks
 
   @override
@@ -54,7 +57,7 @@ class RankChart extends State<MyRankChart> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.only(left: 20, right: 20),
+            padding: const EdgeInsets.only(left: 10, right: 10),
             // width: 200,
             height: 220,
             child: Column(
@@ -80,23 +83,39 @@ class RankChart extends State<MyRankChart> {
                         // ),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: ListTile(
-                        dense: true,
-                        visualDensity:
-                            const VisualDensity(horizontal: 0, vertical: -4),
-                        leading: SizedBox(
-                            width: 30,
-                            child: Emoji(text: widget.ranks[i].emoji)),
-                        title: Text(
-                          widget.ranks[i].name,
-                          textAlign: TextAlign.left,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        trailing: Text("#${widget.ranks[i].number}"),
-                      ),
+                      child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            // dense: true,
+                            // visualDensity:
+                            //     const VisualDensity(horizontal: 0, vertical: -4),
+                            // leading:
+                            Expanded(
+                              flex: 4,
+                              // width: 30,
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 5, bottom: 5),
+                                  child: Emoji(text: widget.ranks[i].emoji)),
+                            ),
+                            // title:
+                            Expanded(
+                              flex: 6,
+                              child: Text(
+                                widget.ranks[i].name,
+                                textAlign: TextAlign.left,
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            // trailing:
+                            Expanded(
+                              flex: 3,
+                              child: Text("#${widget.ranks[i].number}"),
+                            ),
+                          ]),
                     ),
                   );
                 },

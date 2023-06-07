@@ -74,9 +74,9 @@ class Chat extends State<MyChat> {
           FirestoreConstants.pathMessageCollection,
           chatRoomId,
           FirestoreConstants.conv);
-      setState(() {
-        isFirstMessage = true;
-      });
+      // setState(() {
+      isFirstMessage = true;
+      // });
     }
   }
 

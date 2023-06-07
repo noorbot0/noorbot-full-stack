@@ -44,6 +44,7 @@ class NavBar extends State<MyNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.transparent,
       body: Center(
         child: options.elementAt(selectedIndex),
       ),

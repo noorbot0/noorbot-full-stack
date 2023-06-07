@@ -204,6 +204,35 @@ class GPTProvider {
     );
   }
 
+  void giveEmojis(
+      String message, String currentUserId, String chatId, Function callback) {
+    log.info("Giving emojis for message($message) of chatId($chatId)");
+
+    doRequst(
+      GPTAPIs.giveEmojisToSentiments(message),
+      currentUserId,
+      chatId,
+      (String response) {
+        log.info("Got emojis($response), started parsing...");
+        List<String>? emojis;
+        if (response.isNotEmpty &&
+            (!response.contains("None") || !response.contains("none")) &&
+            !response.contains("ERROR") &&
+            !response.contains("Error") &&
+            !response.contains("null")) {
+          emojis = parseToArray(response);
+          callback(emojis);
+        } else {
+          callback(null);
+        }
+      },
+      (String err) {
+        log.error("Emojis failed with error $err");
+        callback(null);
+      },
+    );
+  }
+
   void doRequst(String prompt, String currentUserId, String chatId,
       Function callback, Function errCallback) async {
     log.info("Sending a request prompt($prompt) of chatId($chatId)");

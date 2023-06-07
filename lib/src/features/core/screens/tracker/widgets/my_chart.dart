@@ -39,12 +39,12 @@ class MyChart extends StatelessWidget {
             colors: gradientColors),
       ),
       // width: 420,
-      height: 280,
+      // height: 280,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
+            padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
             child: SizedBox(
               // width: 370,
               height: 220,
@@ -56,13 +56,15 @@ class MyChart extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          SizedBox(
+          Container(
+            padding: const EdgeInsets.only(bottom: 5),
             // width: 375,
-            height: 20,
+            // height: 20,
             child: Center(
               child: Text(
                 subtitle,
-                textAlign: TextAlign.right,
+                textAlign: TextAlign.center,
+                softWrap: true,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,

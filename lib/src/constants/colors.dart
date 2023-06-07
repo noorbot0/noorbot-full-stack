@@ -75,18 +75,27 @@ const Color backgroundThree = Color.fromARGB(255, 201, 91, 231);
 const Color oaPosSectorColor = Color(0xFF5b9e2e);
 const Color oaNeuSectorColor = Color(0xFFefee5b);
 const Color oaNegSectorColor = Color(0xFFd44848);
-const Color oaBackgroundOne = Color(0xFFe87e7c);
-const Color oaBackgroundTwo = Color(0xFFfeb4b4);
+const Color oaBackgroundOne = Color.fromARGB(255, 148, 227, 219);
+const Color oaBackgroundTwo = Color.fromARGB(255, 86, 211, 200);
+// const Color oaBackgroundOne = Color(0xFFe87e7c);
+// const Color oaBackgroundTwo = Color(0xFFfeb4b4);
 
 // Rank Chart Colors
-const Color rankBackgroundOne = Color(0xFF7CE8CF);
-const Color rankBackgroundTwo = Color.fromARGB(255, 180, 254, 233);
+const Color rankBackgroundOne = Color.fromARGB(255, 148, 227, 219);
+const Color rankBackgroundTwo = Color.fromARGB(255, 86, 211, 200);
+// const Color rankBackgroundOne = Color(0xFF7CE8CF);
+// const Color rankBackgroundTwo = Color.fromARGB(255, 180, 254, 233);
 const Color rankRanksColor = Color(0xFFE192E8);
 
 // Daily Chart Colors
-const Color dailyBackgroundOne = Color.fromARGB(255, 61, 220, 108);
-const Color dailyBackgroundTwo = Color.fromARGB(255, 32, 201, 83);
+const Color dailyBackgroundOne = Color.fromARGB(255, 148, 227, 219);
+const Color dailyBackgroundTwo = Color.fromARGB(255, 86, 211, 200);
+const Color dailyGridColor = Color.fromARGB(255, 80, 174, 166);
 const Color dailyRanksColor = Color(0xFFE192E8);
+
+// Tracking card colors
+const cardBGColor = Color.fromARGB(255, 255, 255, 255);
+const cardShadowColor = Color.fromARGB(255, 225, 225, 225);
 
 // App Colors
 const Color tAppbarBGColor = Color(0xFFF0E37F);
