@@ -1,0 +1,91 @@
+[
+    {
+        "id": 1,
+        "question": "My relationships are very intense, unstable, and alternate between the extremes of over idealizing and undervaluing people who are important to me.",
+        "options": [
+            "True",
+            "False"
+        ],
+        "answer_index": 1
+    },
+    {
+        "id": 2,
+        "question": "My emotions change very quickly, and I experience intense episodes of sadness, irritability, and anxiety or panic attacks.",
+        "options": [
+            "Always",
+            "Never",
+            "Sometimes"
+        ],
+        "answer_index": 1
+    },
+    {
+        "id": 3,
+        "question": "My level of anger is often inappropriate, intense, and difficult to control.",
+        "options": [
+            "Always",
+            "Never",
+            "Sometimes"
+        ],
+        "answer_index": 1
+    },
+    {
+        "i}d": 4,
+        "question": "Now, or in the past, when upset, I have engaged in recurrent suicidal behaviors, gestures, threats, or self-injurious behavior such as cutting, burning, or hitting myself.",
+        "options": [
+            "Always",
+            "Never",
+            "Sometimes"
+        ],
+        "answer_index": 1
+    },
+    {
+        "id": 5,
+        "question": "I have a significant and persistently unstable image or sense of myself, or of who I am or what I truly believe in.",
+        "options": [
+            "Always",
+            "Never",
+            "Sometimes"
+        ],
+        "answer_index": 1
+    },
+    {
+        "id": 6,
+        "question": "I have very suspicious ideas, and am even paranoid (falsely believe that others are plotting to cause me harm); or I experience episodes under stress when I feel that I, other people, or the situation is somewhat unreal.",
+        "options": [
+            "Always",
+            "Never",
+            "Sometimes"
+        ],
+        "answer_index": 1
+    },
+    {
+        "id": 7,
+        "question": "I engage in two or more self-damaging acts such as excessive spending, unsafe and inappropriate sexual conduct, substance abuse, reckless driving, and binge eating.",
+        "options": [
+            "Always",
+            "Never",
+            "Sometimes"
+        ],
+        "answer_index": 1
+    },
+    {
+        "id": 8,
+        "question": "I engage in frantic efforts to avoid real or imagined abandonment by people who are close to me.",
+        "options": [
+            "Always",
+            "Never",
+            "Sometimes"
+        ],
+        "answer_index": 1
+    },
+    {
+        "id": 9,
+        "question": "I suffer from feelings of emptiness and boredom.",
+        "options": [
+            "Always",
+            "Never",
+            "Sometimes"
+        ],
+        "answer_index": 1
+    }
+]

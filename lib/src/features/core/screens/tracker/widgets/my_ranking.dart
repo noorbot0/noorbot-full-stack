@@ -96,7 +96,7 @@ class RankChart extends State<MyRankChart> {
                               child: Padding(
                                   padding:
                                       const EdgeInsets.only(top: 5, bottom: 5),
-                                  child: Emoji(text: widget.ranks[i].emoji)),
+                                  child: MyEmoji(text: widget.ranks[i].emoji)),
                             ),
                             // title:
                             Expanded(
