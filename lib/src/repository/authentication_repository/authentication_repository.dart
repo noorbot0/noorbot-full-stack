@@ -103,7 +103,6 @@ class AuthenticationRepository extends GetxController {
 
   /// LOGOUT USER - Valid for GOOGLE & other authentications.
   Future<void> logout() async {
-    await GoogleSignIn().disconnect();
     await _auth.signOut();
   }
 }
