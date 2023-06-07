@@ -26,22 +26,22 @@ class _BodyState extends State<Body> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Padding(
-              //   padding:
-              //       const EdgeInsets.symmetric(horizontal: kDefaultPadding),
-              //   child:
-              // ),
-              SmoothPageIndicator(
-                controller: questionController.pageController,
-                count: questionController.questions.length,
-                effect: JumpingDotEffect(
-                  activeDotColor: tmainGreenColor,
-                  dotColor: Colors.deepPurple.shade100,
-                  dotHeight: 10,
-                  dotWidth: 10,
-                  spacing: 6,
-                  verticalOffset: 50,
-                  jumpScale: 1,
+              Positioned(
+                bottom: 5,
+                right: 5,
+                left: 5,
+                child: SmoothPageIndicator(
+                  controller: questionController.pageController,
+                  count: questionController.questions.length,
+                  effect: JumpingDotEffect(
+                    activeDotColor: tmainGreenColor,
+                    dotColor: Colors.deepPurple.shade100,
+                    dotHeight: 10,
+                    dotWidth: 10,
+                    spacing: 6,
+                    verticalOffset: 50,
+                    jumpScale: 1,
+                  ),
                 ),
               ),
               const SizedBox(height: kDefaultPadding),

@@ -29,11 +29,6 @@ class ProfileScreen extends StatelessWidget {
             icon: const Icon(LineAwesomeIcons.angle_left)),
         title:
             Text(tProfile, style: Theme.of(context).textTheme.headlineMedium),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: Icon(isDark ? LineAwesomeIcons.sun : LineAwesomeIcons.moon))
-        ],
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -73,10 +68,6 @@ class ProfileScreen extends StatelessWidget {
                   title: "PHQ-9 Test",
                   icon: LineAwesomeIcons.wallet,
                   onPress: () => Get.to(const PHQTest())),
-              ProfileMenuWidget(
-                  title: "User Management",
-                  icon: LineAwesomeIcons.user_check,
-                  onPress: () => Get.to(AllUsers())),
               const Divider(),
               const SizedBox(height: 10),
               ProfileMenuWidget(

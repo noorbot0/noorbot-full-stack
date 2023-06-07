@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
+import 'package:noorbot_app/src/features/core/screens/profile/profile_screen.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
 import '../dashboard/widgets/appbar.dart';
@@ -15,8 +17,12 @@ class NotificationsTime extends StatelessWidget {
     final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return SafeArea(
         child: Scaffold(
-            appBar: DashboardAppBar(
-              isDark: isDark,
+            appBar: AppBar(
+              leading: IconButton(
+                  onPressed: () => Get.to(ProfileScreen()),
+                  icon: const Icon(LineAwesomeIcons.angle_left)),
+              title: Text(tNotifications,
+                  style: Theme.of(context).textTheme.headlineMedium),
             ),
             body: SingleChildScrollView(
                 child: Container(
@@ -32,7 +38,7 @@ class NotificationsTime extends StatelessWidget {
                               child: OutlinedButton(
                                 onPressed: () =>
                                     Get.to(() => const Dashboard()),
-                                child: Text(tNext.toUpperCase()),
+                                child: Text(tSave.toUpperCase()),
                               ),
                             ),
                           ],
