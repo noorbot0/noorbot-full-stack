@@ -31,6 +31,7 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(topTitle, style: Theme.of(context).textTheme.headlineMedium),
       actions: [
         Container(
+          alignment: Alignment.center,
           margin: const EdgeInsets.only(right: 15, top: 8, bottom: 8),
           width: 40,
           height: 40,
@@ -40,13 +41,14 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
             shape: BoxShape.circle,
           ),
           child: IconButton(
+            alignment: Alignment.center,
             onPressed: () => Get.to(() => const NotificationsScreen()),
             // onPressed: () => AuthenticationRepository.instance.logout(),
             icon: const Icon(
               Icons.notifications,
               color: tAppbarBGColor,
               shadows: <Shadow>[Shadow(color: Colors.black, blurRadius: 15.0)],
-              size: 30,
+              size: 25,
             ),
           ),
         )
