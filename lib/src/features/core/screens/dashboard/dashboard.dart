@@ -30,17 +30,17 @@ class Dashboard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //Heading
-                Text(tDashboardTitle, style: txtTheme.bodyMedium),
-                Text(tDashboardHeading, style: txtTheme.headlineSmall),
-                const SizedBox(height: tDashboardPadding),
+                // Text(tDashboardTitle, style: txtTheme.bodyMedium),
+                // Text(tDashboardHeading, style: txtTheme.headlineSmall),
+                // const SizedBox(height: tDashboardPadding),
 
                 //Search Box
                 // DashboardSearchBox(txtTheme: txtTheme),
-                // const SizedBox(height: tDashboardPadding),
+                const SizedBox(height: tDashboardPadding),
 
                 //Categories
-                DashboardCategories(txtTheme: txtTheme),
-                const SizedBox(height: tDashboardPadding),
+                // DashboardCategories(txtTheme: txtTheme),
+                // const SizedBox(height: tDashboardPadding),
 
                 //Tests
                 DashboardTests(txtTheme: txtTheme),
