@@ -84,7 +84,7 @@ class LoginFormWidget extends StatelessWidget {
                                   controller.email.text.trim(),
                                   controller.password.text.trim());
                             }
-                            Get.to(MyNavBar()); 
+                            Get.to(const MyNavBar());
                             //USE THIS PLZ
                             // Get.to(Dashboard());
                           },

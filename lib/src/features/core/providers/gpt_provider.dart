@@ -56,9 +56,12 @@ class GPTProvider {
       sentimentAnalysis(
           content, currentUserId, chatId, analyserCallBack, errCallback);
     }
+    log.info("Messages length (${msgs.length})");
+    log.info("First message (${msgs.first})");
+    log.info("Last message (${msgs.last})");
     final request = ChatCompleteText(
       messages: msgs,
-      maxToken: 300,
+      maxToken: 1000,
       model: ChatModel.gptTurbo,
       user: FirestoreConstants.userRole,
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../constants/colors.dart';
 import '../../../../constants/text_strings.dart';
 
@@ -9,8 +10,8 @@ class JournalsAppBar extends StatelessWidget implements PreferredSizeWidget {
   }) : super(key: key);
 
   final bool isDark;
-  
-  displayHelp(BuildContext context){
+
+  displayHelp(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -37,7 +38,8 @@ class JournalsAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       centerTitle: true,
       backgroundColor: Colors.transparent,
-      title: Text(tJournalingAppbar, style: Theme.of(context).textTheme.headlineMedium),
+      title: Text(tJournalingAppbar,
+          style: Theme.of(context).textTheme.headlineMedium),
       actions: [
         Container(
           margin: const EdgeInsets.only(right: 20, top: 7),
@@ -47,7 +49,8 @@ class JournalsAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
           child: IconButton(
             onPressed: () => {displayHelp(context)},
-            icon: Icon(Icons.question_mark, color: isDark ? tWhiteColor : tDarkColor),
+            icon: Icon(Icons.question_mark,
+                color: isDark ? tWhiteColor : tDarkColor),
           ),
         )
       ],
@@ -55,6 +58,5 @@ class JournalsAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(55);
 }

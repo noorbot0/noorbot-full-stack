@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../../../../constants/colors.dart';
 import '../../../models/notifications_time.dart';
 
@@ -31,8 +32,8 @@ class TimesList extends StatelessWidget {
           icon: Icons.bed,
           gradientColorIndex: 3),
     ];
-    String notifications_time = 'Evening';
-    
+    // String notificationsTime = 'Evening';
+
     return SizedBox(
         height: 450,
         width: 300,
@@ -71,7 +72,7 @@ class TimesList extends StatelessWidget {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              new Icon(
+                              Icon(
                                 icon,
                                 color: Colors.white,
                                 size: 24,

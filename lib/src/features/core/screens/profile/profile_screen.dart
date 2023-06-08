@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/constants/sizes.dart';
 import 'package:noorbot_app/src/constants/text_strings.dart';
-import 'package:noorbot_app/src/features/hotlines/hotlines_screen.dart';
-import 'package:noorbot_app/src/features/phq_test/screens/phq_test.dart';
 import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/update_profile_screen.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/widgets/image_with_icon.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/widgets/profile_menu.dart';
+import 'package:noorbot_app/src/features/hotlines/hotlines_screen.dart';
+import 'package:noorbot_app/src/features/phq_test/screens/phq_test.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../repository/authentication_repository/authentication_repository.dart';
@@ -21,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final authRepo = AuthenticationRepository.instance;
 
-    var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    // var isDark = MediaQuery.of(context).platformBrightness == Brightness.dark;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -69,7 +69,7 @@ class ProfileScreen extends StatelessWidget {
               ProfileMenuWidget(
                   title: tMenu4,
                   icon: LineAwesomeIcons.info,
-                  onPress: () => Get.to(HotLines())),
+                  onPress: () => Get.to(const HotLines())),
               ProfileMenuWidget(
                   title: "Logout",
                   icon: LineAwesomeIcons.alternate_sign_out,

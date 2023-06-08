@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:noorbot_app/src/constants/colors.dart';
-import 'package:noorbot_app/src/constants/sizes.dart';
 import 'package:noorbot_app/src/constants/text_strings.dart';
 import 'package:noorbot_app/src/features/core/screens/profile/profile_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HotLines extends StatelessWidget {
+  const HotLines({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +19,8 @@ class HotLines extends StatelessWidget {
         title: Text(tMenu4, style: Theme.of(context).textTheme.headlineMedium),
       ),
       body: ListView(
-        padding: EdgeInsets.all(16.0),
-        children: [
+        padding: const EdgeInsets.all(16.0),
+        children: const [
           CardItem(
             title: 'Dr.Twfiq Sleman',
             subtitles: ['Subtitle 1', 'Subtitle 2'],
@@ -72,7 +72,7 @@ class CardItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
-        leading: Icon(Icons.location_on, color: tmainGreenColor),
+        leading: const Icon(Icons.location_on, color: tmainGreenColor),
         title: Text(title),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +82,7 @@ class CardItem extends StatelessWidget {
               onTap: () => _launchPhone(phoneNumber),
               child: Text(
                 phoneNumber,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.blue,
                   decoration: TextDecoration.underline,
                 ),
@@ -90,7 +90,7 @@ class CardItem extends StatelessWidget {
             ),
           ],
         ),
-        trailing: Icon(Icons.person, color: tmainGreenColor),
+        trailing: const Icon(Icons.person, color: tmainGreenColor),
       ),
     );
   }

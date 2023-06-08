@@ -181,7 +181,7 @@ class MyTracker extends State<Tracker> {
       for (var i = 0; i < maxI; i++) {
         if (topRanks![i].key != FirestoreConstants.sentimentNone) {
           if (rs != null) {
-            print(rs[j]);
+            // print(rs[j]);
             myRanks.add(
               Rank(
                   emoji: rs[j],
@@ -208,7 +208,7 @@ class MyTracker extends State<Tracker> {
         isOverallLoading = false;
         showOverallAnalysis = true;
       }
-      print(myRanks);
+      // print(myRanks);
     }
 
     gptProvider.giveEmojis(

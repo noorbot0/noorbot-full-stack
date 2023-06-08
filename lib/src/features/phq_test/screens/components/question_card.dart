@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:noorbot_app/src/constants/colors.dart';
 import 'package:noorbot_app/src/features/phq_test/controllers/question_controller.dart';
 import 'package:noorbot_app/src/features/phq_test/models/Questions.dart';
+
 import 'option.dart';
 
 class QuestionCard extends StatelessWidget {
@@ -16,10 +17,10 @@ class QuestionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuestionController _controller = Get.put(QuestionController());
+    QuestionController controller = Get.put(QuestionController());
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: kDefaultPadding),
-      padding: EdgeInsets.all(kDefaultPadding),
+      margin: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+      padding: const EdgeInsets.all(kDefaultPadding),
       decoration: BoxDecoration(
         color: tWhiteColor,
         borderRadius: BorderRadius.circular(25),
@@ -30,13 +31,13 @@ class QuestionCard extends StatelessWidget {
             question.question,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
-          SizedBox(height: kDefaultPadding / 2),
+          const SizedBox(height: kDefaultPadding / 2),
           ...List.generate(
             question.options.length,
             (index) => Option(
               index: index,
               text: question.options[index],
-              press: () => _controller.checkAns(question, index),
+              press: () => controller.checkAns(question, index),
             ),
           ),
         ],

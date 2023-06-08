@@ -39,7 +39,7 @@ class Emoji extends State<MyEmoji> {
       // in Extended-ASCII set is an emoji...
       final isEmoji = current > 255;
       final shouldBreak = isEmoji ? (x) => x <= 255 : (x) => x > 255;
-      print("$shouldBreak, $isEmoji");
+      // print("$shouldBreak, $isEmoji");
       final chunk = <int>[];
       while (!shouldBreak(current)) {
         chunk.add(current);

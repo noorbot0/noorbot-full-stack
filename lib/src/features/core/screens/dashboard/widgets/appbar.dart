@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:noorbot_app/src/features/notifications/notifications_screen.dart';
 
 import '../../../../../constants/colors.dart';
-import '../../../../../constants/image_strings.dart';
-import '../../profile/profile_screen.dart';
 
 class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DashboardAppBar({
@@ -33,22 +31,24 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(topTitle, style: Theme.of(context).textTheme.headlineMedium),
       actions: [
         Container(
+          alignment: Alignment.center,
           margin: const EdgeInsets.only(right: 15, top: 8, bottom: 8),
-          // width: 40,
-          // height: 40,
-          // decoration: BoxDecoration(
-          //   // borderRadius: BorderRadius.circular(10),
-          //   color: tAppbarBGColor,
-          //   shape: BoxShape.circle,
-          // ),
+          width: 40,
+          height: 40,
+          decoration: const BoxDecoration(
+            // borderRadius: BorderRadius.circular(10),
+            color: tAppbarBGColor,
+            shape: BoxShape.circle,
+          ),
           child: IconButton(
+            alignment: Alignment.center,
             onPressed: () => Get.to(() => const NotificationsScreen()),
             // onPressed: () => AuthenticationRepository.instance.logout(),
             icon: const Icon(
               Icons.notifications,
               color: tAppbarBGColor,
               shadows: <Shadow>[Shadow(color: Colors.black, blurRadius: 15.0)],
-              size: 30,
+              size: 25,
             ),
           ),
         )

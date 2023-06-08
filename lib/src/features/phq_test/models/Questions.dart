@@ -10,7 +10,7 @@ class Question {
       required this.options});
 }
 
-const List sample_data = [
+const List sampleData = [
   {
     "id": 0,
     "question": "Little interest or pleasure in doing things",

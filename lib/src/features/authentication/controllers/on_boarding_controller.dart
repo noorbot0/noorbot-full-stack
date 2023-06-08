@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:liquid_swipe/PageHelpers/LiquidController.dart';
 import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
-import 'package:noorbot_app/src/features/core/screens/chat/chat.dart';
 
 // import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
 import '../../../constants/colors.dart';

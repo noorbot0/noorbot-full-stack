@@ -16,11 +16,11 @@ class TermsOfUse extends StatelessWidget {
         textAlign: TextAlign.center,
         text: TextSpan(
           text: "By creating an account, you are agreeing to our\n",
-          style: Theme.of(context).textTheme.bodyText1,
+          style: Theme.of(context).textTheme.bodyLarge,
           children: [
             TextSpan(
               text: "Privacy Policy! ",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: const TextStyle(fontWeight: FontWeight.bold),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   showDialog(
