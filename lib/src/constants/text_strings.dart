@@ -25,20 +25,22 @@ const String tChatPageName = "Chat";
 const String tJournalsPageName = "Journals";
 const String tProfilePageName = "Profile";
 const String tNotificationsPageName = "Notifications";
-const String tBDITestPageName = "BDI Test";
+const String tBDITestPageName = "PHQ-9 Test";
 
 const String tAppTagLine = "Your always-avaliable mental health ally";
 
 // -- On Boarding Text
-const String tOnBoardingTitle1 = "Help NoorBot Help others!";
+const String tOnBoardingTitle1 = "Negative Feelings check-in";
 const String tOnBoardingTitle2 = "Your privacy matters";
-const String tOnBoardingTitle3 = "NoorBot is not a crisis service";
+const String tOnBoardingTitle3 =
+    "Help NoorBot Help others! and NoorBot is not a crisis service";
 const String tOnBoardingSubTitle1 =
-    "By using NoorBot, you agree to participate in research to make this experience better for others.";
+    "Chat with Noor to practice CBT whenever you force an emotional challenge, and never let negative emotions build up again";
 const String tOnBoardingSubTitle2 =
     "Your data allows us to customize your experience.";
 const String tOnBoardingSubTitle3 =
-    "You can also type “SOS” at any time for resources to contact for assistance.";
+    "By using NoorBot, you agree to participate in research to make this experience better for others.";
+
 const String tOnBoardingCounter1 = "1/3";
 const String tOnBoardingCounter2 = "2/3";
 const String tOnBoardingCounter3 = "3/3";
@@ -71,8 +73,8 @@ const String tForgetMailSubTitle =
     "Enter your registered E-Mail to receive OTP";
 
 // -- Dashboard Screen - Text
-const String tDashboardTitle = "Hey, Freind";
-const String tDashboardHeading = "Explore CBT exercises and more..";
+const String tDashboardTitle = "";
+const String tDashboardHeading = "";
 const String tDashboardBannerTitle2 = "Noorbot Model";
 const String tDashboardButton = "View All";
 const String tDashboardTopCourses = "Top Courses";
@@ -103,9 +105,9 @@ const String tNotificationTime = "Choose a daily check-in time";
 
 // -- PHQ test screen
 const String tStart = "Start";
-const String tPHQTitle = "Negative Feelings check-in";
+const String tPHQTitle = "PHQ-9 Patient Depression Questionnaire ";
 const String tPHQSubTitle =
-    "Chat with Noor to practice CBT whenever you force an emotional challenge, and never let negative emotions build up again";
+    "Over the last 2 weeks, how often have you been bothered by any of the following problems? \n Scoring: add up all questions answers values on PHQ-9 \n You will see your result at the end.";
 
 // Charts/Graphs subtitles
 const String trackerIntroText =

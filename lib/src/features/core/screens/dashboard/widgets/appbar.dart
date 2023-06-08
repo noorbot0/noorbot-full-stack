@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:noorbot_app/src/features/notifications/notifications_screen.dart';
 
 import '../../../../../constants/colors.dart';
-import '../../../../../constants/image_strings.dart';
-import '../../profile/profile_screen.dart';
 
 class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
   const DashboardAppBar({
@@ -18,16 +17,9 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(20),
-          // top: Radius.circular(20),
-        ),
-      ),
       elevation: 10,
       centerTitle: true,
       backgroundColor: tmainGreenColor,
-
       automaticallyImplyLeading: false,
       // leading:
       // IconButton(
@@ -35,6 +27,7 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
       //   // onPressed: () => AuthenticationRepository.instance.logout(),
       //   icon: Icon(Icons.menu, color: isDark ? tWhiteColor : tDarkColor),
       // ),
+      // color:tSecondaryColor,
       title: Text(topTitle, style: Theme.of(context).textTheme.headlineMedium),
       actions: [
         Container(
@@ -47,9 +40,14 @@ class DashboardAppBar extends StatelessWidget implements PreferredSizeWidget {
             shape: BoxShape.circle,
           ),
           child: IconButton(
-            onPressed: () => Get.to(() => const ProfileScreen()),
+            onPressed: () => Get.to(() => const NotificationsScreen()),
             // onPressed: () => AuthenticationRepository.instance.logout(),
-            icon: const Image(image: AssetImage(tUserProfileImage)),
+            icon: const Icon(
+              Icons.notifications,
+              color: tAppbarBGColor,
+              shadows: <Shadow>[Shadow(color: Colors.black, blurRadius: 15.0)],
+              size: 30,
+            ),
           ),
         )
       ],

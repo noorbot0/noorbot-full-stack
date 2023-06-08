@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -19,23 +18,6 @@ class TermsOfUse extends StatelessWidget {
           text: "By creating an account, you are agreeing to our\n",
           style: Theme.of(context).textTheme.bodyLarge,
           children: [
-            TextSpan(
-              text: "Terms & Conditions ",
-              style: const TextStyle(fontWeight: FontWeight.bold),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
-                  showModal(
-                    context: context,
-                    configuration: const FadeScaleTransitionConfiguration(),
-                    builder: (context) {
-                      return PolicyDialog(
-                        mdFileName: 'terms_and_conditions.md',
-                      );
-                    },
-                  );
-                },
-            ),
-            const TextSpan(text: "and "),
             TextSpan(
               text: "Privacy Policy! ",
               style: const TextStyle(fontWeight: FontWeight.bold),

@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:noorbot_app/src/constants/colors.dart';
+import 'package:noorbot_app/src/features/phq_test/screens/phq_screen.dart';
+import 'package:noorbot_app/src/features/phq_test/screens/phq_test.dart';
 
 import '../../../models/dashboard/tests_model.dart';
 
@@ -17,6 +21,14 @@ class DashboardTests extends StatelessWidget {
 
     void openTest(String testId) {
       print(testId);
+      switch (testId) {
+        case "BDI":
+          break;
+        case "PHQ-9":
+          Get.to(PHQTest());
+          break;
+        default:
+      }
     }
 
     return SizedBox(

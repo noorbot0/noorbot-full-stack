@@ -59,12 +59,12 @@ class PHQTest extends StatelessWidget {
                           Column(
                             children: [
                               Text(tPHQTitle,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayMedium),
-                              Text(tPHQSubTitle,
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                  textAlign: TextAlign.center),
+                                  style:
+                                      Theme.of(context).textTheme.displaySmall),
+                              Text(
+                                tPHQSubTitle,
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
                             ],
                           ),
                           Row(

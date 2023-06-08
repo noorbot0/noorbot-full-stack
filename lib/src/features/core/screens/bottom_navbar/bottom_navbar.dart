@@ -3,6 +3,7 @@ import 'package:noorbot_app/src/constants/colors.dart';
 import 'package:noorbot_app/src/features/core/providers/logger_provider.dart';
 import 'package:noorbot_app/src/features/core/screens/chat/chat.dart';
 import 'package:noorbot_app/src/features/core/screens/dashboard/dashboard.dart';
+import 'package:noorbot_app/src/features/core/screens/profile/profile_screen.dart';
 import 'package:noorbot_app/src/features/core/screens/tracker/tracker.dart';
 import 'package:noorbot_app/src/features/journaling/screens/journaling_screen.dart';
 import 'package:noorbot_app/src/features/notifications/notifications_screen.dart';
@@ -25,7 +26,7 @@ class NavBar extends State<MyNavBar> {
     MyChat(),
     Dashboard(),
     Journaling(),
-    NotificationsScreen(),
+    ProfileScreen(),
   ];
 
   @override
@@ -80,8 +81,8 @@ class NavBar extends State<MyNavBar> {
                 label: 'Tracking',
               ),
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.message_outlined),
-                icon: Icon(Icons.message),
+                activeIcon: Icon(Icons.chat_bubble_outline),
+                icon: Icon(Icons.chat_bubble),
                 label: 'Chat',
               ),
               BottomNavigationBarItem(
@@ -95,8 +96,8 @@ class NavBar extends State<MyNavBar> {
                 label: 'Journal',
               ),
               BottomNavigationBarItem(
-                activeIcon: Icon(Icons.notifications_active_outlined),
-                icon: Icon(Icons.notifications),
+                activeIcon: Icon(Icons.person_2_outlined),
+                icon: Icon(Icons.person),
                 label: 'Notifications',
               ),
             ],

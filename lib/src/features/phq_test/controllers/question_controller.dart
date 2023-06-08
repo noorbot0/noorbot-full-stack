@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:noorbot_app/src/features/authentication/models/user_model.dart';
+import 'package:noorbot_app/src/common_widgets/custome_dialog.dart';
 import 'package:noorbot_app/src/features/core/controllers/profile_controller.dart';
 import 'package:noorbot_app/src/features/core/screens/bottom_navbar/bottom_navbar.dart';
 import 'package:noorbot_app/src/features/phq_test/models/Questions.dart';
@@ -76,28 +79,16 @@ class QuestionController extends GetxController {
           duration: const Duration(milliseconds: 100), curve: Curves.ease);
     } else {
       // Get package provide us simple way to naviigate another page
-      storePHQResult();
+      Get.to(CustomDialog(
+          title: 'You got: ${_score.value} ',
+          description:
+              "Interpretation of Total Score:\n \n 1-4: Minimal depression. \n 5-9: Mild depression. \n 10-14: Moderate depression \n 15-19: Moderately severe depression \n 20-27: Severe depression"));
       // Get.to(Dashboard());
-      Get.to(const MyNavBar());
     }
   }
 
   int updateTheQnNum(int index) {
     _questionNumber.value = index + 1;
     return _questionNumber.value;
-  }
-
-  void storePHQResult() {
-    UserModel user = controller.getUserData() as UserModel;
-    final userData = UserModel(
-      id: user.id,
-      email: user.email,
-      password: user.password,
-      nickname: user.nickname,
-      testScore: _score.value,
-    );
-    controller.updateRecord(userData);
-    _score.value = 0;
-    _questionNumber.value = 0;
   }
 }

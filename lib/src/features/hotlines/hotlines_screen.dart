@@ -22,14 +22,24 @@ class HotLines extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         children: const [
           CardItem(
-            title: 'Card 1',
+            title: 'Dr.Twfiq Sleman',
             subtitles: ['Subtitle 1', 'Subtitle 2'],
             phoneNumber: '022767888',
           ),
           CardItem(
-            title: 'Card 2',
+            title: 'Dr.Samah Jabr',
             subtitles: ['Subtitle 1', 'Subtitle 2'],
-            phoneNumber: '+9876543210',
+            phoneNumber: '+970546981772',
+          ),
+          CardItem(
+            title: 'Dr.Samah Jabr',
+            subtitles: ['Subtitle 1', 'Subtitle 2'],
+            phoneNumber: '+970546981772',
+          ),
+          CardItem(
+            title: 'Dr.Samah Jabr',
+            subtitles: ['Subtitle 1', 'Subtitle 2'],
+            phoneNumber: '+970546981772',
           ),
         ],
       ),
