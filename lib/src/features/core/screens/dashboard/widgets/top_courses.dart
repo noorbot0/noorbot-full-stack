@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../../../constants/colors.dart';
 import '../../../../../constants/sizes.dart';
@@ -14,13 +16,12 @@ class DashboardTopCourses extends StatelessWidget {
 
   final TextTheme txtTheme;
   final bool isDark;
-  Future<void> _launchURL(String url) async {
-    final Uri uri = Uri(scheme: "https", host: url);
-    if (!await launchUrl(
-      uri,
-      mode: LaunchMode.externalApplication,
-    )) {
-      throw "Can not launch url";
+  void _launchPhone(String url) async {
+    final Uri linkUri = Uri(scheme: 'https', path: url);
+    if (await canLaunchUrl(linkUri)) {
+      await launchUrl(linkUri);
+    } else {
+      Get.snackbar("Sorry", "Could not launch this URL");
     }
   }
 
@@ -35,7 +36,7 @@ class DashboardTopCourses extends StatelessWidget {
         itemCount: list.length,
         itemBuilder: (context, index) => GestureDetector(
           onTap: () {
-            _launchURL("www.youtube.com");
+            launch(list[index].link);
           },
           child: SizedBox(
             width: 270,
@@ -84,11 +85,6 @@ class DashboardTopCourses extends StatelessWidget {
                             Text(
                               list[index].heading,
                               style: txtTheme.headlineMedium,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(
-                              list[index].subHeading,
-                              style: txtTheme.bodyMedium,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ],
