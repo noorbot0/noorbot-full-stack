@@ -24,12 +24,7 @@ class NotificationsPageState extends State<NotificationsScreen> {
   late final FirebaseMessaging _messaging;
   late int _totalNotifications;
 
-  final List<Widget> _notificationCards = [
-    const NotificationCard(
-      title: "TEST TITLE",
-      message: "TEST BODy",
-    )
-  ];
+  final List<Widget> _notificationCards = [];
   PushNotification? _notificationInfo;
 
   @override

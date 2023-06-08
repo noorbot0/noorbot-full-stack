@@ -18,6 +18,11 @@ import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// Send all messages
+//daily analysis for numbers of messages, started time, ...
+//create video
+// print circles of Jira Github and Figma
+
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
