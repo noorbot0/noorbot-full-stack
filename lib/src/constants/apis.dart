@@ -27,5 +27,5 @@ class GPTAPIs {
   static extractSentiments(String message) =>
       "Extract sentiments words, otherwise, say none: $message \n\nPositive:\nNegative:";
   static giveEmojisToSentiments(String message) =>
-      "Give emojis to these sentiments, with comma seperated: $message";
+      "Give only emojis to these sentiments, with comma seperated, don't say anything else: $message";
 }
